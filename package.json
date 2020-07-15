@@ -1,0 +1,56 @@
+{
+  "name": "react-create",
+  "version": "1.0.0",
+  "description": "Create React Component folder works on macOS, Windows, and Linux.",
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "react-create": "dist/react-create.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "predev": "rm -rf dist && tsc && npm link",
+    "dev": "tsc -w",
+    "clean": "rm -rf dist *.log",
+    "lint": "eslint --fix --ext .js,.ts .",
+    "test": "jest --no-cache --runInBand 2>&1"
+  },
+  "keywords": [
+    "react",
+    "component",
+    "cli",
+    "generator",
+    "tool",
+    "react-native",
+    "react native",
+    "native",
+    "ng add"
+  ],
+  "author": {
+    "name": "Tzach Bonfil",
+    "email": "tzachbonfil@gmail.com",
+    "url": "https://github.com/tzachbon"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^5.1.0",
+    "fs-extra": "^9.0.1",
+    "inquirer": "^7.3.2",
+    "listr": "^0.14.3",
+    "lodash": "^4.17.19",
+    "react": "^16.13.1"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/fs-extra": "^9.0.1",
+    "@types/inquirer": "^6.5.0",
+    "@types/jest": "26.0.0",
+    "@types/listr": "^0.14.2",
+    "@types/lodash": "^4.14.157",
+    "@types/node": "14.0.13",
+    "create-react-app": "^3.4.1",
+    "jest": "^26.1.0",
+    "typescript": "^3.9.6"
+  }
+}
