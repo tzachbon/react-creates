@@ -3,6 +3,7 @@ import { Language } from "./parsers/parse-language";
 import { Styles } from "./parsers/parse-style";
 
 export interface CreateComponentOptions {
+  target: string,
   name: string;
   type: Types;
   language: Language;

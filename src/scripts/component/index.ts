@@ -15,6 +15,7 @@ export const createComponent = () =>
   program
     .command("component <name>")
     .description("Creates react component")
+    .option("--dir", "Component directory", process.cwd())
     .option("-f --function", "Generate function component")
     .option("-t --type", TYPE_MESSAGE, Types.FUNCTION)
     .option("-l --language", LANGUAGE_MESSAGE)
@@ -38,6 +39,7 @@ export const createComponent = () =>
         css,
         sass,
         function: func,
+        dir: target
       } = _.opts();
 
       const styles = { scss, css, sass };
@@ -55,6 +57,7 @@ export const createComponent = () =>
       try {
         const options: CreateComponentOptions = {
           name,
+          target,
           type: await parseTypes(type),
           language: await parseLanguage(language),
           style: await parseStyle(style),
