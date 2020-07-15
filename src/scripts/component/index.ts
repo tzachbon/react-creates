@@ -10,12 +10,13 @@ import {
 } from "./parsers/parse-type";
 import { parseStyle } from "./parsers/parse-style";
 import { CreateComponentOptions } from "./types";
+import { runCreateComponent } from "./run";
 
 export const createComponent = () =>
   program
     .command("component <name>")
     .description("Creates react component")
-    .option("--dir", "Component directory", process.cwd())
+    .option("--dir", "Component directory")
     .option("-f --function", "Generate function component")
     .option("-t --type", TYPE_MESSAGE, Types.FUNCTION)
     .option("-l --language", LANGUAGE_MESSAGE)
@@ -39,7 +40,7 @@ export const createComponent = () =>
         css,
         sass,
         function: func,
-        dir: target
+        dir: target,
       } = _.opts();
 
       const styles = { scss, css, sass };
@@ -57,14 +58,15 @@ export const createComponent = () =>
       try {
         const options: CreateComponentOptions = {
           name,
-          target,
+          target: target ?? process.cwd(),
           type: await parseTypes(type),
           language: await parseLanguage(language),
           style: await parseStyle(style),
           entry: Boolean(entry),
         };
 
-        console.log(options);
+        await runCreateComponent(options);
+
       } catch (e) {
         throw e;
       }
