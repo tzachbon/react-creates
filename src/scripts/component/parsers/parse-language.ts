@@ -1,17 +1,17 @@
 import isTypescript from "../../../utils/is-typescript";
 
-export const LANGUAGES = {
-  TYPESCRIPT: "typescript",
-  JAVASCRIPT: "javascript",
-};
+export enum Language {
+  TYPESCRIPT = "typescript",
+  JAVASCRIPT = "javascript",
+}
 
-export const MESSAGE = `Select the language you want the component to be created. (${LANGUAGES.TYPESCRIPT} or ${LANGUAGES.JAVASCRIPT})`;
+export const MESSAGE = `Select the language you want the component to be created. (${Language.TYPESCRIPT} or ${Language.JAVASCRIPT})`;
 
-export async function parseLanguage(language: string) {
+export async function parseLanguage(language: Language) {
   return typeof language === "string" &&
-    Object.values(LANGUAGES).includes(language.toLowerCase())
+    Object.values(Language).includes(language as any)
     ? language
     : (await isTypescript())
-    ? LANGUAGES.TYPESCRIPT
-    : LANGUAGES.JAVASCRIPT;
+    ? Language.TYPESCRIPT
+    : Language.JAVASCRIPT;
 }

@@ -1,25 +1,24 @@
-import { prompt } from "inquirer";
-import { startCase } from "lodash";
 import { promptList } from "../../../utils/prompt-list";
 
-export const TYPES = {
-  FUNCTION: "function",
-  CLASS: "class",
-};
+export enum Types {
+  FUNCTION = "function",
+  CLASS = "class",
+}
 
-export const MESSAGE = `What type of the component it should be. (${TYPES.FUNCTION} or ${TYPES.CLASS})`;
+export const MESSAGE = `What type of the component it should be. (${Types.FUNCTION} or ${Types.CLASS})`;
 
-export const parseTypes = async (type: string | undefined | null) => {
+export const parseTypes = async (type: Types) => {
+
   if (
     typeof type === "string" &&
-    Object.values(TYPES).includes(type.toLowerCase())
+    Object.values(Types).includes(type)
   ) {
-    return type.toLowerCase();
+    return type;
   } else {
     return await promptList(
       "type",
       MESSAGE,
-      Object.values(TYPES).map((value) => ({ value }))
-    );
+      Object.values(Types).map((value) => ({ value }))
+    ) as Types;
   }
 };
