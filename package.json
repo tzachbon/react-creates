@@ -1,12 +1,12 @@
 {
-  "name": "react-create",
+  "name": "react-creates",
   "version": "1.0.0",
   "description": "Create React Component folder works on macOS, Windows, and Linux.",
   "files": [
     "dist"
   ],
   "bin": {
-    "react-create": "dist/react-create.js"
+    "react-creates": "dist/react-creates.js"
   },
   "scripts": {
     "build": "tsc",
