@@ -10,10 +10,10 @@
     "react-creates": "dist/react-creates.js"
   },
   "scripts": {
+    "clean": "rm -rf __temp__",
     "build": "tsc",
     "predev": "rm -rf dist && tsc && npm link",
     "dev": "tsc -w",
-    "clean": "rm -rf dist *.log",
     "lint": "eslint --fix --ext .js,.ts .",
     "test": "jest --no-cache --runInBand 2>&1"
   },
