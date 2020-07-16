@@ -36,7 +36,6 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^5.1.0",
-    "fs-extra": "^9.0.1",
     "inquirer": "^7.3.2",
     "listr": "^0.14.3",
     "lodash": "^4.17.19",
@@ -46,7 +45,6 @@
   },
   "devDependencies": {
     "@types/commander": "^2.12.2",
-    "@types/fs-extra": "^9.0.1",
     "@types/inquirer": "^6.5.0",
     "@types/jest": "26.0.0",
     "@types/listr": "^0.14.2",
