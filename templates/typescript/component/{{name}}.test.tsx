@@ -1,11 +1,11 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {%name%} from '.';
+import {{name}} from '.';
 
 
-describe("{%name%}", () => {
+describe("{{name}}", () => {
   it("should match snapshot", () => {
-    const tree = renderer(<{%name%} />);
+    const tree = renderer(<{{name}} />);
     expect(tree).toMatchSnapshot();
   });
 });

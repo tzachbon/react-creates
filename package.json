@@ -40,6 +40,7 @@
     "inquirer": "^7.3.2",
     "listr": "^0.14.3",
     "lodash": "^4.17.19",
+    "mustache": "^4.0.1",
     "ncp": "^2.0.0",
     "react": "^16.13.1"
   },
@@ -50,6 +51,7 @@
     "@types/jest": "26.0.0",
     "@types/listr": "^0.14.2",
     "@types/lodash": "^4.14.157",
+    "@types/mustache": "^4.0.1",
     "@types/ncp": "^2.0.4",
     "@types/node": "14.0.13",
     "create-react-app": "^3.4.1",

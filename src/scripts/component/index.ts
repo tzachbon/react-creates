@@ -2,13 +2,14 @@ import { program } from "commander";
 import {
   parseLanguage,
   MESSAGE as LANGUAGE_MESSAGE,
+  Language,
 } from "./parsers/parse-language";
 import {
   Types,
   parseTypes,
   MESSAGE as TYPE_MESSAGE,
 } from "./parsers/parse-type";
-import { parseStyle } from "./parsers/parse-style";
+import { parseStyle, Styles } from "./parsers/parse-style";
 import { CreateComponentOptions } from "./types";
 import { runCreateComponent } from "./run";
 
@@ -17,19 +18,19 @@ export const createComponent = () =>
     .command("component <name>")
     .description("Creates react component")
     .option("--dir", "Component directory")
-    .option("-f --function", "Generate function component")
-    .option("-t --type", TYPE_MESSAGE, Types.FUNCTION)
-    .option("-l --language", LANGUAGE_MESSAGE)
-    .option("-pt --prop-types", "Should to add Prop-types")
     .option(
       "--entry",
       "Bootstraps the component with the 'ReactDOM.render' function",
       false
     )
-    .option("-s --style", "Selected the style")
     .option("--scss")
     .option("--css")
     .option("--sass")
+    .option("-l --language", LANGUAGE_MESSAGE, Language.JAVASCRIPT)
+    .option("-t --type", TYPE_MESSAGE, Types.FUNCTION)
+    .option("-pt --prop-types", "Should to add Prop-types")
+    .option("-f --function", "Generate function component")
+    .option("-s --style", "Selected the style", Styles.CSS)
     .action(async (name, _) => {
       let {
         type,
@@ -39,6 +40,7 @@ export const createComponent = () =>
         scss,
         css,
         sass,
+        propTypes,
         function: func,
         dir: target,
       } = _.opts();
@@ -63,10 +65,10 @@ export const createComponent = () =>
           language: await parseLanguage(language),
           style: await parseStyle(style),
           entry: Boolean(entry),
+          propTypes: Boolean(propTypes),
         };
 
         await runCreateComponent(options);
-
       } catch (e) {
         throw e;
       }

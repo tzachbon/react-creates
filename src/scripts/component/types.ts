@@ -3,10 +3,11 @@ import { Language } from "./parsers/parse-language";
 import { Styles } from "./parsers/parse-style";
 
 export interface CreateComponentOptions {
-  target: string,
+  target: string;
   name: string;
   type: Types;
   language: Language;
   style: Styles;
-  entry: boolean
+  entry: boolean;
+  propTypes: boolean;
 }
