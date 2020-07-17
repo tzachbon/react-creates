@@ -9,6 +9,7 @@ import {
   parseTypes,
   MESSAGE as TYPE_MESSAGE,
 } from "./parsers/parse-type";
+import { parseTarget } from "./parsers/parse-target";
 import { parseStyle, Styles } from "./parsers/parse-style";
 import { CreateComponentOptions } from "./types";
 import { runCreateComponent } from "./run";
@@ -25,7 +26,7 @@ export const createComponent = () =>
     .option("--scss")
     .option("--css")
     .option("--sass")
-    .option("-l --language <scripting>", LANGUAGE_MESSAGE, Language.JAVASCRIPT)
+    .option("-l --language <scripting>", LANGUAGE_MESSAGE)
     .option("-d --directory <target>", "Component directory", process.cwd())
     .option("-t --type <component>", TYPE_MESSAGE, Types.FUNCTION)
     .option("-pt --prop-types", "Should to add Prop-types")
@@ -45,8 +46,6 @@ export const createComponent = () =>
         directory: target,
       } = _.opts();
 
-      console.log(language);
-
       const styles = { scss, css, sass };
 
       for (const [styleName, isOn] of Object.entries(styles)) {
@@ -60,11 +59,10 @@ export const createComponent = () =>
         type = Types.FUNCTION;
       }
 
-      
       try {
         const options: CreateComponentOptions = {
           name,
-          target: target ?? process.cwd(),
+          target: await parseTarget({ name, target }),
           type: await parseTypes(type),
           language: await parseLanguage(language),
           style: await parseStyle(style),

@@ -16,7 +16,7 @@
     "dev": "tsc -w",
     "lint": "eslint --fix --ext .js,.ts .",
     "test": "jest --no-cache --runInBand 2>&1",
-    "create:cmp": "npm run clean && react-creates component __temp__ -f --scss"
+    "create:cmp": "npm run clean && react-creates component __temp__  -f --scss -d __temp__ "
   },
   "keywords": [
     "react",

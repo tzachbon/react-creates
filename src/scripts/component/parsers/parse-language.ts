@@ -8,6 +8,7 @@ export enum Language {
 export const MESSAGE = `Select the language you want the component to be created. (${Language.TYPESCRIPT} or ${Language.JAVASCRIPT})`;
 
 export async function parseLanguage(language: Language) {
+  
   return typeof language === "string" &&
     Object.values(Language).includes(language as any)
     ? language
