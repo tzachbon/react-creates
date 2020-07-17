@@ -17,7 +17,6 @@ export const createComponent = () =>
   program
     .command("component <name>")
     .description("Creates react component")
-    .option("--dir", "Component directory")
     // .option(
     //   "--entry",
     //   "Bootstraps the component with the 'ReactDOM.render' function",
@@ -26,11 +25,12 @@ export const createComponent = () =>
     .option("--scss")
     .option("--css")
     .option("--sass")
-    .option("-l --language", LANGUAGE_MESSAGE, Language.JAVASCRIPT)
-    .option("-t --type", TYPE_MESSAGE, Types.FUNCTION)
+    .option("-l --language <scripting>", LANGUAGE_MESSAGE, Language.JAVASCRIPT)
+    .option("-d --directory <target>", "Component directory", process.cwd())
+    .option("-t --type <component>", TYPE_MESSAGE, Types.FUNCTION)
     .option("-pt --prop-types", "Should to add Prop-types")
     .option("-f --function", "Generate function component")
-    .option("-s --style", "Selected the style", Styles.CSS)
+    .option("-s --style <styling>", "Selected the style", Styles.CSS)
     .action(async (name, _) => {
       let {
         type,
@@ -42,8 +42,10 @@ export const createComponent = () =>
         sass,
         propTypes,
         function: func,
-        dir: target,
+        directory: target,
       } = _.opts();
+
+      console.log(language);
 
       const styles = { scss, css, sass };
 
@@ -58,6 +60,7 @@ export const createComponent = () =>
         type = Types.FUNCTION;
       }
 
+      
       try {
         const options: CreateComponentOptions = {
           name,
