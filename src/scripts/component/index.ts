@@ -50,6 +50,7 @@ export const createComponent = () =>
       for (const [styleName, isOn] of Object.entries(styles)) {
         if (isOn) {
           style = styleName;
+          break;
         }
       }
 
