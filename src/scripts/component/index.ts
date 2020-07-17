@@ -18,11 +18,11 @@ export const createComponent = () =>
     .command("component <name>")
     .description("Creates react component")
     .option("--dir", "Component directory")
-    .option(
-      "--entry",
-      "Bootstraps the component with the 'ReactDOM.render' function",
-      false
-    )
+    // .option(
+    //   "--entry",
+    //   "Bootstraps the component with the 'ReactDOM.render' function",
+    //   false
+    // )
     .option("--scss")
     .option("--css")
     .option("--sass")
