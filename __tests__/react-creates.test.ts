@@ -6,7 +6,7 @@ describe("react-creates", () => {
   beforeEach(async () => await driver.start());
   afterEach(async () => await driver.reset());
 
-  it("should create component",async  () => {
+  it("should create component (happy flow)",async  () => {
     console.log(await driver.createComponent("__Test__"));
 
     expect(true).toBe(true);

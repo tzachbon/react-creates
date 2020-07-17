@@ -17,6 +17,7 @@ interface TempProjectDriver {
 class TempProject {
   target: string;
   projectName: string;
+  
   constructor(public options: TempProjectDriver = {}) {
     const { projectName } = this.options;
     this.projectName = projectName || "temp-project";
