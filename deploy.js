@@ -48,6 +48,7 @@ program
         "-m",
         `":tada: New version created!" ${newVersion}`,
       ]);
+      await execa("git", ["push"]);
     } catch (e) {
       throw e;
     }
