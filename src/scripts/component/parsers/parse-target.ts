@@ -4,7 +4,7 @@ import { promisify } from "util";
 
 const readdir = promisify(fs.readdir);
 
-export const parseTarget = async ({ name, target }) => {
+const _parseTarget = async ({ name, target }) => {
   if (typeof target !== "string") {
     throw new Error("Invalid option: directory");
   }
@@ -29,4 +29,12 @@ export const parseTarget = async ({ name, target }) => {
       return join(target, name);
     }
   }
+};
+
+export const parseTarget = async (options: {
+  name: string;
+  target: string;
+}) => {
+  const newTarget = await _parseTarget(options);
+  return newTarget;
 };

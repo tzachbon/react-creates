@@ -1,18 +1,19 @@
 import { program } from "commander";
 import {
-  parseLanguage,
   MESSAGE as LANGUAGE_MESSAGE,
-  Language,
+  parseLanguage,
 } from "./parsers/parse-language";
-import {
-  Types,
-  parseTypes,
-  MESSAGE as TYPE_MESSAGE,
-} from "./parsers/parse-type";
-import { parseTarget } from "./parsers/parse-target";
 import { parseStyle, Styles } from "./parsers/parse-style";
-import { CreateComponentOptions } from "./types";
+import { parseTarget } from "./parsers/parse-target";
+import {
+  MESSAGE as TYPE_MESSAGE,
+  parseTypes,
+  Types,
+} from "./parsers/parse-type";
 import { runCreateComponent } from "./run";
+import { CreateComponentOptions } from "./types";
+import chalk from "chalk";
+import { optionsLogger } from "./options-logger";
 
 export const createComponent = () =>
   program
@@ -60,6 +61,12 @@ export const createComponent = () =>
       }
 
       try {
+        console.log(`
+React Creates: ${chalk.blueBright.bold("Component")} 
+
+Parsing arguments...
+        `);
+
         const options: CreateComponentOptions = {
           name,
           target: await parseTarget({ name, target }),
@@ -70,6 +77,7 @@ export const createComponent = () =>
           propTypes: Boolean(propTypes),
         };
 
+        optionsLogger(options);
         await runCreateComponent(options);
       } catch (e) {
         throw e;
