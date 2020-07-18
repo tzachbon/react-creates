@@ -9,6 +9,7 @@ const readdir = promisify(fs.readdir);
 export interface ComponentOptions {
   target: string;
   typescript?: boolean;
+  style?: Styles;
 }
 
 export const componentTestkit = (name: string, options: ComponentOptions) =>
@@ -17,7 +18,6 @@ export const componentTestkit = (name: string, options: ComponentOptions) =>
 class Component {
   private target: string;
   private path: string | null = null;
-  private style: Styles | null = null;
 
   constructor(private name: string, private options: ComponentOptions) {
     this.target = options.target;
@@ -28,6 +28,14 @@ class Component {
   }
 
   async create(args: string[] = []) {
+    if (this.options.typescript) {
+      args.push("-l", "typescript");
+    }
+
+    if (this.options.style) {
+      args.push("-s", this.options.style);
+    }
+
     const command = await execa(
       "react-creates",
       ["component", this.name, ...args],
@@ -67,6 +75,11 @@ class Component {
     const hasIndexFile = files.includes(`index.${this.fileSuffix}`);
 
     return hasIndexFile && hasMainFile;
+  }
+
+  async isStyleMatch(style: Styles = this.options.style || Styles.CSS) {
+    const files = await this.getFiles();
+    return files.includes(`style.${style}`);
   }
 
   get fileSuffix() {
