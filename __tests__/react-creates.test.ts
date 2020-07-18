@@ -1,4 +1,4 @@
-import { tempProjectTestkit } from "./driver/create-react-app.testkit";
+import { tempProjectTestkit } from "./testkit/create-react-app.testkit";
 
 describe("react-creates", () => {
   const driver = tempProjectTestkit();

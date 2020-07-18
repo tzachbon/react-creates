@@ -4,7 +4,7 @@ import tempy from "tempy";
 import chalk from "chalk";
 import { join } from "path";
 import { promisify } from "util";
-import { Language } from "./../../src/scripts/component/parsers/parse-language";
+import { Language } from "../../src/scripts/component/parsers/parse-language";
 import { componentTestkit } from "./component.testkit";
 import { Styles } from "../../src/scripts/component/parsers/parse-style";
 
