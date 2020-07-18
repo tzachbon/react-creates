@@ -7,6 +7,7 @@ import { promisify } from "util";
 import { Language } from "../../src/scripts/component/parsers/parse-language";
 import { componentTestkit } from "./component.testkit";
 import { Styles } from "../../src/scripts/component/parsers/parse-style";
+import execa from "execa";
 
 const copy = promisify(ncp);
 const rmdir = promisify(fs.rmdir);
@@ -16,6 +17,7 @@ interface TempProjectDriver {
   typescript?: boolean;
   style?: Styles;
   projectName?: string;
+  install?: boolean;
 }
 
 class TempProject {
@@ -49,6 +51,10 @@ class TempProject {
     );
 
     await copy(mockPath, this.target);
+
+    if (this.options.install) {
+      await execa("yarn", { cwd: this.target });
+    }
   }
 
   async projectFiles() {
@@ -69,6 +75,14 @@ class TempProject {
   async reset() {
     await rmdir(this.target, { recursive: true });
     this.target = null;
+  }
+
+  async runScript(script: "start" | "test" | "build" = "start") {
+    try {
+      return await execa("npm", ["run", script], { cwd: this.target });
+    } catch (e) {
+      return e;
+    }
   }
 }
 
