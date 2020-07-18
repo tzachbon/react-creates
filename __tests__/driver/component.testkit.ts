@@ -47,8 +47,7 @@ class Component {
     const output = command.stdout;
 
     this.path = Component.getValueFromOutput(output, "⚛️ Target: ");
-    this.style = Component.getValueFromOutput(output, "⚛️ Style:") as Styles;
-
+    
     return this;
   }
 

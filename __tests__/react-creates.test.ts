@@ -7,9 +7,12 @@ describe("react-creates", () => {
   afterAll(async () => await driver.reset());
 
   it("should create component (happy flow)", async () => {
-    // console.log(await driver.createComponent("__Test__"));
 
-    await driver.createComponent('TestCmp')
-    expect(true).toBe(true);
+    const cmpName = `TestCmp`;
+    const componentDriver = await driver.createComponent(cmpName);
+
+    expect(await componentDriver.testFileExists()).toBe(true);
+    expect(await componentDriver.componentFileExists()).toBe(true);
+    expect(await componentDriver.isStyleMatch()).toBe(true);
   });
 });

@@ -1,17 +1,20 @@
 import fs from "fs";
 import ncp from "ncp";
+import tempy from "tempy";
+import chalk from "chalk";
 import { join } from "path";
 import { promisify } from "util";
 import { Language } from "./../../src/scripts/component/parsers/parse-language";
 import { componentTestkit } from "./component.testkit";
+import { Styles } from "../../src/scripts/component/parsers/parse-style";
 
 const copy = promisify(ncp);
 const rmdir = promisify(fs.rmdir);
-const mkdtemp = promisify(fs.mkdtemp);
 const readdir = promisify(fs.readdir);
 
 interface TempProjectDriver {
   typescript?: boolean;
+  style?: Styles;
   projectName?: string;
 }
 
@@ -27,7 +30,11 @@ class TempProject {
   async start() {
     const { typescript } = this.options;
 
-    this.target = await mkdtemp(".tmp");
+    this.target = tempy.directory();
+
+    console.log(chalk`
+    Project created here: ${chalk.bold(this.target)}
+    `);
 
     const projectLanguage = Boolean(typescript)
       ? Language.TYPESCRIPT
