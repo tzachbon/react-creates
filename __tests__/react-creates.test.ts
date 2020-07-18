@@ -1,4 +1,4 @@
-import { tempProjectTestkit } from "./driver/create-mini-project.testkit";
+import { tempProjectTestkit } from "./driver/create-react-app.testkit";
 
 describe("react-creates", () => {
   const driver = tempProjectTestkit();
@@ -9,6 +9,7 @@ describe("react-creates", () => {
   it("should create component (happy flow)", async () => {
     // console.log(await driver.createComponent("__Test__"));
 
+    await driver.createComponent('TestCmp')
     expect(true).toBe(true);
   });
 });
