@@ -18,11 +18,9 @@
     "pretest": "npm run build",
     "test": "jest",
     "create:cmp": "npm run clean && npx react-creates component __temp__  -f --scss -d __temp__ ",
-    "prepublish": "npm run build",
     "deploy:patch": "node deploy -p",
     "deploy:minor": "node deploy -m",
-    "predeploy": "npm run build && npm run deploy:patch",
-    "deploy": "npm publish"
+    "prepublish": "npm run build && npm run deploy:patch"
   },
   "keywords": [
     "react",
