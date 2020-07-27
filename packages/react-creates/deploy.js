@@ -4,6 +4,7 @@ const fs = require("fs");
 const { promisify } = require("util");
 const { resolve } = require("path");
 const chalk = require("chalk");
+const execa = require("execa");
 
 const writeFile = promisify(fs.writeFile);
 
@@ -16,11 +17,32 @@ const updateIndex = {
 program
   .option("-m --minor")
   .option("-p --patch")
+  .option("-g --git")
   .action(async (_) => {
     try {
-      const { major, minor, patch } = _.opts();
+      const { major, minor, patch, git } = _.opts();
 
       const version = packageJson.version.split(".").map((_) => parseInt(_));
+
+      if (git) {
+        await execa("git", ["add", "."]);
+        await execa("git", [
+          "commit",
+          "-m",
+          `New react-scripts version: \`${version}\``,
+        ]);
+        await execa("git", ["push"]);
+
+        console.log(
+          chalk.green(
+            `
+            Git commit created successfully
+          `
+          )
+        );
+
+        return;
+      }
 
       for (const [versionKey, shouldUpdate] of Object.entries({
         major,

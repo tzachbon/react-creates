@@ -1,6 +1,6 @@
 {
   "name": "react-creates",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Create React Component folder works on macOS, Windows, and Linux.",
   "files": [
     "dist",
@@ -20,7 +20,8 @@
     "create:cmp": "npm run clean && npx react-creates component __temp__  -f --scss -d __temp__ ",
     "deploy:patch": "node deploy -p",
     "deploy:minor": "node deploy -m",
-    "prepublish": "npm run build && npm run deploy:patch"
+    "prepublish": "npm run build && npm run deploy:patch",
+    "postpublish": "node deploy -g"
   },
   "keywords": [
     "react",
