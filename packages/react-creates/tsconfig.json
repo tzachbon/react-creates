@@ -10,5 +10,5 @@
     "target": "es2019"
   },
   "include": ["src/**/*.*"],
-  "exclude": ["__tests__/**/*.*"]
+  "exclude": ["packages/react-creates/__tests__/**/*.*"]
 }
