@@ -1,9 +1,9 @@
-const execa = require("execa");
 const { program } = require("commander");
 const packageJson = require("./package");
 const fs = require("fs");
 const { promisify } = require("util");
 const { resolve } = require("path");
+const chalk = require("chalk");
 
 const writeFile = promisify(fs.writeFile);
 
@@ -40,25 +40,29 @@ program
         resolve("package.json"),
         JSON.stringify(packageJson, null, 2)
       );
-      console.log('### Updating package.json');
-      
+      console.log("======================");
+      console.log(
+        chalk.green(
+          "### Updated package.json, version: " + chalk.bold(newVersion)
+        )
+      );
+      console.log("======================");
 
-      // publish current version
-      await execa("npm", ["publish"]);
-      console.log('### Publishing to npm');
+      // // publish current version
+      // await execa("npm", ["publish"]);
+      // console.log('### Publishing to npm');
 
-      // update git with new version
-      await execa("git", ["add", "package.json"]);
-      console.log('### Git: adding package.json');
-      await execa("git", [
-        "commit",
-        "-m",
-        `":tada: New version created!" ${newVersion}`,
-      ]);
-      console.log('### Git: committing');
-      await execa("git", ["push"]);
-      console.log('### Git: pushing 🥳');
-
+      // // update git with new version
+      // await execa("git", ["add", "package.json"]);
+      // console.log('### Git: adding package.json');
+      // await execa("git", [
+      //   "commit",
+      //   "-m",
+      //   `":tada: New version created!" ${newVersion}`,
+      // ]);
+      // console.log('### Git: committing');
+      // await execa("git", ["push"]);
+      // console.log('### Git: pushing 🥳');
     } catch (e) {
       console.error(e);
       throw e;
