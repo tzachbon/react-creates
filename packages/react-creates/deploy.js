@@ -29,7 +29,7 @@ program
         await execa("git", [
           "commit",
           "-m",
-          `New react-scripts version: \`${version}\``,
+          `New react-scripts version: \`${packageJson.version}\``,
         ]);
         await execa("git", ["push"]);
 
