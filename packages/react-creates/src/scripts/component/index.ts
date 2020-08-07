@@ -14,6 +14,7 @@ import { runCreateComponent } from "./run";
 import { CreateComponentOptions } from "./types";
 import chalk from "chalk";
 import { optionsLogger } from "./options-logger";
+import { parsePropTypes } from './parsers/parse-prop-types';
 
 export const createComponent = () =>
   program
@@ -79,8 +80,8 @@ export const createComponent = () =>
           type: await parseTypes(type),
           language: await parseLanguage(language),
           style: await parseStyle(style),
+          propTypes: await parsePropTypes({ propTypes, target }),
           entry: Boolean(entry),
-          propTypes: Boolean(propTypes),
         };
 
         optionsLogger(options);

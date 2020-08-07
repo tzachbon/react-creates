@@ -11,9 +11,7 @@ interface IPackageJson extends PackageJsonType { };
 export default async function getPackageJson(
   {
     cwd = process.cwd()
-  } = {
-      cwd: process.cwd()
-    }
+  }
 ): Promise<PackageJsonType | null> {
 
   const directories = cwd.split(sep);
