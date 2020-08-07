@@ -1,33 +1,32 @@
 import fs from "fs";
 import { join, sep } from "path";
 import { promisify } from "util";
+import getPackageJson from './get-package-json';
 
-const exists = promisify(fs.exists);
+const isFile = async (path: string) => (await promisify(fs.lstat)(path)).isFile()
 
 const isInsideTypescript = async (target: string) => {
-  let currentPath = target;
-  let itr = 0;
-  let found = false;
 
-  const MAX_ITERATIONS = +process.env.MAX_TYPESCRIPT_ITERATIONS || 10;
+  const directories = target.split(sep);
+  const TSCONFIG = `tsconfig.json`;
 
-  while (itr < MAX_ITERATIONS && !found) {
-    if (await exists(currentPath)) {
+  while (directories.length) {
+    const directory = directories.pop()
+    const tsconfigPath = join(sep, ...directories, directory, TSCONFIG)
 
-      if (await exists(join(currentPath, "tsconfig.json"))) {
-        found = true;
-      } else {
-        const currentPathArray = currentPath.split(sep);
-        currentPath = currentPathArray.slice(0, currentPathArray.length - 1).join(sep);
-      }
-    } else {
-      itr = MAX_ITERATIONS;
+    const tsconfigExists = await isFile(tsconfigPath);
+    const { devDependencies, dependencies } = await getPackageJson({ cwd: target, depth: 1 }) || {}
+    const haveTsInDependencies = devDependencies?.['typescript'] || dependencies?.['typescript'];
+
+    if (tsconfigExists && haveTsInDependencies) {
+      return true
     }
+
   }
 
-  return found;
+  return false;
 };
 
-export default async function isTypescript(target = process.cwd()) {
+export default async function isTypescript(target = process.cwd()): Promise<boolean> {
   return await isInsideTypescript(target);
 }

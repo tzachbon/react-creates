@@ -5,7 +5,7 @@ import chalk from "chalk";
 import { join } from "path";
 import { promisify } from "util";
 import { Language } from "../../src/scripts/component/parsers/parse-language";
-import { componentTestkit } from "./component.testkit";
+import { componentTestkit, Component } from "./component.testkit";
 import { Styles } from "../../src/scripts/component/parsers/parse-style";
 import execa from "execa";
 
@@ -24,6 +24,7 @@ interface TempProjectDriver {
 class TempProject {
   target: string;
   projectName: string;
+  components: Record<string, Component> = {}
 
   constructor(public options: TempProjectDriver = {}) {
     const { projectName, target } = this.options;
@@ -73,6 +74,8 @@ class TempProject {
     });
 
     await componentDriver.create(args);
+
+    this.components[cmpName] = componentDriver;
 
     return componentDriver;
   }

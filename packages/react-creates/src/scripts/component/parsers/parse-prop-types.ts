@@ -1,6 +1,4 @@
-import { Language } from './parse-language'
 import getPackageJson from '../../../utils/get-package-json';
-
 
 type ParsePropTypes = (options: { propTypes: boolean, target?: string }) => Promise<boolean>
 

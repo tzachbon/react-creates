@@ -5,6 +5,7 @@ import { promisify } from "util";
 import { Styles } from "../../src/scripts/component/parsers/parse-style";
 
 const readdir = promisify(fs.readdir);
+const rmdir = promisify(fs.rmdir);
 
 export interface ComponentOptions {
   target: string;
@@ -15,11 +16,11 @@ export interface ComponentOptions {
 export const componentTestkit = (name: string, options: ComponentOptions) =>
   new Component(name, options);
 
-class Component {
+export class Component {
   private target: string;
   private path: string | null = null;
 
-  constructor(private name: string, private options: ComponentOptions) {
+  constructor(public name: string, private options: ComponentOptions) {
     this.target = options.target;
   }
 
@@ -27,12 +28,12 @@ class Component {
     return output.split(start)[1].split(end)[0].trim();
   }
 
-  async create(args: string[] = []) {
-    if (this.options.typescript) {
-      args.push("-l", "typescript");
-    }
+  get componentPath() {
+    return this.path
+  }
 
-    if (this.options.style) {
+  async create(args: string[] = []) {
+    if (this.options.style && !args.includes('-s')) {
       args.push("-s", this.options.style);
     }
 
@@ -46,13 +47,12 @@ class Component {
 
     const output = command.stdout;
 
-
     if (command.stderr?.includes('Error:')) {
       throw command;
     }
 
     this.path = Component.getValueFromOutput(output, "⚛️ Target: ");
-    
+
     return this;
   }
 
@@ -84,6 +84,10 @@ class Component {
   async isStyleMatch(style: Styles = this.options.style || Styles.CSS) {
     const files = await this.getFiles();
     return files.includes(`style.${style}`);
+  }
+
+  async delete() {
+    await rmdir(this.path, { recursive: true });
   }
 
   get fileSuffix() {

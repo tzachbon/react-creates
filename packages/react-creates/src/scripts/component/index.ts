@@ -74,9 +74,11 @@ export const createComponent = () =>
         Parsing arguments...
         `);
 
+        target = await parseTarget({ name, target });
+
         const options: CreateComponentOptions = {
           name,
-          target: await parseTarget({ name, target }),
+          target,
           type: await parseTypes(type),
           language: await parseLanguage(language),
           style: await parseStyle(style),
