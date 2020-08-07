@@ -46,6 +46,11 @@ class Component {
 
     const output = command.stdout;
 
+
+    if (command.stderr?.includes('Error:')) {
+      throw command;
+    }
+
     this.path = Component.getValueFromOutput(output, "⚛️ Target: ");
     
     return this;
