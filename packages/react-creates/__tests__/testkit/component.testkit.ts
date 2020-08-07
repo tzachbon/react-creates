@@ -3,6 +3,7 @@ import execa from "execa";
 import chalk from "chalk";
 import { promisify } from "util";
 import { Styles } from "../../src/scripts/component/parsers/parse-style";
+import { parseTarget } from "../../src/scripts/component/parsers/parse-target";
 
 const readdir = promisify(fs.readdir);
 const rmdir = promisify(fs.rmdir);
@@ -32,7 +33,7 @@ export class Component {
     return this.path
   }
 
-  async create(args: string[] = []) {
+  async create(args: string[] = [], { skipCwd = true } = {}) {
     if (this.options.style && !args.includes('-s')) {
       args.push("-s", this.options.style);
     }
@@ -45,13 +46,15 @@ export class Component {
       }
     );
 
-    const output = command.stdout;
-
     if (command.stderr?.includes('Error:')) {
       throw command;
     }
 
-    this.path = Component.getValueFromOutput(output, "⚛️ Target: ");
+    this.path = await parseTarget({
+      name: this.name,
+      target: this.target,
+      skipCwd
+    });
 
     return this;
   }

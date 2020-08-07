@@ -4,12 +4,13 @@ import { promisify } from "util";
 
 const readdir = promisify(fs.readdir);
 
-const _parseTarget = async ({ name, target }) => {
+const _parseTarget = async ({ name, target, skipCwd = false }) => {
   if (typeof target !== "string") {
     throw new Error("Invalid option: directory");
   }
 
-  if (!target.includes(process.cwd())) {
+
+  if (!skipCwd && !target.includes(process.cwd())) {
     target = join(process.cwd(), target);
   }
 
@@ -34,6 +35,7 @@ const _parseTarget = async ({ name, target }) => {
 export const parseTarget = async (options: {
   name: string;
   target: string;
+  skipCwd?: boolean
 }) => {
   const newTarget = await _parseTarget(options);
   return newTarget;
