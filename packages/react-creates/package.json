@@ -15,13 +15,14 @@
     "predev": "rm -rf dist && tsc && npm link",
     "dev": "tsc -w",
     "lint": "eslint --ext .js,.ts .",
-    "pretest": "npm run build",
+    "pretest": "npm run build && npm link",
     "test": "jest",
     "create:cmp": "npm run clean && npx react-creates component __temp__  -f --scss -d __temp__ ",
     "deploy:patch": "node deploy -p",
     "deploy:minor": "node deploy -m",
-    "prepublish": "npm run build && npm run deploy:patch",
-    "postpublish": "node deploy -g"
+    "predeploy": "npm run build && npm run deploy:patch",
+    "deploy": "npm publish",
+    "postdeplloy": "node deploy -g"
   },
   "keywords": [
     "react",
