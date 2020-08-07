@@ -15,14 +15,14 @@ straightforward as possible.
 
 ### Added
 
-- [React creates CLI](https://github.com/tzachbon/react-creates)
+- [React creates CLI](https://github.com/tzachbon/react-creates/tree/master/packages/react-creates)
   Handle `class` based component
 
 ### Changed
 
 ### Fixed
 
-- [React creates CLI](https://github.com/tzachbon/react-creates)
+- [React creates CLI](https://github.com/tzachbon/react-creates/tree/master/packages/react-creates)
   Console log white spaces
 
 
