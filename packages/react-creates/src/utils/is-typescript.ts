@@ -3,7 +3,9 @@ import { join, sep } from "path";
 import { promisify } from "util";
 import getPackageJson from './get-package-json';
 
-const isFile = async (path: string) => (await promisify(fs.lstat)(path)).isFile()
+const lstat = promisify(fs.lstat)
+const exists = promisify(fs.exists)
+const isFile = async (path: string) => await exists(path) && (await lstat(path)).isFile()
 
 const isInsideTypescript = async (target: string) => {
 
