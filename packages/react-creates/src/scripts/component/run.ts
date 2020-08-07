@@ -4,7 +4,7 @@ import { copyTemplate } from "../../utils/copy-template";
 import { replaceVariables, Variables } from "../../utils/replace-variables";
 
 export const runCreateComponent = async (options: CreateComponentOptions) => {
-  const { target, language } = options;
+  const { target, language, type } = options;
 
   const templatesPath = join(
     __dirname,
@@ -13,7 +13,8 @@ export const runCreateComponent = async (options: CreateComponentOptions) => {
     "..",
     "templates",
     language,
-    "component"
+    "component",
+    type
   );
 
   await copyTemplate(templatesPath, target);

@@ -32,6 +32,7 @@ export const createComponent = () =>
     .option("-t --type <component>", TYPE_MESSAGE, Types.FUNCTION)
     .option("-pt --prop-types", "Should add Prop-types")
     .option("-f --function", "Generate function component")
+    .option("-c --class", "Generate class component")
     .option("-s --style <styling>", "Selected the style", Styles.CSS)
     .action(async (name, _) => {
       let {
@@ -45,6 +46,7 @@ export const createComponent = () =>
         propTypes,
         function: func,
         directory: target,
+        class: klass
       } = _.opts();
 
       const styles = { scss, css, sass };
@@ -56,15 +58,19 @@ export const createComponent = () =>
         }
       }
 
+      if (Boolean(klass)) {
+        type = Types.CLASS
+      }
+
       if (Boolean(func)) {
         type = Types.FUNCTION;
       }
 
       try {
         console.log(`
-React Creates: ${chalk.blueBright.bold("Component")} 
+        React Creates: ${chalk.blueBright.bold("Component")} 
 
-Parsing arguments...
+        Parsing arguments...
         `);
 
         const options: CreateComponentOptions = {
