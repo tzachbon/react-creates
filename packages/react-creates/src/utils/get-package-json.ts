@@ -8,9 +8,14 @@ export type PackageJsonType = Record<string, IPackageJson | string | number | bo
 
 interface IPackageJson extends PackageJsonType { };
 
-export default async function getPackageJson(): Promise<PackageJsonType | null> {
+export default async function getPackageJson(
+  {
+    cwd = process.cwd()
+  } = {
+      cwd: process.cwd()
+    }
+): Promise<PackageJsonType | null> {
 
-  const cwd = process.cwd();
   const directories = cwd.split(sep);
   const PACKAGE_JSON = `package.json`;
 
