@@ -18,6 +18,7 @@ interface TempProjectDriver {
   style?: Styles;
   projectName?: string;
   install?: boolean;
+  target?: string;
 }
 
 class TempProject {
@@ -25,14 +26,18 @@ class TempProject {
   projectName: string;
 
   constructor(public options: TempProjectDriver = {}) {
-    const { projectName } = this.options;
+    const { projectName, target } = this.options;
     this.projectName = projectName || "temp-project";
+    this.target = target ?? tempy.directory()
+  }
+
+  beforeAndAfter() {
+    beforeAll(async () => await this.start());
+    afterAll(async () => await this.reset());
   }
 
   async start() {
     const { typescript } = this.options;
-
-    this.target = tempy.directory();
 
     console.log(chalk`
     Project created here: ${chalk.bold(this.target)}
@@ -74,7 +79,6 @@ class TempProject {
 
   async reset() {
     await rmdir(this.target, { recursive: true });
-    this.target = null;
   }
 
   async runScript(script: "start" | "test" | "build" = "start") {

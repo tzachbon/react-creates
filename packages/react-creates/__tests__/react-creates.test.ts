@@ -3,8 +3,7 @@ import { tempProjectTestkit } from "./testkit/create-react-app.testkit";
 describe("react-creates", () => {
   const driver = tempProjectTestkit({ install: true });
 
-  beforeAll(async () => await driver.start());
-  afterAll(async () => await driver.reset());
+  driver.beforeAndAfter();
 
   it("should create component (happy flow)", async () => {
     const cmpName = `TestCmp`;
