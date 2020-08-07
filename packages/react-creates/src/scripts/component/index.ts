@@ -30,7 +30,7 @@ export const createComponent = () =>
     .option("-l --language <scripting>", LANGUAGE_MESSAGE)
     .option("-d --directory <target>", "Component directory", process.cwd())
     .option("-t --type <component>", TYPE_MESSAGE, Types.FUNCTION)
-    .option("-pt --prop-types", "Should to add Prop-types")
+    .option("-pt --prop-types", "Should add Prop-types")
     .option("-f --function", "Generate function component")
     .option("-s --style <styling>", "Selected the style", Styles.CSS)
     .action(async (name, _) => {
