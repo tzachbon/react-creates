@@ -14,10 +14,12 @@ const isInsideTypescript = async (target: string) => {
 
   while (directories.length) {
     const directory = directories.pop()
-    const tsconfigPath = join(sep, ...directories, directory, TSCONFIG)
+    const currentPath = join(...directories, directory);
+    const tsconfigPath = join(currentPath, TSCONFIG)
 
     const tsconfigExists = await isFile(tsconfigPath);
-    const { devDependencies, dependencies } = await getPackageJson({ cwd: target, depth: 1 }) || {}
+
+    const { devDependencies, dependencies } = await getPackageJson({ cwd: currentPath, depth: 1 }) || {}
     const haveTsInDependencies = devDependencies?.['typescript'] || dependencies?.['typescript'];
 
     if (tsconfigExists && haveTsInDependencies) {

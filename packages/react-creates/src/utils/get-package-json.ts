@@ -3,6 +3,7 @@ import { join, sep } from "path";
 import { promisify } from "util";
 
 const readdir = promisify(fs.readdir)
+const readFile = promisify(fs.readFile)
 const exists = promisify(fs.exists)
 
 export type PackageJsonType = Record<string, IPackageJson | string | number | boolean>
@@ -26,14 +27,15 @@ export default async function getPackageJson(
     iterations++;
 
     const directory = directories.pop()
-    const path = join(sep, ...directories, directory)
+    const path = join(...directories, directory)
 
     if (!(await exists(path))) continue;
 
     const dirFiles = await readdir(path)
 
     if (dirFiles.includes(PACKAGE_JSON)) {
-      const packageJson = require(join(path, PACKAGE_JSON)) as PackageJsonType | null;
+      const packageJsonRaw = await readFile(join(path, PACKAGE_JSON), { encoding: 'utf8' })
+      const packageJson = JSON.parse(packageJsonRaw) as PackageJsonType | null;
 
       if (!packageJson) {
         continue;
