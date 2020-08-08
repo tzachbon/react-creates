@@ -1,6 +1,6 @@
-import { tempProjectTestkit } from '../testkit/create-react-app.testkit';
-import { Component } from '../testkit/component.testkit';
-import { Language } from '../../src/scripts/component/parsers/parse-language';
+import { tempProjectTestkit } from '../../testkit/create-react-app.testkit';
+import { Component } from '../../testkit/component.testkit';
+import { Language } from '../../../src/scripts/component/parsers/parse-language';
 
 describe('Is Typescript', () => {
 
