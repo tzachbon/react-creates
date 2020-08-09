@@ -80,7 +80,7 @@ export const createComponent = () =>
           name,
           target,
           type: await parseTypes(type),
-          language: await parseLanguage(language),
+          language: await parseLanguage({ language, target }),
           style: await parseStyle(style),
           propTypes: await parsePropTypes({ propTypes, target }),
           entry: Boolean(entry),
