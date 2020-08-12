@@ -1,13 +1,24 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { registerCommand } from './utils/register-command';
 import create from './commands/create';
+import component from './commands/create/component';
+
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-	context.subscriptions.push(vscode.commands.registerCommand(create.name, create.command));
+	const createCommand = registerCommand(create);
+	const componentCommand = registerCommand(component);
+
+
+	[
+		createCommand,
+		componentCommand
+	].forEach(command => context.subscriptions.push(command));
+
 }
 
 // this method is called when your extension is deactivated
