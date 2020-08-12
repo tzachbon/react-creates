@@ -44,6 +44,7 @@ program
         return;
       }
 
+      let versionType;
       for (const [versionKey, shouldUpdate] of Object.entries({
         major,
         minor,
@@ -51,6 +52,7 @@ program
       })) {
         if (shouldUpdate) {
           version[updateIndex[versionKey]]++;
+          versionType = versionKey.charAt(0);
         }
       }
 
@@ -70,21 +72,12 @@ program
       );
       console.log("======================");
 
-      // // publish current version
-      // await execa("npm", ["publish"]);
-      // console.log('### Publishing to npm');
-
-      // // update git with new version
-      // await execa("git", ["add", "package.json"]);
-      // console.log('### Git: adding package.json');
-      // await execa("git", [
-      //   "commit",
-      //   "-m",
-      //   `":tada: New version created!" ${newVersion}`,
-      // ]);
-      // console.log('### Git: committing');
-      // await execa("git", ["push"]);
-      // console.log('### Git: pushing 🥳');
+      if (versionType) {
+        await execa(`auto-changelog -${versionType}`);
+        console.log("======================");
+        console.log(chalk.blueBright`Change log updated 🕓`);
+        console.log("======================");
+      }
     } catch (e) {
       console.error(e);
       throw e;
