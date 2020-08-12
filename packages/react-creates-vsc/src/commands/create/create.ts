@@ -9,11 +9,12 @@ export default {
 	command: async () => {
 		const readableOptions = Object.values(CREATE_OPTIONS);
 		const selectedOption = await vscode.window.showQuickPick(readableOptions);
+		const path = vscode.window.activeTextEditor?.document.uri.path || vscode.workspace.rootPath;
 
 
 		switch (selectedOption) {
 			case CREATE_OPTIONS.COMPONENT:
-				await component.command();
+				await component.command({ path });
 				break;
 
 			default:

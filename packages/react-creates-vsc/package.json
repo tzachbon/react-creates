@@ -18,7 +18,29 @@
 		"commands": [
 			{
 				"command": "react-creates-vsc.component",
-				"title": "React Creates Component"
+				"title": "React Creates Component",
+				"args": [
+					"exec"
+				],
+				"tasks": [
+					{
+						"suppressTaskName": true,
+						"taskName": "rspec",
+						"args": [
+							"rspec",
+							"${file}"
+						],
+						"isTestCommand": true
+					},
+					{
+						"suppressTaskName": true,
+						"taskName": "cucumber",
+						"args": [
+							"cucumber",
+							"${file}"
+						]
+					}
+				]
 			},
 			{
 				"command": "react-creates-vsc.create",
@@ -28,9 +50,9 @@
 		"menus": {
 			"explorer/context": [
 				{
-          "when": "explorerResourceIsFolder",
-          "command": "react-creates-vsc.component"
-        }
+					"when": "explorerResourceIsFolder",
+					"command": "react-creates-vsc.component"
+				}
 			]
 		}
 	},
@@ -55,11 +77,12 @@
 		"glob": "^7.1.6",
 		"mocha": "^8.0.1",
 		"typescript": "^3.8.3",
+		"utility-types": "^3.10.0",
 		"vscode-test": "^1.4.0"
 	},
 	"dependencies": {
 		"execa": "^4.0.3",
 		"lodash": "^4.17.19",
-		"react-creates": "latest"
+		"react-creates": "^1.0.0"
 	}
 }
