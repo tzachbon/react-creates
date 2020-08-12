@@ -1,7 +1,8 @@
+import * as vscode from 'vscode';
 
 export default {
-  name: 'component',
+  name: 'react-creates-vsc.component',
   command: async () => {
-    
+    vscode.window.showErrorMessage('Works');
   }
 };

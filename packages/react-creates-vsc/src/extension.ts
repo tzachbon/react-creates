@@ -10,12 +10,9 @@ import component from './commands/create/component';
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-	const createCommand = registerCommand(create);
 	const componentCommand = registerCommand(component);
 
-
 	[
-		createCommand,
 		componentCommand
 	].forEach(command => context.subscriptions.push(command));
 
