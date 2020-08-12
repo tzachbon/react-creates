@@ -64,19 +64,15 @@ program
         resolve("package.json"),
         JSON.stringify(packageJson, null, 2)
       );
-      console.log("======================");
       console.log(
         chalk.green(
           "### Updated package.json, version: " + chalk.bold(newVersion)
         )
       );
-      console.log("======================");
 
       if (versionType) {
-        await execa(`auto-changelog -${versionType}`);
-        console.log("======================");
+        await execa("npx", ["auto-changelog", `-${versionType}`]);
         console.log(chalk.blueBright`Change log updated 🕓`);
-        console.log("======================");
       }
     } catch (e) {
       console.error(e);
