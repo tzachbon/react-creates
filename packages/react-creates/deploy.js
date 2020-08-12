@@ -71,7 +71,7 @@ program
       );
 
       if (versionType) {
-        await execa("npx", ["auto-changelog", `-${versionType}`]);
+        await execa("npm", ["run", "version", `-${versionType}`]);
         console.log(chalk.blueBright`Change log updated 🕓`);
       }
     } catch (e) {
