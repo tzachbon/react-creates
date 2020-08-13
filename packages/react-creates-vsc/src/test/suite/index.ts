@@ -1,5 +1,5 @@
 import path from 'path';
-import Mocha from 'mocha';
+import Mocha, { beforeEach, afterEach, after, before } from 'mocha';
 import glob from 'glob';
 
 export function run(): Promise<void> {
@@ -21,6 +21,9 @@ export function run(): Promise<void> {
 			files.forEach(f => mocha.addFile(path.resolve(testsRoot, f)));
 
 			try {
+
+
+
 				// Run the mocha test
 				mocha.run(failures => {
 					if (failures > 0) {
