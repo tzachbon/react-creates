@@ -5,7 +5,7 @@ export enum Language {
   JAVASCRIPT = "javascript",
 }
 
-export const MESSAGE = `Select the language you want the component to be created. (${Language.TYPESCRIPT} or ${Language.JAVASCRIPT})`;
+export const LANGUAGE_MESSAGE = `Select the language you want the component to be created. (${Language.TYPESCRIPT} or ${Language.JAVASCRIPT})`;
 
 export async function parseLanguage({ language, target }: { language: Language, target: string }) {
 

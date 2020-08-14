@@ -1,12 +1,12 @@
 import { program } from "commander";
 import {
-  MESSAGE as LANGUAGE_MESSAGE,
+  LANGUAGE_MESSAGE,
   parseLanguage,
 } from "./parsers/parse-language";
 import { parseStyle, Styles } from "./parsers/parse-style";
 import { parseTarget } from "./parsers/parse-target";
 import {
-  MESSAGE as TYPE_MESSAGE,
+  TYPE_MESSAGE,
   parseTypes,
   Types,
 } from "./parsers/parse-type";

@@ -5,7 +5,7 @@ export enum Types {
   CLASS = "class",
 }
 
-export const MESSAGE = `What type of the component it should be. (${Types.FUNCTION} or ${Types.CLASS})`;
+export const TYPE_MESSAGE = `What type of the component it should be. (${Types.FUNCTION} or ${Types.CLASS})`;
 
 export const parseTypes = async (type: Types) => {
 
@@ -17,7 +17,7 @@ export const parseTypes = async (type: Types) => {
   } else {
     return await promptList(
       "type",
-      MESSAGE,
+      TYPE_MESSAGE,
       Object.values(Types).map((value) => ({ value }))
     ) as Types;
   }

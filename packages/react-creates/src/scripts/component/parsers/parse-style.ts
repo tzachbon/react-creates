@@ -6,7 +6,7 @@ export enum Styles {
   SASS = "sass",
 }
 
-export const MESSAGE = `Select the type of style you want: (${Object.values(
+export const STYLE_MESSAGE = `Select the type of style you want: (${Object.values(
   Styles
 ).join(",")})`;
 
@@ -23,7 +23,7 @@ export async function parseStyle(style: Styles) {
   } else {
     _lastStyle = await promptList(
       "style",
-      MESSAGE,
+      STYLE_MESSAGE,
       Object.values(Styles).map((value) => ({ value })),
       false
     ) as Styles;
