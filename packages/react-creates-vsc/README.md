@@ -1,5 +1,5 @@
 <br/>
-<div style="margin-top: 20px;">
+<div style="margin-top: 20px; width: 400px" >
   <img  src="https://i.ibb.co/9HnYsv4/React-Creates.gif">
 </div>
 <br/>
