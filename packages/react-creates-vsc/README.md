@@ -1,8 +1,4 @@
-<br/>
-<div style="margin-top: 20px;" >
-  <img width="400px" src="https://i.ibb.co/9HnYsv4/React-Creates.gif">
-</div>
-<br/>
+![React Component GIF](https://i.ibb.co/9HnYsv4/React-Creates.gif)
 
 # React Creates (VS Code)
 
