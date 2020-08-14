@@ -1,6 +1,6 @@
 <br/>
-<div style="margin-top: 20px; width: 400px" >
-  <img  src="https://i.ibb.co/9HnYsv4/React-Creates.gif">
+<div style="margin-top: 20px;" >
+  <img width="400px" src="https://i.ibb.co/9HnYsv4/React-Creates.gif">
 </div>
 <br/>
 
