@@ -13,7 +13,7 @@
 - [Learn more](#learn-more)
 
 Simple and easy to use react cli extension.
-You can learn much more about [React Creates](../react-creates/README.md).
+You can learn much more about [React Creates](https://github.com/tzachbon/react-creates/tree/master/packages/react-creates).
 React Creates for you common and useful tools.
 
 You can go to ways:
@@ -31,4 +31,4 @@ You are more than welcome the contribute to this extension
 
 # Learn more 👩‍🏫
 
-[React Creates](../react-creates/README.md)
+[React Creates](https://github.com/tzachbon/react-creates/tree/master/packages/react-creates)
