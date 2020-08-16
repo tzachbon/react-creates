@@ -23,14 +23,12 @@ program
       const { major, minor, patch, git } = _.opts();
 
       const version = packageJson.version.split(".").map((_) => parseInt(_));
+      const message = `New react-scripts version: \`${packageJson.version}\``;
 
       if (git) {
         await execa("git", ["add", "."]);
-        await execa("git", [
-          "commit",
-          "-m",
-          `New react-scripts version: \`${packageJson.version}\``,
-        ]);
+        await execa("git", ["commit", "-m", message]);
+        await execa("git", ["tag", `v${version}`, "-a", message]);
         await execa("git", ["push"]);
 
         console.log(
