@@ -1,7 +1,7 @@
 <h1 align="center">React Creates ⚛️</h1>
 <p align="center">
 Simple and easy to use!
-React Creates for you common and useful tools.
+React creates for you useful and common tools that adapt themselves to your project for faster and easier development
 </p>
 
 <p align="center">
