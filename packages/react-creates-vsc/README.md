@@ -1,4 +1,4 @@
-![React Component GIF](https://i.ibb.co/9HnYsv4/React-Creates.gif)
+<img src="https://i.ibb.co/9HnYsv4/React-Creates.gif" width="500px">
 
 # React Creates (VS Code)
 

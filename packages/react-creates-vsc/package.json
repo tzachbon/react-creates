@@ -1,7 +1,7 @@
 {
 	"name": "react-creates-vsc",
-	"displayName": "react-creates",
-	"description": "React creates for you",
+	"displayName": "React Creates",
+	"description": "React Creates (CLI) for you common and useful tools",
 	"version": "0.0.1",
 	"publisher": "TzachBonfil",
 	"engines": {
@@ -10,6 +10,7 @@
 	"categories": [
 		"Other"
 	],
+	"icon": "assets/logo.png",
 	"homepage": "https://github.com/tzachbon/react-creates/tree/master/packages/react-creates-vsc/README.md",
 	"repository": {
 		"url": "https://github.com/tzachbon/react-creates/tree/master/packages/react-creates-vsc.git",
