@@ -17,7 +17,7 @@ You can go to ways:
 
 # Installation
 
-Soon :)
+You can install [here](https://marketplace.visualstudio.com/items?itemName=TzachBonfil.react-creates-vsc)
 
 # Contribute
 
