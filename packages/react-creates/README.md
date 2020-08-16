@@ -1,6 +1,11 @@
-<img src="https://i.ibb.co/bKHnt3C/React-Creates-Componet-Cli.gif" width="700px">
+<p align="center">
+ <h1 align="center">
+ React Creates (CLI) ⚛️
+ </h1>
+<img src="screencast.gif">
+</p>
 
-# React Creates (CLI) ⚛️
+# Table of content
 
 - [Getting Started ⬇️](#getting-started-⬇️)
 - [Features](#features)
@@ -8,8 +13,8 @@
     - [Start](#start)
     - [Options](#options)
     - [Examples](#examples)
-- [Support 👨‍🔧](#support-👨‍🔧)
-- [Contributing 👩‍💻](#contributing-👩‍💻)
+- [Support 👨‍🔧](#support-)
+- [Contributing 👩‍💻](#contributing-)
 
 Simple and easy to use react CLI.
 React Creates for you common and useful tools.

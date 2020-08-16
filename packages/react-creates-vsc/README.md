@@ -1,6 +1,12 @@
-<img src="https://i.ibb.co/9HnYsv4/React-Creates.gif" width="700px">
+<p align="center">
+ <h1 align="center">
+ React Creates (VS Code) ⚛️
+ </h1>
+<img src="screencast.gif">
+</p>
 
-# React Creates (VS Code) ⚛️
+
+# Table of content
 
 - [Installation](#installation)
 - [Contribute](#contribute)
