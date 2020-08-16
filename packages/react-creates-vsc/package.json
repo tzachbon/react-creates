@@ -3,17 +3,23 @@
 	"displayName": "react-creates",
 	"description": "React creates for you",
 	"version": "0.0.1",
+	"publisher": "TzachBonfil",
 	"engines": {
 		"vscode": "^1.45.0"
 	},
 	"categories": [
 		"Other"
 	],
+	"homepage": "https://github.com/tzachbon/react-creates/tree/master/packages/react-creates-vsc/README.md",
+	"repository": {
+		"url": "https://github.com/tzachbon/react-creates/tree/master/packages/react-creates-vsc.git",
+		"type": "github"
+	},
 	"activationEvents": [
 		"onCommand:react-creates-vsc.create",
 		"onCommand:react-creates-vsc.component"
 	],
-	"main": "./out/extension.js",
+	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
@@ -57,8 +63,10 @@
 		}
 	},
 	"scripts": {
+		"vscode:prepublish": "webpack --mode production",
+		"webpack": "webpack --mode development",
+		"webpack-dev": "webpack --mode development --watch",
 		"clean": "rm -rf out",
-		"vscode:prepublish": "npm run compile",
 		"compile": "tsc ",
 		"lint": "eslint src --ext ts",
 		"watch": "tsc -watch ./",
@@ -73,7 +81,7 @@
 		"@types/mocha": "^8.0.0",
 		"@types/node": "^14.0.27",
 		"@types/sinon": "^9.0.4",
-		"@types/vscode": "^1.47.0",
+		"@types/vscode": "^1.45.0",
 		"@typescript-eslint/eslint-plugin": "^3.8.0",
 		"@typescript-eslint/parser": "^3.8.0",
 		"chai": "^4.2.0",
@@ -81,14 +89,17 @@
 		"glob": "^7.1.6",
 		"mocha": "^8.0.1",
 		"sinon": "^9.0.3",
+		"ts-loader": "^8.0.2",
 		"ts-mocha": "^7.0.0",
 		"typescript": "^3.8.3",
 		"utility-types": "^3.10.0",
-		"vscode-test": "^1.4.0"
+		"vscode-test": "^1.4.0",
+		"webpack": "^4.44.1",
+		"webpack-cli": "^3.3.12"
 	},
 	"dependencies": {
 		"execa": "^4.0.3",
 		"lodash": "^4.17.19",
-		"react-creates": "^1.0.0"
+		"react-creates": "^1.0.6"
 	}
 }
