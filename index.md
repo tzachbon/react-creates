@@ -1,37 +1,93 @@
-## Welcome to GitHub Pages
+<p align="center">
+ <h1 align="center">
+ React Creates (CLI) ⚛️
+ </h1>
+<img src="screencast.gif">
+</p>
 
-You can use the [editor on GitHub](https://github.com/tzachbon/react-creates/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+# Table of content
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+- [Getting Started ⬇️](#getting-started-⬇️)
+- [Features](#features)
+  - [Component](#component)
+    - [Start](#start)
+    - [Options](#options)
+    - [Examples](#examples)
+- [Support 👨‍🔧](#support-)
+- [Contributing 👩‍💻](#contributing-)
 
-### Markdown
+Simple and easy to use react CLI.
+React Creates for you common and useful tools.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+You can go to ways:
 
-```markdown
-Syntax highlighted code block
+- Smart (Zero configuration)
+- Advance (Configure by your needs)
 
-# Header 1
-## Header 2
-### Header 3
+# Getting Started ⬇️
 
-- Bulleted
-- List
+Writer this in the terminal inside your react project:
 
-1. Numbered
-2. List
+`npx react-creates component MyComponent`
 
-**Bold** and _Italic_ and `Code` text
+Will generate for you:
 
-[Link](url) and ![Image](src)
+```
+📦MyComponent
+ ┣ 📜MyComponent.js
+ ┣ 📜MyComponent.test.js
+ ┣ 📜index.js
+ ┗ 📜style.css
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+# Features
 
-### Jekyll Themes
+React Creates will support as many cases as it can, You need a use case it doesn't support? Please [open issue](https://github.com/tzachbon/react-creates/issues/new).
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/tzachbon/react-creates/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+You want to create flow for that use case? You are more than welcome! Learn how [here](#contributing-👩‍💻).
 
-### Support or Contact
+Current features:
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+## Component
+
+React lets you define components as classes or functions.
+But why you need to write it every time?
+Here how to do create one in seconds:
+
+### Start
+
+`npx react-creates component <name>`
+
+### Options
+
+| Option                      | Default                                         | Description                                                      |
+| --------------------------- | ----------------------------------------------- | ---------------------------------------------------------------- |
+| `--scss`                    | `false`                                         | Force `scss` style                                               |
+| `--css`                     | `false`                                         | Force `css` style                                                |
+| `--sass`                    | `false`                                         | Force `sass` style                                               |
+| `-l --language <scripting>` | Calculated (Checks for `tsconfig` to determent) | Select the language you want the component to be                 |
+| `-d --directory <target>`   | `process.cwd()`                                 | Component directory                                              |
+| `-t --type <component>`     | `function`                                      | What type of the component it should be. (function or class)     |
+| `-pt --prop-types`          | `false`                                         | Should add Prop-types. Only works if inside `javascript` project |
+| `-f --function`             | `false`                                         | Force `function` component                                       |
+| `-s --style <styling>`      | `css`                                           | Selected style                                                   |
+
+### Examples
+
+`npx react-creates component MyComponent`
+
+`npx react-creates component MyComponent --type class`
+
+`npx react-creates component MyComponent --style sass`
+
+`npx react-creates component MyComponent -d /Users/project/cool-project`
+
+`npx react-creates component MyComponent -l typescript`
+
+# Support 👨‍🔧
+
+Please [open an issue](https://github.com/tzachbon/react-creates/issues/new) for support.
+
+# Contributing 👩‍💻
+
+Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch, add commits, and [open a pull request](https://github.com/tzachbon/react-creates/compare/).
