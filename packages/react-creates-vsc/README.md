@@ -1,4 +1,4 @@
-<img src="https://i.ibb.co/9HnYsv4/React-Creates.gif" width="500px">
+<img src="https://i.ibb.co/9HnYsv4/React-Creates.gif" width="700px">
 
 # React Creates (VS Code)
 
