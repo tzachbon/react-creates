@@ -2,6 +2,11 @@
  <h1 align="center">
  React Creates (CLI) ⚛️
  </h1>
+<p align="center">
+Simple and easy to use react CLI.
+ <br />
+React creates for you useful and common tools that adapt themselves to your project for faster and easier development
+ </p>
 <img src="screencast.gif">
 </p>
 
@@ -15,9 +20,6 @@
     - [Examples](#examples)
 - [Support 👨‍🔧](#support-)
 - [Contributing 👩‍💻](#contributing-)
-
-Simple and easy to use react CLI.
-React Creates for you common and useful tools.
 
 You can go to ways:
 
