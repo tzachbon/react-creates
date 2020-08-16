@@ -1,6 +1,6 @@
 <img src="https://i.ibb.co/9HnYsv4/React-Creates.gif" width="700px">
 
-# React Creates (VS Code)
+# React Creates (VS Code) ⚛️
 
 - [Installation](#installation)
 - [Contribute](#contribute)
@@ -15,14 +15,14 @@ You can go to ways:
 - Smart (Zero configuration)
 - Advance (Configure by your needs)
 
-# Installation
+# Installation ⬇️
 
-You can install [here](https://marketplace.visualstudio.com/items?itemName=TzachBonfil.react-creates-vsc)
+You can install it from [here](https://marketplace.visualstudio.com/items?itemName=TzachBonfil.react-creates-vsc) 
 
-# Contribute
+# Contribute 👷‍♂️
 
 You are more than welcome the contribute to this extension
 
-# Learn more
+# Learn more 👩‍🏫
 
 [React Creates](../react-creates/README.md)
