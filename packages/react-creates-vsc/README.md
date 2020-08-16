@@ -2,9 +2,8 @@
  <h1 align="center">
  React Creates (VS Code) ⚛️
  </h1>
-<img src="screencast.gif">
+<img src="https://github.com/tzachbon/react-creates/blob/master/packages/react-creates-vsc/screencast.gif?raw=true">
 </p>
-
 
 # Table of content
 
@@ -23,7 +22,7 @@ You can go to ways:
 
 # Installation ⬇️
 
-You can install it from [here](https://marketplace.visualstudio.com/items?itemName=TzachBonfil.react-creates-vsc) 
+You can install it from [here](https://marketplace.visualstudio.com/items?itemName=TzachBonfil.react-creates-vsc)
 
 # Contribute 👷‍♂️
 
