@@ -13,7 +13,9 @@ export default class ReactCreates {
   async createComponent() {
     const name = await window.showInputBox({ prompt: 'Name of the component' });
 
-    if (!name) { return; };
+    if (!name) { 
+      throw new Error('Hey, component must have a name');
+     };
 
     const customOption = {
       default: 'Auto calculate values',
@@ -50,7 +52,7 @@ export default class ReactCreates {
       }).filter(([key, _]) => isNil(_));
 
       if (nilKeys.length) {
-        return window.showErrorMessage(`Invalid value${nilKeys.length === 1 ? '' : 's'} in ${nilKeys.toString()}`);
+        throw new Error(`Invalid value${nilKeys.length === 1 ? '' : 's'} in ${nilKeys.toString()}`);
       }
     }
 
@@ -73,7 +75,7 @@ export default class ReactCreates {
       options.push('-t', types);
     }
 
-    await execa('react-creates', ['component', name, '-d', target, ...options]);
+    return await execa('react-creates', ['component', name, '-d', target, ...options]);
   }
 
 }

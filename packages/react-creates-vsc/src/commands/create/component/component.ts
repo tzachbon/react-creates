@@ -9,6 +9,15 @@ export default {
     }
 
     const reactCreates = new ReactCreates(path);
-    await reactCreates.createComponent();
+    try {
+      const { stderr } = await reactCreates.createComponent();
+
+      if (stderr) {
+        throw new Error(stderr);
+      }
+      
+    } catch (error) {
+      vscode.window.showErrorMessage(error?.message || 'Something went wrong with the extension :( Please try again');
+    }
   }
 };
