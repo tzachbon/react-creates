@@ -28,7 +28,7 @@ program
       if (git) {
         await execa("git", ["add", "."]);
         await execa("git", ["commit", "-m", message]);
-        await execa("git", ["tag", `v${packageJson.version}`, "-a", `"${message}"`]);
+        await execa("git", ["tag", `v${packageJson.version}`]);
         await execa("git", ["push"]);
 
         console.log(
