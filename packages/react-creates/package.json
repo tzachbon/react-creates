@@ -1,6 +1,6 @@
 {
   "name": "react-creates",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Create React Component folder works on macOS, Windows, and Linux.",
   "files": [
     "dist",
@@ -10,6 +10,8 @@
   "bin": {
     "react-creates": "dist/react-creates.js"
   },
+  "homepage": "https://github.com/tzachbon/react-creates/tree/master/packages/react-creates",
+  "readme": "https://github.com/tzachbon/react-creates/tree/master/packages/react-creates/README.md",
   "scripts": {
     "clean": "rm -rf __temp__",
     "build": "tsc",
@@ -41,9 +43,6 @@
     "name": "Tzach Bonfil",
     "email": "tzachbonfil@gmail.com",
     "url": "https://github.com/tzachbon"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   },
   "license": "ISC",
   "dependencies": {
