@@ -1,11 +1,12 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 import {{name}} from '.';
 
 
 describe("{{name}}", () => {
   it("should match snapshot", () => {
-    const tree = renderer(<{{name}} />);
-    expect(tree).toMatchSnapshot();
+    const { getByText } = render(<{{name}} />);
+    const linkElement = getByText(/{{name}} works!/i);
+    expect(linkElement).toBeInTheDocument();
   });
 });
