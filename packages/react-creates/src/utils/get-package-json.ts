@@ -14,7 +14,7 @@ export default async function getPackageJson(
   {
     cwd = process.cwd(),
     depth = 10
-  }
+  } = {}
 ): Promise<PackageJsonType | null> {
 
   const directories = cwd.split(sep);

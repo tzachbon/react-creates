@@ -5,11 +5,20 @@ import { createComponent } from "./scripts/component";
 import { checkForMainDependencies } from './utils/error';
 import * as componentParser from './scripts/component/parsers'
 
-checkForMainDependencies();
+async function main() {
 
-program
-  .addCommand(createComponent())
-  .parse(process.argv);
+  await checkForMainDependencies();
+
+  program
+    .addCommand(createComponent())
+    .parse(process.argv);
+}
+
+main()
+  .catch(error => {
+    throw error
+  })
+
 
 
 export { componentParser }

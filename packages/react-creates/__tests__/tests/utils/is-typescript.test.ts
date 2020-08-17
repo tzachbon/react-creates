@@ -41,7 +41,7 @@ const mockFsDriver = ({
   const reset = () => mockFs.restore();
 
   const beforeAndAfter = () => {
-    beforeAll(start);
+    beforeEach(start);
     afterEach(reset);
   }
 

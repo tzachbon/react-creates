@@ -1,21 +1,16 @@
 import chalk from "chalk";
+import getPackageJson from '../get-package-json';
 
-export const checkForMainDependencies = () => {
-  let foo, error;
-  try {
-    foo = require("react");
-  } catch (err) {
-    error = err;
-  }
+export const checkForMainDependencies = async ({ target = process.cwd() } = {}) => {
 
-  if (!foo) {
-    console.error(
-      chalk.red(`
-      Missing ${chalk.bold("react")} dependence.
-      This CLI is made for react project 😎 ⚛
-    `)
-    );
+  const { dependencies } = await getPackageJson({ cwd: target, depth: 9999 }) || {}
 
-    throw error;
+  const hasReact = Boolean(dependencies?.['react'])
+
+  if (!hasReact) {
+    throw new Error(`
+    Missing ${chalk.bold("React")} dependence.
+    This CLI is made for react project 😎 ⚛
+  `);
   }
 };
