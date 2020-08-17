@@ -1,7 +1,7 @@
 {
   "name": "react-creates",
   "version": "1.0.9",
-  "description": "Create React Component folder works on macOS, Windows, and Linux.",
+  "description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
   "files": [
     "dist",
     "templates"
