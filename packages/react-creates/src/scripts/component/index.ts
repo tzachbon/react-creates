@@ -15,6 +15,7 @@ import { CreateComponentOptions } from "./types";
 import chalk from "chalk";
 import { optionsLogger } from "./options-logger";
 import { parsePropTypes } from './parsers/parse-prop-types';
+import { checkForMainDependencies } from '../../utils/error';
 
 export const createComponent = () =>
   program
@@ -75,6 +76,8 @@ export const createComponent = () =>
         `);
 
         target = await parseTarget({ name, target });
+
+        await checkForMainDependencies({ target });
 
         const options: CreateComponentOptions = {
           name,
