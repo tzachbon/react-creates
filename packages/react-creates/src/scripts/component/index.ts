@@ -32,9 +32,10 @@ export const createComponent = () =>
     .option("-l --language <scripting>", LANGUAGE_MESSAGE)
     .option("-d --directory <target>", "Component directory", process.cwd())
     .option("-t --type <component>", TYPE_MESSAGE, Types.FUNCTION)
-    .option("-pt --prop-types", "Should add Prop-types")
+    .option("-pt --prop-types", "Should add Prop-types if inside javascript project")
     .option("-f --function", "Generate function component")
     .option("-c --class", "Generate class component")
+    .option("--skip-test", "Will not create test file")
     .option("-s --style <styling>", "Selected the style", Styles.CSS)
     .action(async (name, _) => {
       let {
@@ -46,6 +47,7 @@ export const createComponent = () =>
         css,
         sass,
         propTypes,
+        skipTest,
         function: func,
         directory: target,
         class: klass
@@ -87,6 +89,7 @@ export const createComponent = () =>
           style: await parseStyle(style),
           propTypes: await parsePropTypes({ propTypes, target }),
           entry: Boolean(entry),
+          skipTest: Boolean(skipTest)
         };
 
         optionsLogger(options);
