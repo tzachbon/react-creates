@@ -17,18 +17,22 @@ const updateIndex = {
 program
   .option("-m --minor")
   .option("-p --patch")
+  .option("-t --tag")
   .option("-g --git")
   .action(async (_) => {
     try {
-      const { major, minor, patch, git } = _.opts();
+      const { major, minor, patch, git, tag } = _.opts();
 
       const version = packageJson.version.split(".").map((_) => parseInt(_));
       const message = `New react-scripts version: \`${packageJson.version}\``;
 
+      if (tag) {
+        await execa("git", ["tag", `v${packageJson.version}`]);
+      }
+
       if (git) {
         await execa("git", ["add", "."]);
         await execa("git", ["commit", "-m", message]);
-        await execa("git", ["tag", `v${packageJson.version}`]);
         await execa("git", ["push"]);
 
         console.log(

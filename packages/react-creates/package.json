@@ -1,6 +1,6 @@
 {
   "name": "react-creates",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
   "files": [
     "dist",
@@ -23,9 +23,8 @@
     "create:cmp": "npm run clean && react-creates component __temp__  -f --scss -d __temp__",
     "deploy:patch": "node deploy -p",
     "deploy:minor": "node deploy -m",
-    "predeploy": "npm run build && npm run deploy:patch",
+    "predeploy": "npm run build && npm run deploy:patch && node deploy -t && npm run version && node deploy -g",
     "deploy": "npm publish",
-    "postdeploy": "npm run version && node deploy -g",
     "version": "npx auto-changelog"
   },
   "keywords": [
