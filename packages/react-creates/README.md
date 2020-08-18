@@ -1,13 +1,15 @@
 <p align="center">
- <h1 align="center">
- React Creates (CLI) ⚛️
- </h1>
-<p align="center">
+  <p align="center">
+    <h1 align="center">
+      React Creates (CLI) ⚛️
+    </h1>
+ </p>
+  <p align="center">
 Simple and easy to use react CLI.
  <br />
 React creates for you useful and common tools that adapt themselves to your project for faster and easier development
  </p>
-<img src="screencast.gif">
+<img src="https://github.com/tzachbon/react-creates/raw/master/packages/react-creates/screencast.gif">
 </p>
 
 # Table of content
@@ -72,6 +74,7 @@ Here how to do create one in seconds:
 | `-t --type <component>`     | `function`                                      | What type of the component it should be. (function or class)     |
 | `-pt --prop-types`          | `false`                                         | Should add Prop-types. Only works if inside `javascript` project |
 | `-f --function`             | `false`                                         | Force `function` component                                       |
+| `-c --class`                | `false`                                         | Force `class` component                                          |
 | `-s --style <styling>`      | `css`                                           | Selected style                                                   |
 
 ### Examples
