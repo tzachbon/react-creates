@@ -34,7 +34,7 @@ export const copyTemplate = async (
   if (options.skipTest) {
     copyOptions.filter = (file) =>
       isDir(file) ||
-      /^(?!.*\.test\.(js|ts)$).*/.test(
+      /^(?!.*\.test\.(js|tsx)$).*/.test(
         file
       );
   }
