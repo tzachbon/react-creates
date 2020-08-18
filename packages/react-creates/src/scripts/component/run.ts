@@ -17,6 +17,6 @@ export const runCreateComponent = async (options: CreateComponentOptions) => {
     type
   );
 
-  await copyTemplate(templatesPath, target, options);
+  await copyTemplate(templatesPath, target);
   await replaceVariables(target, (options as unknown) as Variables);
 };

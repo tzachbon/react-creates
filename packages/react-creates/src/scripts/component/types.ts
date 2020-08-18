@@ -10,5 +10,4 @@ export interface CreateComponentOptions {
   style: Styles;
   entry: boolean;
   propTypes: boolean;
-  skipTest: boolean
 }

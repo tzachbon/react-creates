@@ -1,47 +1,26 @@
-import fs from 'fs';
-import npc, { Options } from 'ncp';
-import { sep } from 'path';
-import { promisify } from 'util';
-import { CreateComponentOptions } from '../scripts/component/types';
+import { exists as existsCb, mkdir as mkdirCb } from "fs";
+import npc from "ncp";
+import { sep } from "path";
+import { promisify } from "util";
 
 const copy = promisify(npc);
-const exists = promisify(fs.exists);
-const mkdir = promisify(fs.mkdir);
+const exists = promisify(existsCb);
+const mkdir = promisify(mkdirCb);
 
-const isDir = (file: string) =>
-  fs.lstatSync(file).isDirectory();
-const isTemp = process.env.TEMP === 'true';
-const shouldAddTemp = (path) =>
-  path + (isTemp ? sep + '__temp' : '');
+const isTemp = process.env.TEMP === "true";
+const shouldAddTemp = (path) => path + (isTemp ? sep + "__temp" : "");
 
 export const copyTemplate = async (
   templatesPath: string,
-  targetComponentPath: string,
-  options: CreateComponentOptions
+  targetComponentPath: string
 ) => {
-  const targetComponentPathExists = await exists(
-    targetComponentPath
-  );
+  const targetComponentPathExists = await exists(targetComponentPath);
 
   if (!targetComponentPathExists) {
     await mkdir(targetComponentPath);
   }
 
-  const copyOptions: Options = {
+  await copy(templatesPath, shouldAddTemp(targetComponentPath), {
     clobber: true,
-  };
-
-  if (options.skipTest) {
-    copyOptions.filter = (file) =>
-      isDir(file) ||
-      /^(?!.*\.test\.(js|ts)$).*/.test(
-        file
-      );
-  }
-
-  await copy(
-    templatesPath,
-    shouldAddTemp(targetComponentPath),
-    copyOptions
-  );
+  });
 };

@@ -76,7 +76,6 @@ Here how to do create one in seconds:
 | `-f --function`             | `false`                                         | Force `function` component                                       |
 | `-c --class`                | `false`                                         | Force `class` component                                          |
 | `-s --style <styling>`      | `css`                                           | Selected style                                                   |
-| `--skip-test`               | `false`                                         | Will not create test file                                        |
 
 ### Examples
 
