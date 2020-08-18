@@ -15,6 +15,7 @@ React creates for you useful and common tools that adapt themselves to your proj
 # Table of content
 
 - [Getting Started ⬇️](#getting-started-⬇️)
+  - [Feeling Lazy](#feeling-lazy)
 - [Features](#features)
   - [Component](#component)
     - [Start](#start)
@@ -30,7 +31,7 @@ You can go to ways:
 
 # Getting Started ⬇️
 
-Writer this in the terminal inside your react project:
+Write this in the terminal inside your react project:
 
 `npx react-creates component MyComponent`
 
@@ -43,6 +44,10 @@ Will generate for you:
  ┣ 📜index.js
  ┗ 📜style.css
 ```
+
+## Feeling Lazy
+
+Try the [VSCode extension](https://marketplace.visualstudio.com/items?itemName=TzachBonfil.react-creates-vsc)
 
 # Features
 
