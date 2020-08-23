@@ -49,7 +49,14 @@ export default class ReactCreates {
 
       types = await getQuickOptions('Type of component to create', Types);
 
-      language = await getQuickOptions('Type of language', Language);
+      language = await getQuickOptions('Type of language', {
+        AUTO: 'Auto calculate (easy)',
+        ...Language,
+      });
+
+      if ((language as any) === 'AUTO') {
+        language = undefined;
+      }
 
       style = await getQuickOptions('Type of style', Styles);
 
