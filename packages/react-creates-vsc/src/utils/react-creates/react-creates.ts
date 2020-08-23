@@ -6,49 +6,54 @@ import { Language } from 'react-creates/dist/scripts/component/parsers/parse-lan
 import { Styles } from 'react-creates/dist/scripts/component/parsers/parse-style';
 import { Types } from 'react-creates/dist/scripts/component/parsers/parse-type';
 
-
 export default class ReactCreates {
-  constructor(private target: string) { }
+  constructor(private target: string) {}
 
   async createComponent() {
     const name = await window.showInputBox({ prompt: 'Name of the component' });
 
-    if (!name) { 
+    if (!name) {
       throw new Error('Hey, component must have a name');
-     };
+    }
 
     const customOption = {
       default: 'Auto calculate values',
       custom: 'Choose custom options',
     };
-    const isCustom = await window.showQuickPick(Object.values(customOption), { placeHolder: customOption.default });
-
+    const isCustom = await window.showQuickPick(Object.values(customOption), {
+      placeHolder: customOption.default,
+    });
 
     let target = await parseTarget({ name, target: this.target });
     let types, language, style, propTypes;
 
     if (isCustom === customOption.custom) {
-
-      target = await window.showInputBox({ value: target }) || target;
-      types = await window.showQuickPick(Object.values(Types), { placeHolder: 'Type of component to create' });
-      language = await window.showQuickPick(Object.values(Language), { placeHolder: 'Type of language' });
+      target = (await window.showInputBox({ value: target })) || target;
+      types = await window.showQuickPick(Object.values(Types), {
+        placeHolder: 'Type of component to create',
+      });
+      language = await window.showQuickPick(Object.values(Language), {
+        placeHolder: 'Type of language',
+      });
       style = await window.showQuickPick(Object.values(Styles), { placeHolder: 'Type of style' });
       propTypes = false;
 
       if (language === Language.JAVASCRIPT) {
         const propTypeOptions = {
           YES: 'Yes',
-          NO: 'No'
+          NO: 'No',
         };
-        propTypes = (await window.showQuickPick(Object.values(propTypeOptions), { placeHolder: 'Show use props types' })) === propTypeOptions.YES;
+        propTypes =
+          (await window.showQuickPick(Object.values(propTypeOptions), {
+            placeHolder: 'Show use props types',
+          })) === propTypeOptions.YES;
       }
-
 
       const nilKeys = Object.entries({
         types,
         language,
         style,
-        propTypes
+        propTypes,
       }).filter(([key, _]) => isNil(_));
 
       if (nilKeys.length) {
@@ -57,7 +62,6 @@ export default class ReactCreates {
     }
 
     const options: string[] = [];
-
 
     if (language) {
       options.push('-l', language);
@@ -75,7 +79,8 @@ export default class ReactCreates {
       options.push('-t', types);
     }
 
-    return await execa('react-creates', ['component', name, '-d', target, ...options]);
-  }
+    window.showInformationMessage('Creates component: ' + name + ', Please wait ⚛️');
 
+    return await execa('npx', ['react-creates', 'component', name, '-d', target, ...options]);
+  }
 }

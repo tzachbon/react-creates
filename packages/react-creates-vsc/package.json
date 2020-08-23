@@ -102,6 +102,6 @@
 	"dependencies": {
 		"execa": "^4.0.3",
 		"lodash": "^4.17.19",
-		"react-creates": "^1.0.6"
+		"react-creates": "^1.0.14"
 	}
 }
