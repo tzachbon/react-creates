@@ -1,7 +1,23 @@
 import execa from 'execa';
 import { window, ProgressLocation } from 'vscode';
 import { isNil } from 'lodash';
+import { ValuesType } from 'utility-types';
 import { parseTarget, Language, Styles, Types } from 'react-creates';
+
+const yesOrNoQuestion = {
+  YES: 'Yes',
+  NO: 'No',
+} as const;
+
+const getYesOrNoQuestion = async (title: string) =>
+  (await window.showQuickPick(Object.values(yesOrNoQuestion), { placeHolder: title })) as
+    | ValuesType<typeof yesOrNoQuestion>
+    | undefined;
+
+const getQuickOptions = async <T, J extends {} = {}>(title: string, options: J) =>
+  (await window.showQuickPick(Object.values(options ?? {}), {
+    placeHolder: title,
+  })) as T | undefined;
 
 export default class ReactCreates {
   constructor(private target: string) {}
@@ -22,35 +38,35 @@ export default class ReactCreates {
     });
 
     let target = await parseTarget({ name, target: this.target });
-    let types, language, style, propTypes;
+    let types: Types | undefined;
+    let language: Language | undefined;
+    let style: Styles | undefined;
+    let propTypes: boolean | undefined;
+    let skipTest: boolean | undefined;
 
     if (isCustom === customOption.custom) {
       target = (await window.showInputBox({ value: target })) || target;
-      types = await window.showQuickPick(Object.values(Types), {
-        placeHolder: 'Type of component to create',
-      });
-      language = await window.showQuickPick(Object.values(Language), {
-        placeHolder: 'Type of language',
-      });
-      style = await window.showQuickPick(Object.values(Styles), { placeHolder: 'Type of style' });
+
+      types = await getQuickOptions('Type of component to create', Types);
+
+      language = await getQuickOptions('Type of language', Language);
+
+      style = await getQuickOptions('Type of style', Styles);
+
       propTypes = false;
 
       if (language === Language.JAVASCRIPT) {
-        const propTypeOptions = {
-          YES: 'Yes',
-          NO: 'No',
-        };
-        propTypes =
-          (await window.showQuickPick(Object.values(propTypeOptions), {
-            placeHolder: 'Show use props types',
-          })) === propTypeOptions.YES;
+        propTypes = (await getYesOrNoQuestion('Should use props types?')) === yesOrNoQuestion.YES;
       }
+
+      skipTest = (await getYesOrNoQuestion('Should create test file?')) === yesOrNoQuestion.NO;
 
       const nilKeys = Object.entries({
         types,
         language,
         style,
         propTypes,
+        skipTest,
       }).filter(([key, _]) => isNil(_));
 
       if (nilKeys.length) {
@@ -74,6 +90,10 @@ export default class ReactCreates {
 
     if (types) {
       options.push('-t', types);
+    }
+
+    if (skipTest) {
+      options.push('--skip-test');
     }
 
     return await window.withProgress(
