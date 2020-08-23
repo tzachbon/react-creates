@@ -1,4 +1,2 @@
-import * as componentParser from './scripts/component/parsers';
-import { createComponent } from './scripts/component';
-
-export { componentParser, createComponent };
+export * from './scripts/component/parsers';
+export * from './scripts/component';
