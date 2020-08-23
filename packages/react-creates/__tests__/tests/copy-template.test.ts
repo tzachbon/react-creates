@@ -4,13 +4,7 @@ import { Language } from '../../src/scripts/component/parsers/parse-language';
 
 describe('Copy Template', () => {
   let cmpDriver: Component;
-  const driver = tempProjectTestkit();
-
-  driver.beforeAndAfter();
-
-  afterEach(async () => {
-    cmpDriver && (await cmpDriver.delete());
-  });
+  const driver = tempProjectTestkit().beforeAndAfter();
 
   it('should create test file', async () => {
     cmpDriver = await driver.createComponent('ComponentWithTest1');
