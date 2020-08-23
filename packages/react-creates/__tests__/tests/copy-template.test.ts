@@ -13,52 +13,34 @@ describe('Copy Template', () => {
   });
 
   it('should create test file', async () => {
-    cmpDriver = await driver.createComponent(
-      'ComponentWithTest1'
-    );
+    cmpDriver = await driver.createComponent('ComponentWithTest1');
 
     const files = await cmpDriver.getFiles();
 
-    expect(files).toContain(
-      `${cmpDriver.name}.test.js`
-    );
+    expect(files).toContain(`${cmpDriver.name}.test.js`);
   });
 
   it('should not create test file', async () => {
-    cmpDriver = await driver.createComponent(
-      'ComponentWithTest2',
-      ['--skip-test']
-    );
+    cmpDriver = await driver.createComponent('ComponentWithTest2', ['--skip-test']);
 
     const files = await cmpDriver.getFiles();
 
-    expect(await cmpDriver.isStyleMatch()).toBe(
-      true
-    );
-    expect(files).toContain(
-      `${cmpDriver.name}.js`
-    );
-    expect(files).not.toContain(
-      `${cmpDriver.name}.test.js`
-    );
+    expect(await cmpDriver.isStyleMatch()).toBe(true);
+    expect(files).toContain(`${cmpDriver.name}.js`);
+    expect(files).not.toContain(`${cmpDriver.name}.test.js`);
   });
 
   it('should not create test file (ts)', async () => {
-    cmpDriver = await driver.createComponent(
-      'ComponentWithTest3',
-      ['--skip-test', '-l', Language.TYPESCRIPT]
-    );
+    cmpDriver = await driver.createComponent('ComponentWithTest3', [
+      '--skip-test',
+      '-l',
+      Language.TYPESCRIPT,
+    ]);
 
     const files = await cmpDriver.getFiles();
 
-    expect(await cmpDriver.isStyleMatch()).toBe(
-      true
-    );
-    expect(files).toContain(
-      `${cmpDriver.name}.tsx`
-    );
-    expect(files).not.toContain(
-      `${cmpDriver.name}.test.tsx`
-    );
+    expect(await cmpDriver.isStyleMatch()).toBe(true);
+    expect(files).toContain(`${cmpDriver.name}.tsx`);
+    expect(files).not.toContain(`${cmpDriver.name}.test.tsx`);
   });
 });
