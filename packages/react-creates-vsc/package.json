@@ -2,7 +2,7 @@
 	"name": "react-creates-vsc",
 	"displayName": "React Creates",
 	"description": "React Creates (CLI) for you common and useful tools",
-	"version": "0.0.9",
+	"version": "0.0.10",
 	"publisher": "TzachBonfil",
 	"engines": {
 		"vscode": "^1.45.0"
@@ -73,7 +73,8 @@
 		"watch": "tsc -watch ./",
 		"pretest": "npm run clean && npm run compile && npm run lint",
 		"test": "node ./out/test/runTest.js",
-		"deploy": "npx vsce publish patch"
+		"deploy": "npx vsce publish patch",
+		"postdeploy": "node deploy"
 	},
 	"devDependencies": {
 		"@types/chai": "^4.2.12",
