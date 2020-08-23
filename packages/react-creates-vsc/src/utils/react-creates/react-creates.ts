@@ -1,10 +1,7 @@
 import execa from 'execa';
-import { window } from 'vscode';
+import { window, ProgressLocation } from 'vscode';
 import { isNil } from 'lodash';
-import { parseTarget } from 'react-creates/dist/scripts/component/parsers/parse-target';
-import { Language } from 'react-creates/dist/scripts/component/parsers/parse-language';
-import { Styles } from 'react-creates/dist/scripts/component/parsers/parse-style';
-import { Types } from 'react-creates/dist/scripts/component/parsers/parse-type';
+import { parseTarget, Language, Styles, Types } from 'react-creates';
 
 export default class ReactCreates {
   constructor(private target: string) {}
@@ -79,8 +76,14 @@ export default class ReactCreates {
       options.push('-t', types);
     }
 
-    window.showInformationMessage('Creates component: ' + name + ', Please wait ⚛️');
-
-    return await execa('npx', ['react-creates', 'component', name, '-d', target, ...options]);
+    return await window.withProgress(
+      {
+        title: 'Creates component: ' + name + ', Please wait ⚛️...',
+        location: ProgressLocation.Notification,
+        cancellable: false,
+      },
+      async (progress) =>
+        await execa('npx', ['react-creates', 'component', name, '-d', target, ...options])
+    );
   }
 }
