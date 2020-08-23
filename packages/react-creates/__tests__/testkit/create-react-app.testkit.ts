@@ -41,11 +41,15 @@ export class TempProject {
     beforeAll(async () => await this.start());
     afterAll(async () => await this.reset());
 
+    this.runComponentsBeforeAndAfter();
+
+    return this;
+  }
+
+  private runComponentsBeforeAndAfter() {
     for (const component of Object.values(this.components)) {
       component?.beforeAndAfter();
     }
-
-    return this;
   }
 
   async start() {
@@ -85,9 +89,7 @@ export class TempProject {
 
   async createComponent(cmpName: string, args: string[] = []) {
     if (this.components[cmpName]) {
-      throw new Error(
-        `This component name is taken: ${cmpName}, please be original...`
-      );
+      throw new Error(`This component name is taken: ${cmpName}, please be original...`);
     }
 
     const componentDriver = componentTestkit(cmpName, {

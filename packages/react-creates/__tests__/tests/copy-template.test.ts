@@ -14,7 +14,7 @@ describe('Copy Template', () => {
 
   it('should create test file', async () => {
     cmpDriver = await driver.createComponent(
-      'ComponentWithTest'
+      'ComponentWithTest1'
     );
 
     const files = await cmpDriver.getFiles();
@@ -26,7 +26,7 @@ describe('Copy Template', () => {
 
   it('should not create test file', async () => {
     cmpDriver = await driver.createComponent(
-      'ComponentWithTest',
+      'ComponentWithTest2',
       ['--skip-test']
     );
 
@@ -45,7 +45,7 @@ describe('Copy Template', () => {
 
   it('should not create test file (ts)', async () => {
     cmpDriver = await driver.createComponent(
-      'ComponentWithTest',
+      'ComponentWithTest3',
       ['--skip-test', '-l', Language.TYPESCRIPT]
     );
 
