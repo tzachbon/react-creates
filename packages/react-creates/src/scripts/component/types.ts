@@ -8,7 +8,6 @@ export interface CreateComponentOptions {
   type: Types;
   language: Language;
   style: Styles;
-  entry: boolean;
   propTypes: boolean;
   skipTest: boolean
 }

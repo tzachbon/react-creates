@@ -1,54 +1,79 @@
 import execa from 'execa';
-import { window } from 'vscode';
+import { window, ProgressLocation } from 'vscode';
 import { isNil } from 'lodash';
-import { parseTarget } from 'react-creates/dist/scripts/component/parsers/parse-target';
-import { Language } from 'react-creates/dist/scripts/component/parsers/parse-language';
-import { Styles } from 'react-creates/dist/scripts/component/parsers/parse-style';
-import { Types } from 'react-creates/dist/scripts/component/parsers/parse-type';
+import { ValuesType } from 'utility-types';
+import { parseTarget, Language, Styles, Types } from 'react-creates';
 
+const yesOrNoQuestion = {
+  YES: 'Yes',
+  NO: 'No',
+} as const;
+
+const getYesOrNoQuestion = async (title: string) =>
+  (await window.showQuickPick(Object.values(yesOrNoQuestion), { placeHolder: title })) as
+    | ValuesType<typeof yesOrNoQuestion>
+    | undefined;
+
+const getQuickOptions = async <T, J extends {} = {}>(title: string, options: J) =>
+  (await window.showQuickPick(Object.values(options ?? {}), {
+    placeHolder: title,
+  })) as T | undefined;
 
 export default class ReactCreates {
-  constructor(private target: string) { }
+  constructor(private target: string) {}
 
   async createComponent() {
     const name = await window.showInputBox({ prompt: 'Name of the component' });
 
-    if (!name) { 
+    if (!name) {
       throw new Error('Hey, component must have a name');
-     };
+    }
 
     const customOption = {
       default: 'Auto calculate values',
       custom: 'Choose custom options',
     };
-    const isCustom = await window.showQuickPick(Object.values(customOption), { placeHolder: customOption.default });
-
+    const isCustom = await window.showQuickPick(Object.values(customOption), {
+      placeHolder: customOption.default,
+    });
 
     let target = await parseTarget({ name, target: this.target });
-    let types, language, style, propTypes;
+    let types: Types | undefined;
+    let language: Language | undefined;
+    let style: Styles | undefined;
+    let propTypes: boolean | undefined;
+    let skipTest: boolean | undefined;
 
     if (isCustom === customOption.custom) {
+      target = (await window.showInputBox({ value: target })) || target;
 
-      target = await window.showInputBox({ value: target }) || target;
-      types = await window.showQuickPick(Object.values(Types), { placeHolder: 'Type of component to create' });
-      language = await window.showQuickPick(Object.values(Language), { placeHolder: 'Type of language' });
-      style = await window.showQuickPick(Object.values(Styles), { placeHolder: 'Type of style' });
+      types = await getQuickOptions('Type of component to create', Types);
+
+      language = await getQuickOptions('Type of language', {
+        AUTO: 'Auto calculate (easy)',
+        ...Language,
+      });
+
+      if ((language as any) === 'AUTO') {
+        language = undefined;
+      }
+
+      style = await getQuickOptions('Type of style', Styles);
+
       propTypes = false;
 
       if (language === Language.JAVASCRIPT) {
-        const propTypeOptions = {
-          YES: 'Yes',
-          NO: 'No'
-        };
-        propTypes = (await window.showQuickPick(Object.values(propTypeOptions), { placeHolder: 'Show use props types' })) === propTypeOptions.YES;
+        propTypes = (await getYesOrNoQuestion('Should use props types?')) === yesOrNoQuestion.YES;
       }
 
+      skipTest = (await getYesOrNoQuestion('Should create test file?')) === yesOrNoQuestion.NO;
 
       const nilKeys = Object.entries({
         types,
         language,
         style,
-        propTypes
+        propTypes,
+        skipTest,
       }).filter(([key, _]) => isNil(_));
 
       if (nilKeys.length) {
@@ -57,7 +82,6 @@ export default class ReactCreates {
     }
 
     const options: string[] = [];
-
 
     if (language) {
       options.push('-l', language);
@@ -75,7 +99,18 @@ export default class ReactCreates {
       options.push('-t', types);
     }
 
-    return await execa('react-creates', ['component', name, '-d', target, ...options]);
-  }
+    if (skipTest) {
+      options.push('--skip-test');
+    }
 
+    return await window.withProgress(
+      {
+        title: 'Creates component: ' + name + ', Please wait ⚛️...',
+        location: ProgressLocation.Notification,
+        cancellable: false,
+      },
+      async (progress) =>
+        await execa('npx', ['react-creates', 'component', name, '-d', target, ...options])
+    );
+  }
 }
