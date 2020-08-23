@@ -28,17 +28,17 @@ export const createComponent = () =>
     .action(async (name, _) => await createComponentRaw(name, _.opts()));
 
 export interface CreateComponent {
-  type: Types;
-  language: Language;
-  style: Styles;
-  scss: boolean;
-  css: boolean;
-  sass: boolean;
-  propTypes: boolean;
-  skipTest: boolean;
-  function: boolean;
-  directory: string;
-  class: boolean;
+  type?: Types;
+  language?: Language;
+  style?: Styles;
+  scss?: boolean;
+  css?: boolean;
+  sass?: boolean;
+  propTypes?: boolean;
+  skipTest?: boolean;
+  function?: boolean;
+  directory?: string;
+  class?: boolean;
 }
 
 export const createComponentRaw = async (
@@ -55,7 +55,7 @@ export const createComponentRaw = async (
     function: func,
     directory: target,
     class: klass,
-  }: CreateComponent
+  }
 ) => {
   const styles = { scss, css, sass };
 
