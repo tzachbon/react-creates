@@ -1,12 +1,13 @@
 {
   "name": "react-creates",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
   "files": [
     "dist",
     "templates"
   ],
-  "type": "dist/react-creates.d.ts",
+  "type": "dist/index.d.ts",
+  "main": "dist/index.js",
   "bin": {
     "react-creates": "dist/react-creates.js"
   },
