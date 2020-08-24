@@ -21,10 +21,12 @@ export const parseTypes = async ({ type, config }: Params) => {
   } else if (config.has(KEY)) {
     return config.get<Types>(KEY)
   } else {
-    return (await promptList(
+     type = (await promptList(
       KEY,
       TYPE_MESSAGE,
       Object.values(Types).map((value) => ({ value }))
     )) as Types;
+
+    return config.set(KEY, type);
   }
 };
