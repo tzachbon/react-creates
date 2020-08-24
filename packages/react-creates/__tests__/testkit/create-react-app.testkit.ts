@@ -87,7 +87,14 @@ export class TempProject {
     return await readdir(this.target);
   }
 
-  async createComponent(cmpName: string, args: string[] = [], { skipBeforeAndAfter = false } = {}) {
+  async createComponent(
+    cmpName: string,
+    args: string[] = [],
+    {
+      skipBeforeAndAfter = false,
+      execaOptions,
+    }: { skipBeforeAndAfter?: boolean; execaOptions?: execa.Options } = {}
+  ) {
     const hasComponentWithTheSameName = this.components.some(([name]) => name === cmpName);
 
     if (hasComponentWithTheSameName) {
@@ -101,6 +108,7 @@ export class TempProject {
     const componentDriver = componentTestkit(cmpName, {
       target: this.target,
       typescript: this.options.typescript,
+      execaOptions
     });
 
     await componentDriver.create(args);
@@ -122,7 +130,7 @@ export class TempProject {
   }
 
   async cleanCache() {
-    if (!this.options.skipCacheClean && await this.hasConfig()) {
+    if (!this.options.skipCacheClean && (await this.hasConfig())) {
       fs.unlinkSync(this.configPath);
     }
   }

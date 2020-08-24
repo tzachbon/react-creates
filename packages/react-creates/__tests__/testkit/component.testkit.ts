@@ -12,6 +12,7 @@ export interface ComponentOptions {
   target: string;
   typescript?: boolean;
   style?: Styles;
+  execaOptions?: execa.Options;
 }
 
 export const componentTestkit = (name: string, options: ComponentOptions) =>
@@ -41,8 +42,6 @@ export class Component {
     return this;
   }
 
-
-
   async reset() {
     await this.delete();
   }
@@ -54,6 +53,7 @@ export class Component {
 
     const command = await execa('react-creates', ['component', this.name, ...args], {
       cwd: this.target,
+      ...(this.options.execaOptions || {}),
     });
 
     if (command.stderr?.includes('Error:')) {
