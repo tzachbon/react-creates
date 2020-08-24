@@ -21,7 +21,7 @@
     "lint": "eslint --ext .js,.ts .",
     "pretest": "npm run build",
     "test": "npm link && jest",
-    "create:cmp": "npm run clean && react-creates component __temp__  -f --scss -d __temp__",
+    "create:cmp": "npm run clean && react-creates component __temp__  -f --scss -d __temp__ --skip-cache",
     "deploy:patch": "node deploy -p",
     "deploy:minor": "node deploy -m",
     "predeploy": "npm run build && npm run deploy:patch && node deploy -t && npm run version && node deploy -g",

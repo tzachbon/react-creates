@@ -29,8 +29,11 @@ export const createComponent = () =>
     .option('-c --class', 'Generate class component')
     .option('--skip-test', 'Will not create test file')
     .option('-s --style <styling>', 'Selected the style')
-    .option('--skip-cache', "Won't use cache values")
-    .action(async (name, _) => await createComponentRaw(name, _.opts()));
+    .option('--ignore-cache', "Won't use cache values")
+    .option('--skip-cache', "Won't save cache values")
+    .action(async (name, _) => {
+      await createComponentRaw(name, _.opts());
+    });
 
 export interface CreateComponent {
   type?: Types;
@@ -44,6 +47,7 @@ export interface CreateComponent {
   function?: boolean;
   directory?: string;
   class?: boolean;
+  ignoreCache?: boolean;
   skipCache?: boolean;
 }
 
@@ -62,9 +66,10 @@ export const createComponentRaw = async (
     directory: target,
     class: klass,
     skipCache,
+    ignoreCache,
   }: CreateComponent
 ) => {
-  const config = await getConfig({ target });
+  const config = await getConfig({ target, skipCache });
 
   const styles = { scss, css, sass };
 
@@ -97,14 +102,12 @@ export const createComponentRaw = async (
     const options: CreateComponentOptions = {
       name,
       target,
-      type: await parseTypes({ type, config, skipCache }),
-      language: await parseLanguage({ language, target, config, skipCache }),
-      style: await parseStyle({ style, config, skipCache }),
-      propTypes: await parsePropTypes({ propTypes, target, config, skipCache }),
-      skipTest: await parseSkipTest({ skipTest, config, skipCache }),
+      type: await parseTypes({ type, config, ignoreCache }),
+      language: await parseLanguage({ language, target, config, ignoreCache }),
+      style: await parseStyle({ style, config, ignoreCache }),
+      propTypes: await parsePropTypes({ propTypes, target, config, ignoreCache }),
+      skipTest: await parseSkipTest({ skipTest, config, ignoreCache }),
     };
-
-    await parseTypes({ type, config, skipCache })
 
     optionsLogger(options);
     await runCreateComponent(options);

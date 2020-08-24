@@ -22,13 +22,37 @@ describe('Caching mechanism', () => {
     expect(await secondComponent.getFiles()).not.toContain(`style.${Styles.CSS}`);
   });
 
-  it.skip('should skip cache values', async () => {
+  it('should override cache value', async () => {
+    const newValue = Styles.SCSS;
+    const oldValue = Styles.SASS;
+
+    const firstComponent = await driver.createComponent('FirstComponent', [
+      `--${oldValue}`,
+      `--${Types.FUNCTION}`,
+    ]);
+
+    expect(await firstComponent.isStyleMatch(oldValue)).toBe(true);
+    expect(await driver.hasConfig()).toBe(true);
+
+    expect(JSON.parse(readFileSync(driver.configPath, 'utf8')).style).toEqual(oldValue);
+
+    const secondComponent = await driver.createComponent('SecondComponent', [
+      `--${newValue}`,
+      `--${Types.FUNCTION}`,
+    ]);
+
+    expect(await secondComponent.isStyleMatch(newValue)).toBe(true);
+    expect(await driver.hasConfig()).toBe(true);
+
+    expect(JSON.parse(readFileSync(driver.configPath, 'utf8')).style).toEqual(newValue);
+  });
+
+  it.skip('should ignore cache values', async () => {
     const currentStyle = Styles.SCSS;
     const newStyle = Styles.SASS;
 
     const firstComponent = await driver.createComponent('FirstComponent', [
-      '-s',
-      currentStyle,
+      `--${currentStyle}`,
       `--${Types.FUNCTION}`,
     ]);
 
@@ -41,7 +65,7 @@ describe('Caching mechanism', () => {
 
     const secondComponent = await driver.createComponent(
       'SecondComponent',
-      [`--${Types.FUNCTION}`, '--skip-cache'],
+      [`--${Types.FUNCTION}`, '--ignore-cache'],
       {
         execaOptions: { input: newStyle },
       }
@@ -49,5 +73,16 @@ describe('Caching mechanism', () => {
 
     expect(await secondComponent.getFiles()).not.toContain(`style.${currentStyle}`);
     expect(await secondComponent.getFiles()).toContain(`style.${newStyle}`);
+  });
+
+  it('should not save cache', async () => {
+    await driver.createComponent('FirstComponent', [
+      '-s',
+      Styles.SCSS,
+      `--${Types.FUNCTION}`,
+      '--skip-cache',
+    ]);
+
+    expect(await driver.hasConfig()).toBe(false);
   });
 });

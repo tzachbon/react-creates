@@ -9,8 +9,8 @@ type ParseSkipTest = (options: Params) => Promise<boolean>;
 
 const KEY = 'skipTest';
 
-export const parseSkipTest: ParseSkipTest = async ({ skipTest, config, skipCache }) => {
+export const parseSkipTest: ParseSkipTest = async ({ skipTest, config, ignoreCache }) => {
   if (isBoolean(skipTest)) return config.set(KEY, skipTest);
-  else if (!skipCache && config.has(KEY)) return config.get<boolean>(KEY);
+  else if (!ignoreCache && config.has(KEY)) return config.get<boolean>(KEY);
   else return false;
 };

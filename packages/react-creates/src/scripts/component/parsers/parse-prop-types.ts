@@ -14,13 +14,15 @@ export const parsePropTypes: ParsePropTypes = async ({
   propTypes,
   config,
   target = process.cwd(),
-  skipCache,
+  ignoreCache,
 }) => {
   if (propTypes) return config.set(KEY, propTypes);
-  else if (!skipCache && config.has(KEY)) return config.get<boolean>(KEY);
+  else if (!ignoreCache && config.has(KEY)) return config.get<boolean>(KEY);
 
   const packageJson = (await getPackageJson({ cwd: target })) || {};
   const { dependencies } = packageJson;
 
-  return config.set(KEY, Boolean(dependencies?.['prop-types']));
+  propTypes = Boolean(dependencies?.['prop-types']);
+
+  return config.set(KEY, propTypes);
 };

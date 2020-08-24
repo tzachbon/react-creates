@@ -5,11 +5,12 @@ import { ReactCreatesConfig, ConfigCreateParams, ConfigParams } from './types';
 
 export const getConfig = async (options: ConfigCreateParams) => await Config.create(options);
 
-export class Config {
-  store: Configstore;
+export class Config implements ConfigCreateParams {
+  store: Configstore | undefined;
   target: string;
   name: string;
   reactCreates: ReactCreatesConfig;
+  skipCache: boolean;
 
   static async create(options: ConfigCreateParams) {
     const { target } = options;
@@ -23,9 +24,10 @@ export class Config {
     });
   }
 
-  private constructor({ target, packageJson }: ConfigParams) {
+  private constructor({ target, packageJson, skipCache }: ConfigParams) {
     this.target = target;
     this.name = packageJson?.name as string;
+    this.skipCache = skipCache;
 
     if (isNil(packageJson)) {
       throw new Error(`We looked everywhere for you package json, where the hell is it?`);
@@ -34,16 +36,20 @@ export class Config {
     }
 
     this.reactCreates = packageJson['react-creates'];
-    this.store = new Configstore(this.name);
+
+    if (!skipCache) {
+      this.store = new Configstore(this.name);
+    }
   }
 
   set<T = any>(key: string, value: T) {
-    this.store.set(key, value);
+    this.store?.set(key, value);
+
     return value;
   }
 
   get<T = any>(key: string): T {
-    return (this.store.get(key) ?? this.reactCreates?.[key]) as T;
+    return (this.store?.get(key) ?? this.reactCreates?.[key]) as T;
   }
 
   has(key): boolean {
@@ -51,6 +57,6 @@ export class Config {
   }
 
   clean() {
-    this.store.clear()
+    this.store?.clear();
   }
 }

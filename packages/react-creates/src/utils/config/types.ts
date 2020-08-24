@@ -5,6 +5,7 @@ import finder from 'find-package-json';
 
 export interface ConfigCreateParams {
   target: string;
+  skipCache?: boolean
 }
 
 export interface ConfigParams extends ConfigCreateParams {
@@ -13,7 +14,7 @@ export interface ConfigParams extends ConfigCreateParams {
 
 export interface WithConfig {
   config: Config;
-  skipCache?: boolean
+  ignoreCache?: boolean;
 }
 
 export type ReactCreatesConfig = Optional<CreateComponentOptions> | null;

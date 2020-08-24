@@ -15,10 +15,10 @@ const KEY = 'type';
 
 export const TYPE_MESSAGE = `What type of the component it should be. (${Types.FUNCTION} or ${Types.CLASS})`;
 
-export const parseTypes = async ({ type, config, skipCache }: Params) => {
+export const parseTypes = async ({ type, config, ignoreCache }: Params) => {
   if (isString(type) && Object.values(Types).includes(type)) {
     return config.set(KEY, type);
-  } else if (!skipCache && config.has(KEY)) {
+  } else if (!ignoreCache && config.has(KEY)) {
     return config.get<Types>(KEY);
   } else {
     type = (await promptList(
