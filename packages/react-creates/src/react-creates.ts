@@ -2,5 +2,6 @@
 
 import { program } from 'commander';
 import { createComponent } from './scripts/component';
+import { cleanCache } from './scripts/clean-cache/clean-cache';
 
-program.addCommand(createComponent()).parse(process.argv);
+program.addCommand(createComponent()).addCommand(cleanCache()).parse(process.argv);

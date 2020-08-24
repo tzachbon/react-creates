@@ -25,7 +25,7 @@
 		"commands": [
 			{
 				"command": "react-creates-vsc.component",
-				"title": "React Creates Component",
+				"title": "React Creates: Component",
 				"args": [
 					"exec"
 				],

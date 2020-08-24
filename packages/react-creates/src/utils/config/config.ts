@@ -2,6 +2,7 @@ import Configstore from 'configstore';
 import getPackageJson from '../get-package-json';
 import { isString, isNil } from 'lodash';
 import { ReactCreatesConfig, ConfigCreateParams, ConfigParams } from './types';
+import { existsSync, unlinkSync } from 'fs';
 
 export const getConfig = async (options: ConfigCreateParams) => await Config.create(options);
 
@@ -24,6 +25,18 @@ export class Config implements ConfigCreateParams {
     });
   }
 
+  static getConfigPath(name: string) {
+    return `${process.env.HOME}/.config/configstore/${name}.json`;
+  }
+
+  static clean(name: string) {
+    const path = Config.getConfigPath(name);
+
+    if (existsSync(path)) {
+      unlinkSync(path);
+    }
+  }
+
   private constructor({ target, packageJson, skipCache }: ConfigParams) {
     this.target = target;
     this.name = packageJson?.name as string;
@@ -42,6 +55,10 @@ export class Config implements ConfigCreateParams {
     }
   }
 
+  get path() {
+    return Config.getConfigPath(this.name);
+  }
+
   set<T = any>(key: string, value: T) {
     this.store?.set(key, value);
 
@@ -58,5 +75,6 @@ export class Config implements ConfigCreateParams {
 
   clean() {
     this.store?.clear();
+    Config.clean(this.name);
   }
 }

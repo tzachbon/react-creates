@@ -15,6 +15,10 @@ export default class ReactCreates {
 
   private constructor(private target: string, private readonly config: Config) {}
 
+  async cleanCache() {
+    this.config.clean();
+  }
+
   async createComponent() {
     const name = await window.showInputBox({ prompt: 'Name of the component' });
 
