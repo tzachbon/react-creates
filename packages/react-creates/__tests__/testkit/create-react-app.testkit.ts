@@ -21,35 +21,27 @@ interface TempProjectDriver {
   projectName?: string;
   install?: boolean;
   target?: string;
+  skipCacheClean?: boolean;
 }
 
 export class TempProject {
   target: string;
-  projectName: string;
-  components: Record<string, Component> = {};
+  name: string;
+  components: [string, Component][] = [];
   config: Configstore;
 
   constructor(public options: TempProjectDriver = {}) {
     const { projectName, target } = this.options;
-    this.projectName =
-      (projectName || 'temp-project') + new chance.Chance().name().split(' ').join('');
+    this.name = (projectName || 'temp-project') + new chance.Chance().name().split(' ').join('');
     this.target = target ?? tempy.directory();
-    this.config = new Configstore(this.projectName);
+    this.config = new Configstore(this.name);
   }
 
   beforeAndAfter() {
     beforeAll(async () => await this.start());
     afterAll(async () => await this.reset());
 
-    this.runComponentsBeforeAndAfter();
-
     return this;
-  }
-
-  private runComponentsBeforeAndAfter() {
-    for (const component of Object.values(this.components)) {
-      component?.beforeAndAfter();
-    }
   }
 
   async start() {
@@ -78,7 +70,7 @@ export class TempProject {
     const packageJsonRaw = fs.readFileSync(packageJsonPath, 'utf8');
     const packageJson = JSON.parse(packageJsonRaw);
 
-    packageJson.name = this.projectName;
+    packageJson.name = this.name;
 
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson));
   }
@@ -87,26 +79,39 @@ export class TempProject {
     return await readdir(this.target);
   }
 
-  async createComponent(cmpName: string, args: string[] = []) {
-    if (this.components[cmpName]) {
-      throw new Error(`This component name is taken: ${cmpName}, please be original...`);
+  async createComponent(cmpName: string, args: string[] = [], { skipBeforeAndAfter = false } = {}) {
+    const hasComponentWithTheSameName = this.components.some(([name]) => name === cmpName);
+
+    if (hasComponentWithTheSameName) {
+      console.log(
+        chalk.yellowBright`${chalk.bold`Warning:`} You already have this component name: ${chalk.bold(
+          cmpName
+        )}`
+      );
     }
 
     const componentDriver = componentTestkit(cmpName, {
       target: this.target,
       typescript: this.options.typescript,
-      projectName: this.projectName,
     });
 
     await componentDriver.create(args);
 
-    this.components[cmpName] = componentDriver;
+    this.components.push([cmpName, componentDriver]);
 
-    return componentDriver;
+    if (skipBeforeAndAfter) {
+      return componentDriver;
+    }
+
+    return componentDriver.beforeAndAfter();
   }
 
   async reset() {
     await rmdir(this.target, { recursive: true });
+
+    if (!this.options.skipCacheClean && this.hasConfig) {
+      fs.unlinkSync(this.configPath);
+    }
   }
 
   async runScript(script: 'start' | 'test' | 'build' = 'start') {
@@ -115,6 +120,14 @@ export class TempProject {
     } catch (e) {
       return e;
     }
+  }
+
+  get configPath() {
+    return `~/.config/configstore/${this.name}.json`;
+  }
+
+  get hasConfig() {
+    return fs.existsSync(this.configPath) && fs.lstatSync(this.configPath).isFile();
   }
 }
 

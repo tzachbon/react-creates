@@ -7,7 +7,7 @@ describe('Copy Template', () => {
   const driver = tempProjectTestkit().beforeAndAfter();
 
   it('should create test file', async () => {
-    cmpDriver = await driver.createComponent('ComponentWithTest1');
+    cmpDriver = await driver.createComponent('ComponentWithTest');
 
     const files = await cmpDriver.getFiles();
 
@@ -15,7 +15,7 @@ describe('Copy Template', () => {
   });
 
   it('should not create test file', async () => {
-    cmpDriver = await driver.createComponent('ComponentWithTest2', ['--skip-test']);
+    cmpDriver = await driver.createComponent('ComponentWithTest', ['--skip-test']);
 
     const files = await cmpDriver.getFiles();
 
@@ -25,7 +25,7 @@ describe('Copy Template', () => {
   });
 
   it('should not create test file (ts)', async () => {
-    cmpDriver = await driver.createComponent('ComponentWithTest3', [
+    cmpDriver = await driver.createComponent('ComponentWithTest', [
       '--skip-test',
       '-l',
       Language.TYPESCRIPT,

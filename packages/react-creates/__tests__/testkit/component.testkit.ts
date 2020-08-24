@@ -12,7 +12,6 @@ export interface ComponentOptions {
   target: string;
   typescript?: boolean;
   style?: Styles;
-  projectName?: string;
 }
 
 export const componentTestkit = (name: string, options: ComponentOptions) =>
@@ -20,12 +19,10 @@ export const componentTestkit = (name: string, options: ComponentOptions) =>
 
 export class Component {
   private target: string;
-  private projectName: string;
   private path: string | null = null;
 
   constructor(public name: string, private options: ComponentOptions) {
     this.target = options.target;
-    this.projectName = options.projectName;
   }
 
   static getValueFromOutput(output: string, start: string, end: string = '\n') {
@@ -37,28 +34,17 @@ export class Component {
   }
 
   beforeAndAfter() {
-    afterEach(async () => {
+    beforeEach(async () => {
       await this.reset();
     });
 
     return this;
   }
 
-  get configPath() {
-    return `~/.config/configstore/${this.projectName || this.name}.json`;
-  }
 
-  get hasConfig() {
-    return fs.existsSync(this.configPath) && fs.lstatSync(this.configPath).isFile();
-  }
 
   async reset() {
-    await execa('react-creates', ['component', this.name, '--clean-cache']);
     await this.delete();
-
-    if (this.hasConfig) {
-      fs.unlinkSync(this.configPath);
-    }
   }
 
   async create(args: string[] = [], { skipCwd = true } = {}) {
