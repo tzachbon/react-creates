@@ -23,12 +23,12 @@ export const createComponent = () =>
     .option('--sass')
     .option('-l --language <scripting>', LANGUAGE_MESSAGE)
     .option('-d --directory <target>', 'Component directory', process.cwd())
-    .option('-t --type <component>', TYPE_MESSAGE, Types.FUNCTION)
+    .option('-t --type <component>', TYPE_MESSAGE)
     .option('-pt --prop-types', 'Should add Prop-types if inside javascript project')
     .option('-f --function', 'Generate function component')
     .option('-c --class', 'Generate class component')
     .option('--skip-test', 'Will not create test file')
-    .option('-s --style <styling>', 'Selected the style', Styles.CSS)
+    .option('-s --style <styling>', 'Selected the style')
     .option('--clean-cache', 'Cleans cache data')
     .action(async (name, _) => await createComponentRaw(name, _.opts()));
 

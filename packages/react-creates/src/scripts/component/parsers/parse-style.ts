@@ -19,12 +19,12 @@ interface Params extends WithConfig {
 const KEY = 'style';
 
 export async function parseStyle({ style, config }: Params) {
+
   if (isString(style) && Object.values(Styles).includes(style as any)) {
     return config.set(KEY, style);
   } else if (config.has(KEY)) {
     return config.get<Styles>(KEY);
   } else {
-    
     style = (await promptList(
       'style',
       STYLE_MESSAGE,
