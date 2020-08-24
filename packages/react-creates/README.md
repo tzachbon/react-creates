@@ -69,19 +69,21 @@ Here how to do create one in seconds:
 
 ### Options
 
-| Option                      | Default                                         | Description                                                      |
-| --------------------------- | ----------------------------------------------- | ---------------------------------------------------------------- |
-| `--scss`                    | `false`                                         | Force `scss` style                                               |
-| `--css`                     | `false`                                         | Force `css` style                                                |
-| `--sass`                    | `false`                                         | Force `sass` style                                               |
-| `-l --language <scripting>` | Calculated (Checks for `tsconfig` to determent) | Select the language you want the component to be                 |
-| `-d --directory <target>`   | `process.cwd()`                                 | Component directory                                              |
-| `-t --type <component>`     | `function`                                      | What type of the component it should be. (function or class)     |
-| `-pt --prop-types`          | `false`                                         | Should add Prop-types. Only works if inside `javascript` project |
-| `-f --function`             | `false`                                         | Force `function` component                                       |
-| `-c --class`                | `false`                                         | Force `class` component                                          |
-| `-s --style <styling>`      | `css`                                           | Selected style                                                   |
-| `--skip-test`               | `false`                                         | Will not create test file                                        |
+| Option                      | Default                                         | Type                         | Description                                                      |
+| --------------------------- | ----------------------------------------------- | ---------------------------- | ---------------------------------------------------------------- |
+| `--scss`                    | `false`                                         | boolean                      | Force `scss` style                                               |
+| `--css`                     | `false`                                         | boolean                      | Force `css` style                                                |
+| `--sass`                    | `false`                                         | boolean                      | Force `sass` style                                               |
+| `-l --language <scripting>` | Calculated (Checks for `tsconfig` to determent) | `typescript` or `javascript` | Select the language you want the component to be                 |
+| `-d --directory <target>`   | `process.cwd()`                                 | string                       | Component directory                                              |
+| `-t --type <component>`     |                                                 | `function` or `class`        | What type of the component it should be.                         |
+| `-pt --prop-types`          | `false`                                         | boolean                      | Should add Prop-types. Only works if inside `javascript` project |
+| `-f --function`             | `false`                                         | boolean                      | Force `function` component                                       |
+| `-c --class`                | `false`                                         | boolean                      | Force `class` component                                          |
+| `-s --style <styling>`      |                                                 | `css`, `scss`, `sass`        | Selected style                                                   |
+| `--skip-test`               | `false`                                         | boolean                      | Will not create test file                                        |
+| `--skip-cache`              | `false`                                         | boolean                      | Won't save cache values                                          |
+| `--ignore-cache`            | `false`                                         | boolean                      | Won't use cache values                                           |
 
 ### Examples
 
