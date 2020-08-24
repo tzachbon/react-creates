@@ -8,12 +8,13 @@ import { Language } from '../../src/scripts/component/parsers/parse-language';
 import { componentTestkit, Component } from './component.testkit';
 import { Styles } from '../../src/scripts/component/parsers/parse-style';
 import execa from 'execa';
-import Configstore from 'configstore';
 import chance from 'chance';
 
 const copy = promisify(ncp);
 const rmdir = promisify(fs.rmdir);
 const readdir = promisify(fs.readdir);
+const exists = promisify(fs.exists);
+const lstat = promisify(fs.lstat);
 
 interface TempProjectDriver {
   typescript?: boolean;
@@ -28,23 +29,30 @@ export class TempProject {
   target: string;
   name: string;
   components: [string, Component][] = [];
-  config: Configstore;
 
   constructor(public options: TempProjectDriver = {}) {
-    const { projectName, target } = this.options;
-    this.name = (projectName || 'temp-project') + new chance.Chance().name().split(' ').join('');
+    const { target } = this.options;
     this.target = target ?? tempy.directory();
-    this.config = new Configstore(this.name);
   }
 
-  beforeAndAfter() {
+  beforeAndAfterAll() {
     beforeAll(async () => await this.start());
     afterAll(async () => await this.reset());
 
     return this;
   }
 
+  beforeAndAfter() {
+    beforeEach(async () => await this.start());
+    afterEach(async () => await this.reset());
+
+    return this;
+  }
+
   async start() {
+    this.name =
+      (this.options.projectName || 'temp-project') + new chance.Chance().name().split(' ').join('');
+
     const { typescript } = this.options;
 
     console.log(chalk`
@@ -108,8 +116,13 @@ export class TempProject {
 
   async reset() {
     await rmdir(this.target, { recursive: true });
+    await this.cleanCache();
 
-    if (!this.options.skipCacheClean && this.hasConfig) {
+    this.components = [];
+  }
+
+  async cleanCache() {
+    if (!this.options.skipCacheClean && await this.hasConfig()) {
       fs.unlinkSync(this.configPath);
     }
   }
@@ -123,11 +136,11 @@ export class TempProject {
   }
 
   get configPath() {
-    return `~/.config/configstore/${this.name}.json`;
+    return `${process.env.HOME}/.config/configstore/${this.name}.json`;
   }
 
-  get hasConfig() {
-    return fs.existsSync(this.configPath) && fs.lstatSync(this.configPath).isFile();
+  async hasConfig() {
+    return (await exists(this.configPath)) && (await lstat(this.configPath)).isFile();
   }
 }
 
