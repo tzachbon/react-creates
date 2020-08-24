@@ -1,13 +1,25 @@
 import getPackageJson from '../../../utils/get-package-json';
+import { WithConfig } from '../../../utils/config';
 
-type ParsePropTypes = (options: { propTypes: boolean, target?: string }) => Promise<boolean>
+interface Params extends WithConfig {
+  propTypes: boolean;
+  target?: string;
+}
 
-export const parsePropTypes: ParsePropTypes = async ({ propTypes, target = process.cwd() }) => {
+type ParsePropTypes = (options: Params) => Promise<boolean>;
 
-  if (propTypes) return propTypes;
+const KEY = 'propTypes';
 
-  const packageJson = await getPackageJson({ cwd: target }) || {}
+export const parsePropTypes: ParsePropTypes = async ({
+  propTypes,
+  config,
+  target = process.cwd(),
+}) => {
+  if (propTypes) return config.set(KEY, propTypes);
+  else if (config.has(KEY)) return config.get<boolean>(KEY);
+
+  const packageJson = (await getPackageJson({ cwd: target })) || {};
   const { dependencies } = packageJson;
 
-  return Boolean(dependencies?.['prop-types'])
-}
+  return config.set(KEY, Boolean(dependencies?.['prop-types']));
+};
