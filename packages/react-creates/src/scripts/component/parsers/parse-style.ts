@@ -1,32 +1,36 @@
-import { promptList } from "../../../utils/prompt-list";
+import { promptList } from '../../../utils/prompt-list';
+import { isString } from 'lodash';
+import { WithConfig } from '../../../utils/config';
 
 export enum Styles {
-  SCSS = "scss",
-  CSS = "css",
-  SASS = "sass",
+  SCSS = 'scss',
+  CSS = 'css',
+  SASS = 'sass',
 }
 
-export const STYLE_MESSAGE = `Select the type of style you want: (${Object.values(
-  Styles
-).join(",")})`;
+export const STYLE_MESSAGE = `Select the type of style you want: (${Object.values(Styles).join(
+  ','
+)})`;
 
-let _lastStyle: Styles;
+interface Params extends WithConfig {
+  style: Styles;
+}
 
-export async function parseStyle(style: Styles) {
-  if (
-    typeof style === "string" &&
-    Object.values(Styles).includes(style as any)
-  ) {
-    _lastStyle = style;
-  } else if (_lastStyle) {
-    return _lastStyle;
+const KEY = 'style';
+
+export async function parseStyle({ style, config }: Params) {
+  if (isString(style) && Object.values(Styles).includes(style as any)) {
+    return config.set(KEY, style);
+  } else if (config.has(KEY)) {
+    return config.get<Styles>(KEY);
   } else {
-    _lastStyle = await promptList(
-      "style",
+    
+    style = (await promptList(
+      'style',
       STYLE_MESSAGE,
       Object.values(Styles).map((value) => ({ value })),
       false
-    ) as Styles;
+    )) as Styles;
   }
-  return _lastStyle;
+  return config.set(KEY, style);
 }

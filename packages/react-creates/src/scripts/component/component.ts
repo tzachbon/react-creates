@@ -100,7 +100,7 @@ export const createComponentRaw = async (
       target,
       type: await parseTypes({ type, config }),
       language: await parseLanguage({ language, target, config }),
-      style: await parseStyle(style),
+      style: await parseStyle({ style, config }),
       propTypes: await parsePropTypes({ propTypes, target }),
       skipTest: Boolean(skipTest),
     };
