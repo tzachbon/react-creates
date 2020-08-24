@@ -11,17 +11,17 @@ interface Params extends WithConfig {
   type: Types;
 }
 
-const KEY = 'type'
+const KEY = 'type';
 
 export const TYPE_MESSAGE = `What type of the component it should be. (${Types.FUNCTION} or ${Types.CLASS})`;
 
-export const parseTypes = async ({ type, config }: Params) => {
+export const parseTypes = async ({ type, config, skipCache }: Params) => {
   if (isString(type) && Object.values(Types).includes(type)) {
     return config.set(KEY, type);
-  } else if (config.has(KEY)) {
-    return config.get<Types>(KEY)
+  } else if (!skipCache && config.has(KEY)) {
+    return config.get<Types>(KEY);
   } else {
-     type = (await promptList(
+    type = (await promptList(
       KEY,
       TYPE_MESSAGE,
       Object.values(Types).map((value) => ({ value }))

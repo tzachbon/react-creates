@@ -16,13 +16,13 @@ const KEY = 'language';
 
 export const LANGUAGE_MESSAGE = `Select the language you want the component to be created. (${Language.TYPESCRIPT} or ${Language.JAVASCRIPT})`;
 
-export async function parseLanguage({ language, target, config }: Params) {
+export async function parseLanguage({ language, target, config, skipCache }: Params) {
   const hasAskedForLanguage =
     isString(language) && Object.values(Language).includes(language as any);
 
   if (hasAskedForLanguage) {
     return config.set(KEY, language);
-  } else if (config.has(KEY)) {
+  } else if (!skipCache && config.has(KEY)) {
     return config.get<Language>(KEY);
   } else {
     language = (await isTypescript(target)) ? Language.TYPESCRIPT : Language.JAVASCRIPT;

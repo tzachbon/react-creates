@@ -29,7 +29,7 @@ export const createComponent = () =>
     .option('-c --class', 'Generate class component')
     .option('--skip-test', 'Will not create test file')
     .option('-s --style <styling>', 'Selected the style')
-    .option('--clean-cache', 'Cleans cache data')
+    .option('--skip-cache', "Won't use cache values")
     .action(async (name, _) => await createComponentRaw(name, _.opts()));
 
 export interface CreateComponent {
@@ -44,7 +44,7 @@ export interface CreateComponent {
   function?: boolean;
   directory?: string;
   class?: boolean;
-  cleanCache?: boolean;
+  skipCache?: boolean;
 }
 
 export const createComponentRaw = async (
@@ -61,7 +61,7 @@ export const createComponentRaw = async (
     function: func,
     directory: target,
     class: klass,
-    cleanCache,
+    skipCache,
   }: CreateComponent
 ) => {
   const config = await getConfig({ target });
@@ -83,10 +83,6 @@ export const createComponentRaw = async (
     type = Types.FUNCTION;
   }
 
-  if (cleanCache) {
-    return config.clean();
-  }
-
   try {
     console.log(`
         React Creates: ${chalk.blueBright.bold('Component')} 
@@ -101,12 +97,14 @@ export const createComponentRaw = async (
     const options: CreateComponentOptions = {
       name,
       target,
-      type: await parseTypes({ type, config }),
-      language: await parseLanguage({ language, target, config }),
-      style: await parseStyle({ style, config }),
-      propTypes: await parsePropTypes({ propTypes, target, config }),
-      skipTest: await parseSkipTest({ skipTest, config }),
+      type: await parseTypes({ type, config, skipCache }),
+      language: await parseLanguage({ language, target, config, skipCache }),
+      style: await parseStyle({ style, config, skipCache }),
+      propTypes: await parsePropTypes({ propTypes, target, config, skipCache }),
+      skipTest: await parseSkipTest({ skipTest, config, skipCache }),
     };
+
+    await parseTypes({ type, config, skipCache })
 
     optionsLogger(options);
     await runCreateComponent(options);

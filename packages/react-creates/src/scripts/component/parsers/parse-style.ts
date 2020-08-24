@@ -18,11 +18,11 @@ interface Params extends WithConfig {
 
 const KEY = 'style';
 
-export async function parseStyle({ style, config }: Params) {
+export async function parseStyle({ style, config, skipCache }: Params) {
 
   if (isString(style) && Object.values(Styles).includes(style as any)) {
     return config.set(KEY, style);
-  } else if (config.has(KEY)) {
+  } else if (!skipCache && config.has(KEY)) {
     return config.get<Styles>(KEY);
   } else {
     style = (await promptList(
@@ -31,6 +31,7 @@ export async function parseStyle({ style, config }: Params) {
       Object.values(Styles).map((value) => ({ value })),
       false
     )) as Styles;
+
+    return config.set(KEY, style);
   }
-  return config.set(KEY, style);
 }

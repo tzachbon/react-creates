@@ -13,6 +13,7 @@ export interface ConfigParams extends ConfigCreateParams {
 
 export interface WithConfig {
   config: Config;
+  skipCache?: boolean
 }
 
 export type ReactCreatesConfig = Optional<CreateComponentOptions> | null;
