@@ -2,30 +2,18 @@ import execa from 'execa';
 import { window, ProgressLocation } from 'vscode';
 import { isNil } from 'lodash';
 import { ValuesType } from 'utility-types';
-import { parseTarget, Language, Styles, Types } from 'react-creates';
+import { parseTarget, Language, Styles, Types, getConfig, Config } from 'react-creates';
+import { cacheTypes, getQuickOptions, getYesOrNoQuestion, yesOrNoQuestion } from './utils';
 
-const yesOrNoQuestion = {
-  YES: 'Yes',
-  NO: 'No',
-} as const;
-
-const cacheTypes = {
-  CACHE: 'Use cache (default)',
-  SKIP_CACHE: "Skip cache (won't save cache value)",
-} as const;
-
-const getYesOrNoQuestion = async (title: string) =>
-  (await window.showQuickPick(Object.values(yesOrNoQuestion), { placeHolder: title })) as
-    | ValuesType<typeof yesOrNoQuestion>
-    | undefined;
-
-const getQuickOptions = async <T, J extends {} = {}>(title: string, options: J) =>
-  (await window.showQuickPick(Object.values(options ?? {}), {
-    placeHolder: title,
-  })) as T | undefined;
+const getStyleQuestions = async () => await getQuickOptions<Styles>('Type of style', Styles);
+const getTypesQuestions = async () => await getQuickOptions<Types>('Type of style', Types);
 
 export default class ReactCreates {
-  constructor(private target: string) {}
+  static async start(target: string) {
+    return new ReactCreates(target, await getConfig({ target }));
+  }
+
+  private constructor(private target: string, private readonly config: Config) {}
 
   async createComponent() {
     const name = await window.showInputBox({ prompt: 'Name of the component' });
@@ -53,7 +41,7 @@ export default class ReactCreates {
     if (isCustom === customOption.custom) {
       target = (await window.showInputBox({ value: target })) || target;
 
-      types = await getQuickOptions('Type of component to create', Types);
+      types = await getTypesQuestions();
 
       language = await getQuickOptions('Type of language', {
         AUTO: 'Auto calculate (easy)',
@@ -64,7 +52,7 @@ export default class ReactCreates {
         language = undefined;
       }
 
-      style = await getQuickOptions('Type of style', Styles);
+      style = await getStyleQuestions();
 
       propTypes = false;
 
@@ -96,17 +84,21 @@ export default class ReactCreates {
       options.push('-l', language);
     }
 
-    if (style) {
-      options.push('-s', style);
-    }
+    options.push(
+      '-s',
+      style ||
+        this.config.get<Styles>('style') ||
+        this.config.set('style', await getStyleQuestions())
+    );
 
     if (propTypes) {
       options.push('-pt');
     }
 
-    if (types) {
-      options.push('-t', types);
-    }
+    options.push(
+      '-t',
+      types || this.config.get<Types>('type') || this.config.set('types', await getTypesQuestions())
+    );
 
     if (skipTest) {
       options.push('--skip-test');

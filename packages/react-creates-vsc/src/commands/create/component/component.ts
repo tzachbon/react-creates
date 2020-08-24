@@ -8,7 +8,7 @@ export default {
       return vscode.window.showErrorMessage('Path is not found');
     }
 
-    const reactCreates = new ReactCreates(path);
+    const reactCreates = await ReactCreates.start(path);
     try {
       const { stderr } = await reactCreates.createComponent();
 
