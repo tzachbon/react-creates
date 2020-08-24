@@ -1,15 +1,18 @@
 import { program } from 'commander';
-import { LANGUAGE_MESSAGE, parseLanguage, Language } from './parsers/parse-language';
-import { parseStyle, Styles } from './parsers/parse-style';
-import { parseTarget } from './parsers/parse-target';
-import { TYPE_MESSAGE, parseTypes, Types } from './parsers/parse-type';
+import chalk from 'chalk';
+
+import getConfig from '../../utils/config';
 import { runCreateComponent } from './run';
 import { CreateComponentOptions } from './types';
-import chalk from 'chalk';
 import { optionsLogger } from './options-logger';
-import { parsePropTypes } from './parsers/parse-prop-types';
 import { checkForMainDependencies } from '../../utils/error';
-import getConfig from '../../utils/config';
+
+import { parsePropTypes } from './parsers/parse-prop-types';
+import { parseSkipTest } from './parsers/parse-skip-test';
+import { parseStyle, Styles } from './parsers/parse-style';
+import { parseTarget } from './parsers/parse-target';
+import { LANGUAGE_MESSAGE, parseLanguage, Language } from './parsers/parse-language';
+import { TYPE_MESSAGE, parseTypes, Types } from './parsers/parse-type';
 
 export const createComponent = () =>
   program
@@ -102,7 +105,7 @@ export const createComponentRaw = async (
       language: await parseLanguage({ language, target, config }),
       style: await parseStyle({ style, config }),
       propTypes: await parsePropTypes({ propTypes, target, config }),
-      skipTest: Boolean(skipTest),
+      skipTest: await parseSkipTest({ skipTest, config }),
     };
 
     optionsLogger(options);
