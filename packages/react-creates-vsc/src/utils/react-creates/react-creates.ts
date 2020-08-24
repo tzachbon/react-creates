@@ -9,6 +9,11 @@ const yesOrNoQuestion = {
   NO: 'No',
 } as const;
 
+const cacheTypes = {
+  CACHE: 'Use cache (default)',
+  SKIP_CACHE: "Skip cache (won't save cache value)",
+} as const;
+
 const getYesOrNoQuestion = async (title: string) =>
   (await window.showQuickPick(Object.values(yesOrNoQuestion), { placeHolder: title })) as
     | ValuesType<typeof yesOrNoQuestion>
@@ -43,6 +48,7 @@ export default class ReactCreates {
     let style: Styles | undefined;
     let propTypes: boolean | undefined;
     let skipTest: boolean | undefined;
+    let cache: ValuesType<typeof cacheTypes> | undefined;
 
     if (isCustom === customOption.custom) {
       target = (await window.showInputBox({ value: target })) || target;
@@ -68,12 +74,15 @@ export default class ReactCreates {
 
       skipTest = (await getYesOrNoQuestion('Should create test file?')) === yesOrNoQuestion.NO;
 
+      cache = await getQuickOptions('Select cache mechanism', cacheTypes);
+
       const nilKeys = Object.entries({
         types,
         language,
         style,
         propTypes,
         skipTest,
+        cache,
       }).filter(([key, _]) => isNil(_));
 
       if (nilKeys.length) {
@@ -101,6 +110,10 @@ export default class ReactCreates {
 
     if (skipTest) {
       options.push('--skip-test');
+    }
+
+    if (cache === cacheTypes.SKIP_CACHE) {
+      options.push('--skip-cache');
     }
 
     return await window.withProgress(
