@@ -6,7 +6,7 @@
     "dist",
     "templates"
   ],
-  "type": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "bin": {
     "react-creates": "dist/react-creates.js"
