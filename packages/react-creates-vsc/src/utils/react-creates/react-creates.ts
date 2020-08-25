@@ -2,25 +2,22 @@ import execa from 'execa';
 import { window, ProgressLocation } from 'vscode';
 import { isNil } from 'lodash';
 import { ValuesType } from 'utility-types';
-import { parseTarget, Language, Styles, Types } from 'react-creates';
+import { parseTarget, Language, Styles, Types, getConfig, Config, PARSE_KEYS } from 'react-creates';
+import { cacheTypes, getQuickOptions, getYesOrNoQuestion, yesOrNoQuestion } from './utils';
 
-const yesOrNoQuestion = {
-  YES: 'Yes',
-  NO: 'No',
-} as const;
-
-const getYesOrNoQuestion = async (title: string) =>
-  (await window.showQuickPick(Object.values(yesOrNoQuestion), { placeHolder: title })) as
-    | ValuesType<typeof yesOrNoQuestion>
-    | undefined;
-
-const getQuickOptions = async <T, J extends {} = {}>(title: string, options: J) =>
-  (await window.showQuickPick(Object.values(options ?? {}), {
-    placeHolder: title,
-  })) as T | undefined;
+const getStyleQuestions = async () => await getQuickOptions<Styles>('Type of style', Styles);
+const getTypesQuestions = async () => await getQuickOptions<Types>('Type of style', Types);
 
 export default class ReactCreates {
-  constructor(private target: string) {}
+  static async start(target: string) {
+    return new ReactCreates(target, await getConfig({ target }));
+  }
+
+  private constructor(private target: string, private readonly config: Config) {}
+
+  async cleanCache() {
+    this.config.clean();
+  }
 
   async createComponent() {
     const name = await window.showInputBox({ prompt: 'Name of the component' });
@@ -43,11 +40,12 @@ export default class ReactCreates {
     let style: Styles | undefined;
     let propTypes: boolean | undefined;
     let skipTest: boolean | undefined;
+    let cache: ValuesType<typeof cacheTypes> | undefined;
 
     if (isCustom === customOption.custom) {
       target = (await window.showInputBox({ value: target })) || target;
 
-      types = await getQuickOptions('Type of component to create', Types);
+      types = await getTypesQuestions();
 
       language = await getQuickOptions('Type of language', {
         AUTO: 'Auto calculate (easy)',
@@ -58,7 +56,7 @@ export default class ReactCreates {
         language = undefined;
       }
 
-      style = await getQuickOptions('Type of style', Styles);
+      style = await getStyleQuestions();
 
       propTypes = false;
 
@@ -68,12 +66,15 @@ export default class ReactCreates {
 
       skipTest = (await getYesOrNoQuestion('Should create test file?')) === yesOrNoQuestion.NO;
 
+      cache = await getQuickOptions('Select cache mechanism', cacheTypes);
+
       const nilKeys = Object.entries({
         types,
         language,
         style,
         propTypes,
         skipTest,
+        cache,
       }).filter(([key, _]) => isNil(_));
 
       if (nilKeys.length) {
@@ -87,20 +88,30 @@ export default class ReactCreates {
       options.push('-l', language);
     }
 
-    if (style) {
-      options.push('-s', style);
-    }
+    options.push(
+      '-s',
+      style ||
+        this.config.get<Styles>(PARSE_KEYS.STYLE) ||
+        this.config.set(PARSE_KEYS.STYLE, await getStyleQuestions())
+    );
 
     if (propTypes) {
       options.push('-pt');
     }
 
-    if (types) {
-      options.push('-t', types);
-    }
+    options.push(
+      '-t',
+      types ||
+        this.config.get<Types>(PARSE_KEYS.TYPE) ||
+        this.config.set(PARSE_KEYS.TYPE, await getTypesQuestions())
+    );
 
     if (skipTest) {
       options.push('--skip-test');
+    }
+
+    if (cache === cacheTypes.SKIP_CACHE) {
+      options.push('--skip-cache');
     }
 
     return await window.withProgress(

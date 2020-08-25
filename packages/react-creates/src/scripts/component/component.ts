@@ -1,14 +1,18 @@
 import { program } from 'commander';
-import { LANGUAGE_MESSAGE, parseLanguage, Language } from './parsers/parse-language';
-import { parseStyle, Styles } from './parsers/parse-style';
-import { parseTarget } from './parsers/parse-target';
-import { TYPE_MESSAGE, parseTypes, Types } from './parsers/parse-type';
+import chalk from 'chalk';
+
+import getConfig from '../../utils/config';
 import { runCreateComponent } from './run';
 import { CreateComponentOptions } from './types';
-import chalk from 'chalk';
 import { optionsLogger } from './options-logger';
-import { parsePropTypes } from './parsers/parse-prop-types';
 import { checkForMainDependencies } from '../../utils/error';
+
+import { parsePropTypes } from './parsers/parse-prop-types';
+import { parseSkipTest } from './parsers/parse-skip-test';
+import { parseStyle, Styles } from './parsers/parse-style';
+import { parseTarget } from './parsers/parse-target';
+import { LANGUAGE_MESSAGE, parseLanguage, Language } from './parsers/parse-language';
+import { TYPE_MESSAGE, parseTypes, Types } from './parsers/parse-type';
 
 export const createComponent = () =>
   program
@@ -19,13 +23,17 @@ export const createComponent = () =>
     .option('--sass')
     .option('-l --language <scripting>', LANGUAGE_MESSAGE)
     .option('-d --directory <target>', 'Component directory', process.cwd())
-    .option('-t --type <component>', TYPE_MESSAGE, Types.FUNCTION)
+    .option('-t --type <component>', TYPE_MESSAGE)
     .option('-pt --prop-types', 'Should add Prop-types if inside javascript project')
     .option('-f --function', 'Generate function component')
     .option('-c --class', 'Generate class component')
     .option('--skip-test', 'Will not create test file')
-    .option('-s --style <styling>', 'Selected the style', Styles.CSS)
-    .action(async (name, _) => await createComponentRaw(name, _.opts()));
+    .option('-s --style <styling>', 'Selected the style')
+    .option('--ignore-cache', "Won't use cache values")
+    .option('--skip-cache', "Won't save cache values")
+    .action(async (name, _) => {
+      await createComponentRaw(name, _.opts());
+    });
 
 export interface CreateComponent {
   type?: Types;
@@ -39,6 +47,8 @@ export interface CreateComponent {
   function?: boolean;
   directory?: string;
   class?: boolean;
+  ignoreCache?: boolean;
+  skipCache?: boolean;
 }
 
 export const createComponentRaw = async (
@@ -55,8 +65,12 @@ export const createComponentRaw = async (
     function: func,
     directory: target,
     class: klass,
-  }
+    skipCache,
+    ignoreCache,
+  }: CreateComponent
 ) => {
+  const config = await getConfig({ target, skipCache });
+
   const styles = { scss, css, sass };
 
   for (const [styleName, isOn] of Object.entries(styles)) {
@@ -88,11 +102,11 @@ export const createComponentRaw = async (
     const options: CreateComponentOptions = {
       name,
       target,
-      type: await parseTypes(type),
-      language: await parseLanguage({ language, target }),
-      style: await parseStyle(style),
-      propTypes: await parsePropTypes({ propTypes, target }),
-      skipTest: Boolean(skipTest),
+      type: await parseTypes({ type, config, ignoreCache }),
+      language: await parseLanguage({ language, target, config, ignoreCache }),
+      style: await parseStyle({ style, config, ignoreCache }),
+      propTypes: await parsePropTypes({ propTypes, target, config, ignoreCache }),
+      skipTest: await parseSkipTest({ skipTest, config, ignoreCache }),
     };
 
     optionsLogger(options);

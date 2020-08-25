@@ -4,9 +4,7 @@ import { componentTestkit } from "../testkit/component.testkit";
 import { tempProjectTestkit } from "../testkit/create-react-app.testkit";
 
 describe("react-creates", () => {
-  const driver = tempProjectTestkit({ install: true });
-
-  driver.beforeAndAfter();
+  const driver = tempProjectTestkit({ install: true }).beforeAndAfter();
 
   beforeEach(() => {
     mockFs.restore()

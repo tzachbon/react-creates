@@ -21,7 +21,7 @@
     "lint": "eslint --ext .js,.ts .",
     "pretest": "npm run build",
     "test": "npm link && jest",
-    "create:cmp": "npm run clean && react-creates component __temp__  -f --scss -d __temp__",
+    "create:cmp": "npm run clean && react-creates component __temp__  -f --scss -d __temp__ --skip-cache",
     "deploy:patch": "node deploy -p",
     "deploy:minor": "node deploy -m",
     "predeploy": "npm run build && npm run deploy:patch && node deploy -t && npm run version && node deploy -g",
@@ -48,6 +48,8 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "commander": "^5.1.0",
+    "configstore": "^5.0.1",
+    "find-package-json": "^1.2.0",
     "inquirer": "^7.3.2",
     "listr": "^0.14.3",
     "lodash": "^4.17.19",
@@ -59,6 +61,8 @@
     "@types/chalk": "^2.2.0",
     "@types/chance": "^1.1.0",
     "@types/commander": "^2.12.2",
+    "@types/configstore": "^4.0.0",
+    "@types/find-package-json": "^1.1.1",
     "@types/inquirer": "^6.5.0",
     "@types/jest": "26.0.0",
     "@types/listr": "^0.14.2",
@@ -77,7 +81,8 @@
     "mock-fs": "^4.12.0",
     "tempy": "^0.5.0",
     "ts-jest": "^26.1.2",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.6",
+    "utility-types": "^3.10.0"
   },
   "husky": {
     "hooks": {

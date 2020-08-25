@@ -4,61 +4,37 @@ import { Language } from '../../src/scripts/component/parsers/parse-language';
 
 describe('Copy Template', () => {
   let cmpDriver: Component;
-  const driver = tempProjectTestkit();
-
-  driver.beforeAndAfter();
-
-  afterEach(async () => {
-    cmpDriver && (await cmpDriver.delete());
-  });
+  const driver = tempProjectTestkit().beforeAndAfter();
 
   it('should create test file', async () => {
-    cmpDriver = await driver.createComponent(
-      'ComponentWithTest'
-    );
+    cmpDriver = await driver.createComponent('ComponentWithTest');
 
     const files = await cmpDriver.getFiles();
 
-    expect(files).toContain(
-      `${cmpDriver.name}.test.js`
-    );
+    expect(files).toContain(`${cmpDriver.name}.test.js`);
   });
 
   it('should not create test file', async () => {
-    cmpDriver = await driver.createComponent(
-      'ComponentWithTest',
-      ['--skip-test']
-    );
+    cmpDriver = await driver.createComponent('ComponentWithTest', ['--skip-test']);
 
     const files = await cmpDriver.getFiles();
 
-    expect(await cmpDriver.isStyleMatch()).toBe(
-      true
-    );
-    expect(files).toContain(
-      `${cmpDriver.name}.js`
-    );
-    expect(files).not.toContain(
-      `${cmpDriver.name}.test.js`
-    );
+    expect(await cmpDriver.isStyleMatch()).toBe(true);
+    expect(files).toContain(`${cmpDriver.name}.js`);
+    expect(files).not.toContain(`${cmpDriver.name}.test.js`);
   });
 
   it('should not create test file (ts)', async () => {
-    cmpDriver = await driver.createComponent(
-      'ComponentWithTest',
-      ['--skip-test', '-l', Language.TYPESCRIPT]
-    );
+    cmpDriver = await driver.createComponent('ComponentWithTest', [
+      '--skip-test',
+      '-l',
+      Language.TYPESCRIPT,
+    ]);
 
     const files = await cmpDriver.getFiles();
 
-    expect(await cmpDriver.isStyleMatch()).toBe(
-      true
-    );
-    expect(files).toContain(
-      `${cmpDriver.name}.tsx`
-    );
-    expect(files).not.toContain(
-      `${cmpDriver.name}.test.tsx`
-    );
+    expect(await cmpDriver.isStyleMatch()).toBe(true);
+    expect(files).toContain(`${cmpDriver.name}.tsx`);
+    expect(files).not.toContain(`${cmpDriver.name}.test.tsx`);
   });
 });
