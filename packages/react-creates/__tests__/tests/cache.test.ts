@@ -16,7 +16,9 @@ describe('Caching mechanism', () => {
     expect(await firstComponent.isStyleMatch(Styles.SCSS)).toBe(true);
     expect(await driver.hasConfig()).toBe(true);
 
-    const secondComponent = await driver.createComponent('SecondComponent');
+    const secondComponent = await driver.createComponent('SecondComponent', [], {
+      skipDefaults: true,
+    });
 
     expect(await secondComponent.isStyleMatch(Styles.SCSS)).toBe(true);
     expect(await secondComponent.getFiles()).not.toContain(`style.${Styles.CSS}`);

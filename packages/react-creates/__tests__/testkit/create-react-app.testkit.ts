@@ -1,14 +1,15 @@
+import { join } from 'path';
+import { promisify } from 'util';
+
 import fs from 'fs';
+import execa from 'execa';
+import chance from 'chance';
 import ncp from 'ncp';
 import tempy from 'tempy';
 import chalk from 'chalk';
-import { join } from 'path';
-import { promisify } from 'util';
-import { Language } from '../../src/scripts/component/parsers/parse-language';
+
 import { componentTestkit, Component } from './component.testkit';
-import { Styles } from '../../src/scripts/component/parsers/parse-style';
-import execa from 'execa';
-import chance from 'chance';
+import { Language, Styles, Types } from '../../src';
 
 const copy = promisify(ncp);
 const rmdir = promisify(fs.rmdir);
@@ -93,7 +94,8 @@ export class TempProject {
     {
       skipBeforeAndAfter = false,
       execaOptions,
-    }: { skipBeforeAndAfter?: boolean; execaOptions?: execa.Options } = {}
+      skipDefaults = false,
+    }: { skipBeforeAndAfter?: boolean; execaOptions?: execa.Options; skipDefaults?: boolean } = {}
   ) {
     const hasComponentWithTheSameName = this.components.some(([name]) => name === cmpName);
 
@@ -105,10 +107,47 @@ export class TempProject {
       );
     }
 
+    if (!skipDefaults && ((execaOptions && !execaOptions.input) || !execaOptions)) {
+      const defaults = [];
+
+      if (
+        !(
+          args.includes('-t') ||
+          args.includes('--type') ||
+          args.includes('--function') ||
+          args.includes('--class')
+        )
+      ) {
+        defaults.push(`--${Types.FUNCTION}`);
+      }
+
+      if (
+        !(
+          args.includes('--scss') ||
+          args.includes('--css') ||
+          args.includes('--sass') ||
+          args.includes('-s') ||
+          args.includes('--style')
+        )
+      ) {
+        defaults.push(`--${Styles.CSS}`);
+      }
+
+      if (defaults.length) {
+        console.log(
+          chalk.yellowBright`${chalk.bold`## WARNING:`} Adding default values to ${chalk.bold(
+            cmpName
+          )}. defaults: ${defaults}`
+        );
+      }
+
+      args = [...args, ...defaults];
+    }
+
     const componentDriver = componentTestkit(cmpName, {
       target: this.target,
       typescript: this.options.typescript,
-      execaOptions
+      execaOptions,
     });
 
     await componentDriver.create(args);
