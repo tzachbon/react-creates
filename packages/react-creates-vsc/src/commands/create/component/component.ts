@@ -10,16 +10,13 @@ export default {
 
     const reactCreates = await ReactCreates.start(path);
     try {
-      const { stderr } = await reactCreates.createComponent();
-
-      if (stderr && !stderr.startsWith('npx: installed')) {
-        throw new Error(stderr);
-      }
+      await reactCreates.createComponent();
 
       vscode.window.showInformationMessage('Done, your component is ready for work! ⚛️');
-      
     } catch (error) {
-      vscode.window.showErrorMessage(error?.message || 'Something went wrong with the extension :( Please try again');
+      vscode.window.showErrorMessage(
+        error?.message || 'Something went wrong with the extension :( Please try again'
+      );
     }
-  }
+  },
 };

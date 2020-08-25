@@ -4,6 +4,8 @@ import { isNil } from 'lodash';
 import { ValuesType } from 'utility-types';
 import { parseTarget, Language, Styles, Types, getConfig, Config, PARSE_KEYS } from 'react-creates';
 import { cacheTypes, getQuickOptions, getYesOrNoQuestion, yesOrNoQuestion } from './utils';
+import { timeout } from 'promise-timeout';
+ 
 
 const getStyleQuestions = async () => await getQuickOptions<Styles>('Type of style', Styles);
 const getTypesQuestions = async () => await getQuickOptions<Types>('Type of style', Types);
@@ -120,8 +122,20 @@ export default class ReactCreates {
         location: ProgressLocation.Notification,
         cancellable: false,
       },
-      async (progress) =>
-        await execa('npx', ['react-creates', 'component', name, '-d', target, ...options])
+      async (progress) => {
+        try {
+          const { stderr } = await timeout(
+            execa('npx', ['react-creates', 'component', name, '-d', target, ...options]),
+            20000
+          );
+
+          if (stderr && !stderr.startsWith('npx: installed')) {
+            throw new Error(stderr);
+          }
+        } catch (e) {
+          throw e;
+        }
+      }
     );
   }
 }
