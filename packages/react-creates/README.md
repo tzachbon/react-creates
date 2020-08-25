@@ -14,9 +14,10 @@ React creates for you useful and common tools that adapt themselves to your proj
 
 # Table of content
 
-- [Getting Started ⬇️](#getting-started-⬇️)
+- [Getting Started ⬇️](#getting-started-)
   - [Feeling Lazy](#feeling-lazy)
 - [Features](#features)
+  - [Default values](#default-values)
   - [Component](#component)
     - [Start](#start)
     - [Options](#options)
@@ -56,6 +57,23 @@ React Creates will support as many cases as it can, You need a use case it doesn
 You want to create flow for that use case? You are more than welcome! Learn how [here](#contributing-👩‍💻).
 
 Current features:
+
+## Default values
+
+If you want to make sure all component will have the same features (styling, type, etc..), you can specify it in your `package.json`
+For example:
+
+```json
+{
+"name": "my-project",
+"version": "0.1.0",
+...
+ "react-creates": {
+    "style": "scss"
+  },
+...
+}
+```
 
 ## Component
 
