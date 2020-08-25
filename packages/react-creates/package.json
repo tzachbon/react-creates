@@ -55,7 +55,7 @@
     "lodash": "^4.17.19",
     "mustache": "^4.0.1",
     "ncp": "^2.0.0",
-    "react": "^16.13.1"
+    "update-notifier": "^4.1.1"
   },
   "devDependencies": {
     "@types/chalk": "^2.2.0",
@@ -72,6 +72,7 @@
     "@types/ncp": "^2.0.4",
     "@types/node": "14.0.13",
     "@types/tempy": "^0.3.0",
+    "@types/update-notifier": "^4.1.1",
     "auto-changelog": "^2.2.0",
     "chance": "^1.1.6",
     "create-react-app": "^3.4.1",
