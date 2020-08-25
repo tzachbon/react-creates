@@ -2,9 +2,9 @@ import chalk from 'chalk';
 import getPackageJson from '../get-package-json';
 
 export const checkForMainDependencies = async ({ target = process.cwd() } = {}) => {
-  const { dependencies } = (await getPackageJson({ cwd: target })) || {};
+  const { dependencies, devDependencies } = (await getPackageJson({ cwd: target })) || {};
 
-  const hasReact = Boolean(dependencies?.['react']);
+  const hasReact = Boolean(dependencies?.['react'] || devDependencies?.['react']);
 
   if (!hasReact) {
     throw new Error(`
