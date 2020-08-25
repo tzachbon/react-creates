@@ -1,5 +1,6 @@
 import getPackageJson from '../../../utils/get-package-json';
 import { WithConfig } from '../../../utils/config';
+import { PARSE_KEYS } from './keys';
 
 interface Params extends WithConfig {
   propTypes: boolean;
@@ -8,7 +9,7 @@ interface Params extends WithConfig {
 
 type ParsePropTypes = (options: Params) => Promise<boolean>;
 
-const KEY = 'propTypes';
+const KEY = PARSE_KEYS.PROP_TYPES;
 
 export const parsePropTypes: ParsePropTypes = async ({
   propTypes,

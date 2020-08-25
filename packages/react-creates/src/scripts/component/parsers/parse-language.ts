@@ -1,6 +1,7 @@
 import isTypescript from '../../../utils/is-typescript';
 import { WithConfig } from '../../../utils/config';
 import { isString } from 'lodash';
+import { PARSE_KEYS } from './keys';
 
 export enum Language {
   TYPESCRIPT = 'typescript',
@@ -12,7 +13,7 @@ interface Params extends WithConfig {
   target: string;
 }
 
-const KEY = 'language';
+const KEY = PARSE_KEYS.LANGUAGE;
 
 export const LANGUAGE_MESSAGE = `Select the language you want the component to be created. (${Language.TYPESCRIPT} or ${Language.JAVASCRIPT})`;
 

@@ -1,5 +1,6 @@
 import { WithConfig } from '../../../utils/config';
 import { isBoolean } from 'lodash';
+import { PARSE_KEYS } from './keys';
 
 interface Params extends WithConfig {
   skipTest: boolean;
@@ -7,7 +8,7 @@ interface Params extends WithConfig {
 
 type ParseSkipTest = (options: Params) => Promise<boolean>;
 
-const KEY = 'skipTest';
+const KEY = PARSE_KEYS.SKIP_TEST;
 
 export const parseSkipTest: ParseSkipTest = async ({ skipTest, config, ignoreCache }) => {
   if (isBoolean(skipTest)) return config.set(KEY, skipTest);

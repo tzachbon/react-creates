@@ -1,6 +1,7 @@
 import { promptList } from '../../../utils/prompt-list';
 import { isString } from 'lodash';
 import { WithConfig } from '../../../utils/config';
+import { PARSE_KEYS } from './keys';
 
 export enum Styles {
   SCSS = 'scss',
@@ -16,7 +17,7 @@ interface Params extends WithConfig {
   style: Styles;
 }
 
-const KEY = 'style';
+const KEY = PARSE_KEYS.STYLE;
 
 export async function parseStyle({ style, config, ignoreCache }: Params) {
   if (isString(style) && Object.values(Styles).includes(style as any)) {

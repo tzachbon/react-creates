@@ -2,7 +2,7 @@ import execa from 'execa';
 import { window, ProgressLocation } from 'vscode';
 import { isNil } from 'lodash';
 import { ValuesType } from 'utility-types';
-import { parseTarget, Language, Styles, Types, getConfig, Config } from 'react-creates';
+import { parseTarget, Language, Styles, Types, getConfig, Config, PARSE_KEYS } from 'react-creates';
 import { cacheTypes, getQuickOptions, getYesOrNoQuestion, yesOrNoQuestion } from './utils';
 
 const getStyleQuestions = async () => await getQuickOptions<Styles>('Type of style', Styles);
@@ -91,8 +91,8 @@ export default class ReactCreates {
     options.push(
       '-s',
       style ||
-        this.config.get<Styles>('style') ||
-        this.config.set('style', await getStyleQuestions())
+        this.config.get<Styles>(PARSE_KEYS.STYLE) ||
+        this.config.set(PARSE_KEYS.STYLE, await getStyleQuestions())
     );
 
     if (propTypes) {
@@ -101,7 +101,9 @@ export default class ReactCreates {
 
     options.push(
       '-t',
-      types || this.config.get<Types>('type') || this.config.set('types', await getTypesQuestions())
+      types ||
+        this.config.get<Types>(PARSE_KEYS.TYPE) ||
+        this.config.set(PARSE_KEYS.TYPE, await getTypesQuestions())
     );
 
     if (skipTest) {

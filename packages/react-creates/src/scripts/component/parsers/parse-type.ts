@@ -1,6 +1,7 @@
 import { promptList } from '../../../utils/prompt-list';
 import { isString } from 'lodash';
 import { WithConfig } from '../../../utils/config';
+import { PARSE_KEYS } from './keys';
 
 export enum Types {
   FUNCTION = 'function',
@@ -11,7 +12,7 @@ interface Params extends WithConfig {
   type: Types;
 }
 
-const KEY = 'type';
+const KEY = PARSE_KEYS.TYPE;
 
 export const TYPE_MESSAGE = `What type of the component it should be. (${Types.FUNCTION} or ${Types.CLASS})`;
 
