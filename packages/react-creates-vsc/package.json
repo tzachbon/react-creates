@@ -7,6 +7,19 @@
 	"engines": {
 		"vscode": "^1.45.0"
 	},
+	"keywords": [
+		"react",
+		"component",
+		"cli",
+		"generator",
+		"tool",
+		"react-native",
+		"react native",
+		"native",
+		"ng add",
+		"javascript",
+		"typescript"
+	],
 	"categories": [
 		"Other"
 	],
@@ -27,28 +40,6 @@
 			{
 				"command": "react-creates-vsc.component",
 				"title": "React Creates: Component",
-				"args": [
-					"exec"
-				],
-				"tasks": [
-					{
-						"suppressTaskName": true,
-						"taskName": "rspec",
-						"args": [
-							"rspec",
-							"${file}"
-						],
-						"isTestCommand": true
-					},
-					{
-						"suppressTaskName": true,
-						"taskName": "cucumber",
-						"args": [
-							"cucumber",
-							"${file}"
-						]
-					}
-				]
 			},
 			{
 				"command": "react-creates-vsc.create",
@@ -56,10 +47,17 @@
 			}
 		],
 		"menus": {
-			"explorer/context": [
+			"commandPalette": [
 				{
 					"when": "explorerResourceIsFolder",
 					"command": "react-creates-vsc.component"
+				}
+			],
+			"explorer/context": [
+				{
+					"when": "explorerResourceIsFolder",
+					"command": "react-creates-vsc.component",
+					"group": "reactcreates@1"
 				}
 			]
 		}

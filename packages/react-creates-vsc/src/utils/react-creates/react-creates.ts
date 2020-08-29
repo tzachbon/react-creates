@@ -1,4 +1,4 @@
-import { window, ProgressLocation, Terminal } from 'vscode';
+import { window, Terminal } from 'vscode';
 import { isNil } from 'lodash';
 import { ValuesType } from 'utility-types';
 import { parseTarget, Language, Styles, Types, getConfig, Config, PARSE_KEYS } from 'react-creates';
