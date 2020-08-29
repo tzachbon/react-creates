@@ -2,7 +2,7 @@
 	"name": "react-creates-vsc",
 	"displayName": "React Creates",
 	"description": "React Creates (CLI) for you common and useful tools",
-	"version": "0.0.14",
+	"version": "0.0.15",
 	"publisher": "TzachBonfil",
 	"engines": {
 		"vscode": "^1.45.0"
