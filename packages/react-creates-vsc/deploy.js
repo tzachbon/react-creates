@@ -1,17 +1,23 @@
 const execa = require('execa');
 const packageJson = require('./package.json');
 
-const exe = ([first, ...args]) => execa(first, [...args]).stdout.pipe(process.stdout);
+const exe = ([first, ...args]) => {
+  const { stdout, stderr } = execa.sync(first, [...args]);
 
-async function main() {
-  await exe(['npm', 'i', 'react-creates@latest']);
-  await exe(['npx', 'vsce', 'publish', 'patch']);
-  await exe(['git', 'add', 'package.json']);
-  await exe(['git', 'commit', '-m', `vsc: ${packageJson.version}`]);
-}
+  if (stdout) {
+    console.log();
+    console.log(stdout);
+  }
 
-try {
-  main();
-} catch (e) {
-  throw e;
-}
+  if (stderr) {
+    console.log('############');
+    console.error(stderr);
+    process.exit(1)
+  }
+
+};
+
+exe(['npm', 'i', 'react-creates@latest']);
+exe(['npx', 'vsce', 'publish', 'patch']);
+exe(['git', 'add', 'package.json']);
+exe(['git', 'commit', '-m', `vsc: ${packageJson.version}`]);
