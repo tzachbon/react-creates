@@ -9,10 +9,9 @@ export default {
     }
 
     const reactCreates = await ReactCreates.start(path);
+
     try {
       await reactCreates.createComponent();
-
-      vscode.window.showInformationMessage('Done, your component is ready for work! ⚛️');
     } catch (error) {
       vscode.window.showErrorMessage(
         error?.message || 'Something went wrong with the extension :( Please try again'

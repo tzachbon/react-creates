@@ -1,16 +1,19 @@
-import execa from 'execa';
-import { window, ProgressLocation } from 'vscode';
+import { window, ProgressLocation, Terminal } from 'vscode';
 import { isNil } from 'lodash';
 import { ValuesType } from 'utility-types';
 import { parseTarget, Language, Styles, Types, getConfig, Config, PARSE_KEYS } from 'react-creates';
 import { cacheTypes, getQuickOptions, getYesOrNoQuestion, yesOrNoQuestion } from './utils';
-import { timeout } from 'promise-timeout';
- 
 
 const getStyleQuestions = async () => await getQuickOptions<Styles>('Type of style', Styles);
 const getTypesQuestions = async () => await getQuickOptions<Types>('Type of style', Types);
 
 export default class ReactCreates {
+  terminals: Record<string, Terminal> = {};
+
+  static getTerminalName(name: string) {
+    return `React Creates: ${name}`;
+  }
+
   static async start(target: string) {
     return new ReactCreates(target, await getConfig({ target }));
   }
@@ -19,6 +22,26 @@ export default class ReactCreates {
 
   async cleanCache() {
     this.config.clean();
+  }
+
+  runCommand(name: string, cwd: string, shellArgs: string[] = []) {
+    let terminal = this.terminals[name];
+
+    if (!terminal) {
+      terminal = window.createTerminal({
+        name: ReactCreates.getTerminalName(name),
+        cwd,
+      });
+
+      this.terminals[name] = terminal;
+    } else {
+      terminal.sendText('cd ' + cwd);
+    }
+
+    terminal.sendText(shellArgs.join(' '));
+    terminal.show(true);
+
+    return terminal;
   }
 
   async createComponent() {
@@ -116,26 +139,18 @@ export default class ReactCreates {
       options.push('--skip-cache');
     }
 
-    return await window.withProgress(
-      {
-        title: 'Creates component: ' + name + ', Please wait ⚛️...',
-        location: ProgressLocation.Notification,
-        cancellable: false,
-      },
-      async (progress) => {
-        try {
-          const { stderr } = await timeout(
-            execa('npx', ['react-creates', 'component', name, '-d', target, ...options]),
-            20000
-          );
+    this.runCommand('component', target.slice(0, name.length * -1), [
+      'npx',
+      'react-creates',
+      'component',
+      name,
+      ...options,
+    ]);
 
-          if (stderr && !stderr.startsWith('npx: installed')) {
-            throw new Error(stderr);
-          }
-        } catch (e) {
-          throw e;
-        }
-      }
-    );
+    return {
+      name,
+      target,
+      options,
+    };
   }
 }
