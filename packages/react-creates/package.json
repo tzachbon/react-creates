@@ -45,9 +45,6 @@
     "url": "https://github.com/tzachbon"
   },
   "license": "ISC",
-  "peerDependencies": {
-    "react": "latest"
-  },
   "dependencies": {
     "chalk": "^4.1.0",
     "commander": "^5.1.0",

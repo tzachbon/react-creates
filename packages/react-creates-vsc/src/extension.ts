@@ -4,14 +4,17 @@ import * as vscode from 'vscode';
 import { registerCommand } from './utils/register-command';
 import create from './commands/create';
 import component from './commands/create/component';
+import { checkForUpdate } from './utils/installer';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
   const createCommand = registerCommand(create);
   const componentCommand = registerCommand(component);
 
   [createCommand, componentCommand].forEach((command) => context.subscriptions.push(command));
+  
+  await checkForUpdate();
 }
 
 // this method is called when your extension is deactivated

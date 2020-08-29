@@ -17,8 +17,7 @@
 		"type": "github"
 	},
 	"activationEvents": [
-		"onCommand:react-creates-vsc.create",
-		"onCommand:react-creates-vsc.component"
+		"*"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
@@ -72,7 +71,7 @@
 		"lint": "eslint src --ext ts",
 		"watch": "tsc -watch ./",
 		"pretest": "npm run clean && npm run compile && npm run lint",
-		"test": "node ./out/test/runTest.js",
+		"test": "cp ./package.json ./src/test/assets && node ./out/test/runTest.js",
 		"deploy": "npx vsce publish patch",
 		"postdeploy": "node deploy"
 	},
@@ -103,6 +102,7 @@
 		"webpack-cli": "^3.3.12"
 	},
 	"dependencies": {
+		"axios": "^0.20.0",
 		"configstore": "^5.0.1",
 		"execa": "^4.0.3",
 		"find-package-json": "^1.2.0",
