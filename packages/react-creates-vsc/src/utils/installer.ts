@@ -2,15 +2,12 @@ import axios from 'axios';
 import execa from 'execa';
 import * as vscode from 'vscode';
 
-const VALID_VERSION_PATTERN = /^[1-9]\d*(\.[1-9]\d*)*$/;
-
 export class Installer {
   private _latestVersion: string | undefined;
 
   static async getCurrentVersion() {
     const { stdout } = await execa('npm', ['view', 'react-creates', 'version']);
-
-    return VALID_VERSION_PATTERN.test(stdout) ? stdout : undefined;
+    return stdout;
   }
 
   static async create() {
@@ -40,7 +37,7 @@ export class Installer {
   }
 
   async update() {
-    const { stderr } = await execa('npm', ['i', '-g', 'react-creates']);
+    const { stderr } = await execa('npm', ['i', '-g', 'react-creates@latest']);
 
     if (stderr) {
       throw new Error(stderr);
@@ -59,7 +56,6 @@ export const checkForUpdate = async () => {
       title: `React Creates: Checking for updates... (current version: ${installer.currentVersion})`,
     },
     async (progress) => {
-
       await installer.fetchLatestVersion();
 
       progress.report({ increment: 33 });

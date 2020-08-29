@@ -17,7 +17,9 @@
 		"type": "github"
 	},
 	"activationEvents": [
-		"*"
+		"*",
+		"onCommand:react-creates-vsc.create",
+		"onCommand:react-creates-vsc.component"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
