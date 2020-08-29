@@ -7,7 +7,7 @@ export const checkForMainDependencies = async ({ target = process.cwd() } = {}) 
   const hasReact = Boolean(dependencies?.['react'] || devDependencies?.['react']);
 
   if (!hasReact) {
-    throw new Error(`
+    console.warn(`
     Missing ${chalk.bold('React')} dependence.
     This CLI is made for react project 😎 ⚛
   `);
