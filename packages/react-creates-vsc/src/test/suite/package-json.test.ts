@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import { before, after } from 'mocha';
 import { activate } from '../../extension';
-import { activationEvents, contributes } from '../assets/package.json';
+import {  contributes } from '../assets/package.json';
 
 
 const { commands, menus } = contributes;
@@ -27,15 +27,6 @@ suite('Package JSON', () => {
 
   after(() => {
     sinon.reset();
-  });
-
-  test('Command activated', () => {
-
-    const activatedEvent: string[] = activationEvents.map(command => command.slice('onCommand:'.length)).sort();
-
-    expect(
-      activatedEvent
-    ).to.deep.includes.members(fakeContext.subscriptions.sort());
   });
 
   test('Command add contributes', () => {
