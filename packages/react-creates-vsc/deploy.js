@@ -12,7 +12,6 @@ const exe = ([first, ...args]) => {
   if (stderr) {
     console.log('############');
     console.error(stderr);
-    process.exit(1)
   }
 
 };
