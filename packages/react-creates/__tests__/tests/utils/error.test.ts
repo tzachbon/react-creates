@@ -2,73 +2,73 @@ import mockFs from 'mock-fs';
 import { checkForMainDependencies } from '../../../src/utils/error';
 
 const getMockFs = ({ havePackageJson = true }) => {
-
-
-  let options = { havePackageJson }
+  let options = { havePackageJson };
 
   const start = () => {
     const mock = {
-      'main': {
-        'src': {
-          'App.tsx': `import React from 'react'`
-        }
-      }
-    }
+      main: {
+        src: {
+          'App.tsx': `import React from 'react'`,
+        },
+      },
+    };
 
     if (options.havePackageJson) {
       mock.main['package.json'] = `{
         "dependencies": {
           "react": "latest"
         }
-      }`
+      }`;
     }
 
     mockFs(mock);
-  }
+  };
 
   const reset = () => mockFs.restore();
 
   const beforeAndAfter = () => {
     beforeEach(start);
     afterEach(reset);
-  }
+  };
 
   const updateProps = (newProps: any = {}) => {
     options = {
       ...options,
-      ...newProps
-    }
+      ...newProps,
+    };
 
     reset();
     start();
-  }
+  };
 
   return {
     start,
     reset,
     beforeAndAfter,
     updateProps,
-    target: `main/src`
-  }
-}
+    target: `main/src`,
+  };
+};
 
 describe('Error', () => {
-
   const mockDriver = getMockFs({});
-  const { target } = mockDriver
+  const { target } = mockDriver;
 
-  mockDriver.beforeAndAfter()
+  mockDriver.beforeAndAfter();
 
   describe('checkForMainDependencies', () => {
-
     it('should not fail', async () => {
-      await expect(checkForMainDependencies({ target })).resolves.toMatchInlineSnapshot(`undefined`)
-    })
+      await expect(checkForMainDependencies({ target })).resolves.toMatchInlineSnapshot(
+        `undefined`
+      );
+    });
 
     it('should fail', async () => {
+      const warnSpy = jest.spyOn(console, 'warn');
       mockDriver.updateProps({ havePackageJson: false });
-      await expect(checkForMainDependencies({ target })).rejects.toThrowError(/react/ig)
-    })
-  })
+      await checkForMainDependencies({ target });
 
-})
+      expect(warnSpy).toBeCalled();
+    });
+  });
+});
