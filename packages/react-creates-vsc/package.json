@@ -2,7 +2,7 @@
 	"name": "react-creates-vsc",
 	"displayName": "React Creates",
 	"description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
-	"version": "0.0.18",
+	"version": "0.0.19",
 	"publisher": "TzachBonfil",
 	"engines": {
 		"vscode": "^1.45.0"
@@ -30,16 +30,14 @@
 		"type": "github"
 	},
 	"activationEvents": [
-		"*",
-		"onCommand:react-creates-vsc.create",
-		"onCommand:react-creates-vsc.component"
+		"*"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "react-creates-vsc.component",
-				"title": "React Creates: Component",
+				"title": "React Creates: Component"
 			},
 			{
 				"command": "react-creates-vsc.create",
@@ -106,6 +104,6 @@
 		"execa": "^4.0.3",
 		"find-package-json": "^1.2.0",
 		"lodash": "^4.17.19",
-		"react-creates": "^1.0.19"
+		"react-creates": "^1.0.20"
 	}
 }
