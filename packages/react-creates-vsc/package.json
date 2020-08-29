@@ -1,7 +1,7 @@
 {
 	"name": "react-creates-vsc",
 	"displayName": "React Creates",
-	"description": "React Creates (CLI) for you common and useful tools",
+	"description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
 	"version": "0.0.16",
 	"publisher": "TzachBonfil",
 	"engines": {

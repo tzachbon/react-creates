@@ -53,23 +53,26 @@ export const checkForUpdate = async () => {
   await vscode.window.withProgress(
     {
       location: vscode.ProgressLocation.Window,
-      title: `React Creates: Checking for updates... (current version: ${installer.currentVersion})`,
+      title: `React Creates`,
     },
     async (progress) => {
       await installer.fetchLatestVersion();
 
-      progress.report({ increment: 33 });
+      progress.report({
+        increment: 33,
+        message: `Checking for updates... (current version: ${installer.currentVersion})`,
+      });
 
       if (installer.hasLatestVersion) {
         progress.report({
           increment: 100,
-          message: `React Creates: Latest version is installed (${installer.latestVersion})`,
+          message: `Latest version is installed (${installer.latestVersion})`,
         });
       }
 
       progress.report({
         increment: 66,
-        message: `React Creates: Updating to latest version (${installer.latestVersion})`,
+        message: `Updating to latest version (${installer.latestVersion})`,
       });
 
       await installer.update();
