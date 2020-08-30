@@ -1,8 +1,8 @@
-import getPackageJson from '../../utils/get-package-json';
+import execa from 'execa';
 import { program } from 'commander';
 
 export const getVersionRaw = async () => {
-  const { version } = (await getPackageJson()) || {};
+  const { stdout: version } = await execa('npm', 'info react-creates version'.split(' '));
 
   return version;
 };
