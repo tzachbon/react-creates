@@ -9,10 +9,11 @@ export default {
       return vscode.window.showErrorMessage('Path is not found');
     }
 
-    const reactCreates = await ReactCreates.start(path);
-
     try {
+
+      const reactCreates = await ReactCreates.start(path);
       await reactCreates.createComponent();
+      
     } catch (error) {
       vscode.window.showErrorMessage(
         error?.message || 'Something went wrong with the extension :( Please try again'
