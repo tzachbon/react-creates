@@ -30,14 +30,16 @@
 		"type": "github"
 	},
 	"activationEvents": [
-		"*"
+		"*",
+		"onCommand:react-creates-vsc.component",
+		"onCommand:react-creates-vsc.create"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "react-creates-vsc.component",
-				"title": "React Creates: Component",
+				"title": "Component",
 				"category": "React Creates",
 				"icon": {
 					"dark": "assets/add_icon_light.svg",
@@ -46,7 +48,7 @@
 			},
 			{
 				"command": "react-creates-vsc.create",
-				"title": "React Creates",
+				"title": "Create",
 				"category": "React Creates"
 			}
 		],
