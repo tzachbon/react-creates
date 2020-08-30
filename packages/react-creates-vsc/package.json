@@ -30,7 +30,6 @@
 		"type": "github"
 	},
 	"activationEvents": [
-		"*",
 		"onCommand:react-creates-vsc.component",
 		"onCommand:react-creates-vsc.create"
 	],
