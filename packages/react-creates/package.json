@@ -15,8 +15,8 @@
   "readme": "https://github.com/tzachbon/react-creates/tree/master/packages/react-creates/README.md",
   "scripts": {
     "clean": "rm -rf __temp__",
-    "build": "tsc",
-    "predev": "rm -rf dist && tsc && npm link",
+    "build": "tsc -b",
+    "predev": "rm -rf dist && npm run build && npm link",
     "dev": "tsc -w",
     "lint": "eslint --ext .js,.ts .",
     "pretest": "npm run build",
@@ -46,6 +46,7 @@
   },
   "license": "ISC",
   "dependencies": {
+    "execa": "^4.0.3",
     "chalk": "^4.1.0",
     "commander": "^5.1.0",
     "configstore": "^5.0.1",
@@ -76,7 +77,6 @@
     "auto-changelog": "^2.2.0",
     "chance": "^1.1.6",
     "create-react-app": "^3.4.1",
-    "execa": "^4.0.3",
     "husky": "^4.2.5",
     "jest": "^26.1.0",
     "mock-fs": "^4.12.0",

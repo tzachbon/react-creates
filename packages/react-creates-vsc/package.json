@@ -37,11 +37,17 @@
 		"commands": [
 			{
 				"command": "react-creates-vsc.component",
-				"title": "React Creates: Component"
+				"title": "React Creates: Component",
+				"category": "React Creates",
+				"icon": {
+					"dark": "assets/add_icon_light.svg",
+					"light": "assets/add_icon_dark.svg"
+				}
 			},
 			{
 				"command": "react-creates-vsc.create",
-				"title": "React Creates"
+				"title": "React Creates",
+				"category": "React Creates"
 			}
 		],
 		"menus": {

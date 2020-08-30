@@ -1,7 +1,7 @@
-import { CreateComponentOptions } from "./types";
-import { join, sep } from "path";
+import { join } from "path";
 import { copyTemplate } from "../../utils/copy-template";
 import { replaceVariables, Variables } from "../../utils/replace-variables";
+import { CreateComponentOptions } from "./types";
 
 export const runCreateComponent = async (options: CreateComponentOptions) => {
   const { target, language, type } = options;

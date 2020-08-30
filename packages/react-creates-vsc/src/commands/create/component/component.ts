@@ -1,9 +1,10 @@
 import * as vscode from 'vscode';
 import ReactCreates from '../../../utils/react-creates';
+import { getPath } from '../../../utils/get-path';
 
 export default {
   name: 'react-creates-vsc.component',
-  command: async ({ path = '' } = {}) => {
+  command: async ({ path = getPath() } = {}) => {
     if (!path) {
       return vscode.window.showErrorMessage('Path is not found');
     }
