@@ -1,23 +1,16 @@
 import * as vscode from 'vscode';
 import ReactCreates from '../../../utils/react-creates';
-import { getPath } from '../../../utils/get-path';
-import { Optional } from 'utility-types';
+import { Command } from '../../../utils/register-command';
 
-export default {
+const command: Command = {
   name: 'react-creates-vsc.component',
-  command: async ({
-    path,
-    ...rest
-  }: { path?: string | undefined; _fsPath?: string | undefined } = {}) => {
-    
-    path ||= rest._fsPath;
-
-    if (!path) {
+  command: async (contextUri) => {
+    if (!contextUri?.fsPath) {
       return vscode.window.showErrorMessage('Path is not found');
     }
 
     try {
-      const reactCreates = await ReactCreates.start(path);
+      const reactCreates = await ReactCreates.start(contextUri.fsPath);
       await reactCreates.createComponent();
     } catch (error) {
       vscode.window.showErrorMessage(
@@ -26,3 +19,5 @@ export default {
     }
   },
 };
+
+export default command;

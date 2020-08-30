@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 
-interface Command {
+export interface Command {
   name: string;
-  command: (...args: any[]) => any;
+  command: (contextUri?: vscode.Uri) => any;
 }
 
 export const registerCommand = (
