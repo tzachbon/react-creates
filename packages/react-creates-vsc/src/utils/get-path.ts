@@ -1,4 +1,6 @@
 import * as vscode from 'vscode';
 
 export const getPath = () =>
-  vscode.window.activeTextEditor?.document.uri.path || vscode.workspace.rootPath;
+  vscode.Uri.file(
+    vscode.window.activeTextEditor?.document.uri.path || vscode.workspace.rootPath || ''
+  ).fsPath;
