@@ -30,6 +30,7 @@
 		"type": "github"
 	},
 	"activationEvents": [
+		"*",
 		"onCommand:react-creates-vsc.component",
 		"onCommand:react-creates-vsc.create"
 	],
@@ -97,7 +98,6 @@
 		"sinon": "^9.0.3",
 		"ts-loader": "^8.0.2",
 		"ts-mocha": "^7.0.0",
-		"typescript": "^3.8.3",
 		"utility-types": "^3.10.0",
 		"vscode-test": "^1.4.0",
 		"webpack": "^4.44.1",
