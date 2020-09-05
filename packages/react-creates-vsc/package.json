@@ -2,7 +2,7 @@
 	"name": "react-creates-vsc",
 	"displayName": "React Creates",
 	"description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
-	"version": "0.0.25",
+	"version": "0.0.26",
 	"publisher": "TzachBonfil",
 	"engines": {
 		"vscode": "^1.45.0"
