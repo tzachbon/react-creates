@@ -31,6 +31,7 @@ export const createComponent = () =>
     .option('-s --style <styling>', 'Selected the style')
     .option('--ignore-cache', "Won't use cache values")
     .option('--skip-cache', "Won't save cache values")
+    .option('--dry-run', 'Only logs the options')
     .action(async (name, _) => {
       await createComponentRaw(name, _.opts());
     });
@@ -49,6 +50,7 @@ export interface CreateComponent {
   class?: boolean;
   ignoreCache?: boolean;
   skipCache?: boolean;
+  dryRun?: boolean;
 }
 
 export const createComponentRaw = async (
@@ -67,6 +69,7 @@ export const createComponentRaw = async (
     class: klass,
     skipCache,
     ignoreCache,
+    dryRun,
   }: CreateComponent
 ) => {
   const config = await getConfig({ target, skipCache });
@@ -110,6 +113,11 @@ export const createComponentRaw = async (
     };
 
     optionsLogger(options);
+
+    if (dryRun) {
+      return;
+    }
+
     await runCreateComponent(options);
   } catch (e) {
     throw e;

@@ -102,6 +102,7 @@ Here how to do create one in seconds:
 | `--skip-test`               | `false`                                         | boolean                      | Will not create test file                                        |
 | `--skip-cache`              | `false`                                         | boolean                      | Won't save cache values                                          |
 | `--ignore-cache`            | `false`                                         | boolean                      | Won't use cache values                                           |
+| `--dry-run`                 | `false`                                         | boolean                      | Only logs the options                                            |
 
 ### Examples
 
