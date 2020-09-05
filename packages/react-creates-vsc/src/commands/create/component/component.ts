@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { getPath } from '../../../utils/get-path';
 import ReactCreates from '../../../utils/react-creates';
 import { Command } from '../../../utils/register-command';
 
@@ -6,7 +7,7 @@ const command: Command = {
   name: 'react-creates-vsc.component',
   command: async (contextUri) => {
     if (!contextUri?.fsPath) {
-      return vscode.window.showErrorMessage('Path is not found');
+      contextUri = getPath();
     }
 
     try {
