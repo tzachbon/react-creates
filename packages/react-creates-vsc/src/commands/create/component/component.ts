@@ -10,7 +10,7 @@ const command: Command = {
     }
 
     try {
-      const reactCreates = await ReactCreates.start(contextUri.fsPath);
+      const reactCreates = await ReactCreates.start(contextUri);
       await reactCreates.createComponent();
     } catch (error) {
       vscode.window.showErrorMessage(

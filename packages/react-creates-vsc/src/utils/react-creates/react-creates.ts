@@ -1,8 +1,10 @@
-import { window, Terminal } from 'vscode';
+import { window, Terminal, Uri, workspace } from 'vscode';
+import { sep } from 'path';
 import { isNil } from 'lodash';
 import { ValuesType } from 'utility-types';
 import { parseTarget, Language, Styles, Types, getConfig, Config, PARSE_KEYS } from 'react-creates';
 import { cacheTypes, getQuickOptions, getYesOrNoQuestion, yesOrNoQuestion } from './utils';
+import { Terminals } from './../terminals';
 
 const getStyleQuestions = async () => await getQuickOptions<Styles>('Type of style', Styles);
 const getTypesQuestions = async () => await getQuickOptions<Types>('Type of style', Types);
@@ -10,38 +12,30 @@ const getTypesQuestions = async () => await getQuickOptions<Types>('Type of styl
 export default class ReactCreates {
   terminals: Record<string, Terminal> = {};
 
-  static getTerminalName(name: string) {
-    return `React Creates: ${name}`;
+  static async start(contextUri: Uri) {
+    return new ReactCreates(contextUri, await getConfig({ target: contextUri.fsPath }));
   }
 
-  static async start(target: string) {
-    return new ReactCreates(target, await getConfig({ target }));
+  getComponentCommend(componentName: string, options: string[]) {
+    return ['npx', 'react-creates', 'component', componentName, ...options].join(' ');
   }
 
-  private constructor(private target: string, private readonly config: Config) {}
+  private constructor(private contextUri: Uri, private readonly config: Config) {}
 
   async cleanCache() {
     this.config.clean();
   }
 
-  runCommand(name: string, cwd: string, shellArgs: string[] = []) {
-    let terminal = this.terminals[name];
+  get fsPath() {
+    return this.contextUri.fsPath;
+  }
 
-    if (!terminal) {
-      terminal = window.createTerminal({
-        name: ReactCreates.getTerminalName(name),
-        cwd,
-      });
+  private getExtraPath() {
+    const workspaceFolder = workspace.getWorkspaceFolder(this.contextUri)!;
+    const workspaceFolderPathLength = workspaceFolder.uri.fsPath.split(sep).length;
+    const fsPath = this.fsPath.split(sep);
 
-      this.terminals[name] = terminal;
-    } else {
-      terminal.sendText('cd ' + cwd);
-    }
-
-    terminal.sendText(shellArgs.join(' '));
-    terminal.show(true);
-
-    return terminal;
+    return fsPath.slice(workspaceFolderPathLength).join(sep);
   }
 
   async createComponent() {
@@ -59,7 +53,7 @@ export default class ReactCreates {
       placeHolder: customOption.default,
     });
 
-    let target = await parseTarget({ name, target: this.target });
+    let target = await parseTarget({ name, target: this.fsPath });
     let types: Types | undefined;
     let language: Language | undefined;
     let style: Styles | undefined;
@@ -107,7 +101,7 @@ export default class ReactCreates {
       }
     }
 
-    const options: string[] = [];
+    let options: string[] = [];
 
     if (language) {
       options.push('-l', language);
@@ -139,13 +133,13 @@ export default class ReactCreates {
       options.push('--skip-cache');
     }
 
-    this.runCommand('component', target.slice(0, name.length * -1), [
-      'npx',
-      'react-creates',
-      'component',
-      name,
-      ...options,
-    ]);
+    const extraPath = this.getExtraPath();
+
+    if (extraPath) {
+      options = ['-d', extraPath, ...options];
+    }
+
+    Terminals.send(this.contextUri, this.getComponentCommend(name, options));
 
     return {
       name,
