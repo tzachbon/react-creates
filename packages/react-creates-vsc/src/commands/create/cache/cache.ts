@@ -1,14 +1,15 @@
 import * as vscode from 'vscode';
 import ReactCreates from '../../../utils/react-creates';
+import { Command } from '../../../utils/register-command';
 
-export default {
+const command: Command = {
   name: 'react-creates-vsc.clean-cache',
-  command: async ({ path = '' } = {}) => {
-    if (!path) {
+  command: async (contextUri) => {
+    if (!contextUri) {
       return vscode.window.showErrorMessage('Path is not found');
     }
 
-    const reactCreates = await ReactCreates.start(path);
+    const reactCreates = await ReactCreates.start(contextUri);
 
     try {
       await reactCreates.cleanCache();
@@ -20,3 +21,5 @@ export default {
     }
   }
 };
+
+export default command;
