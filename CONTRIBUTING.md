@@ -17,7 +17,7 @@ Please ask first if somebody else is already working on this or the core develop
 ## Local Setup
 
 - Clone the repo
-- Run `npm i` in the yoshi monorepo root.
+- Run `npm i` in the root.
 
 ## Test
 
