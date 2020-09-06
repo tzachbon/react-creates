@@ -6,20 +6,9 @@
   "useWorkspaces": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "start": "lerna run start --stream",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "test": "npx jest"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
-    "collectCoverageFrom": [
-      "packages/*/src/**/*.{js,jsx,ts,tsx}"
-    ]
+    "postinstall": "npm run bootstrap",
+    "test": "lerna run test --stream",
+    "deploy": "lerna run deploy --stream"
   },
   "devDependencies": {
     "@types/jest": "^26.0.7",
