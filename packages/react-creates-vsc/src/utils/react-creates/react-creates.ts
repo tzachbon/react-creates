@@ -71,7 +71,7 @@ export default class ReactCreates {
         ...Language,
       });
 
-      if ((language as any) === 'AUTO') {
+      if ((language as any) === 'Auto calculate (easy)') {
         language = undefined;
       }
 
