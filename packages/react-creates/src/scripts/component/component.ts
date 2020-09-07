@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import getConfig from '../../utils/config';
 import { runCreateComponent } from './run';
 import { CreateComponentOptions } from './types';
-import { optionsLogger } from './options-logger';
+import { optionsLogger } from './log/options-logger';
 import { checkForMainDependencies } from '../../utils/error';
 
 import { parsePropTypes } from './parsers/parse-prop-types';
@@ -13,6 +13,7 @@ import { parseStyle, Styles } from './parsers/parse-style';
 import { parseTarget } from './parsers/parse-target';
 import { LANGUAGE_MESSAGE, parseLanguage, Language } from './parsers/parse-language';
 import { TYPE_MESSAGE, parseTypes, Types } from './parsers/parse-type';
+import { logHeader } from './log/log-header';
 
 export const createComponent = () =>
   program
@@ -92,11 +93,7 @@ export const createComponentRaw = async (
   }
 
   try {
-    console.log(`
-        React Creates: ${chalk.blueBright.bold('Component')} 
-
-        Parsing arguments...
-        `);
+    logHeader(name);
 
     target = await parseTarget({ name, target });
 
