@@ -122,4 +122,4 @@ Please [open an issue](https://github.com/tzachbon/react-creates/issues/new) for
 
 # Contributing 👩‍💻
 
-Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch, add commits, and [open a pull request](https://github.com/tzachbon/react-creates/compare/).
+Please contribute using [contributing guide](../../CONTRIBUTING.md). Create a branch, add commits, and [open a pull request](https://github.com/tzachbon/react-creates/compare/).
