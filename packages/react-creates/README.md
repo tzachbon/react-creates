@@ -77,9 +77,8 @@ For example:
 
 ## Component
 
-React lets you define components as classes or functions.
-But why you need to write it every time?
-Here how to do create one in seconds:
+React lets you define components as classes or functions, but why you need to write it every time?
+Here how to create one in seconds:
 
 ### Start
 
