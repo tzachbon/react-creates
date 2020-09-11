@@ -69,7 +69,7 @@ export class TempProject {
     await this.updatePackageJsonName(this.target);
 
     if (this.options.install) {
-      await execa('yarn', { cwd: this.target });
+      await execa('npm', ['i'], { cwd: this.target });
     }
   }
 
