@@ -17,7 +17,7 @@ Please ask first if somebody else is already working on this or the core develop
 ## Local Setup
 
 - Clone the repo
-- Run `npm i` in the root.
+- Run `npm install` in the root.
 
 ## Test
 
