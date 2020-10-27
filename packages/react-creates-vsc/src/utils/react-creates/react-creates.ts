@@ -60,7 +60,7 @@ export default class ReactCreates {
     let propTypes: boolean | undefined;
     let skipTest: boolean | undefined;
     let cache: ValuesType<typeof cacheTypes> | undefined;
-
+    
     if (isCustom === customOption.custom) {
       target = (await window.showInputBox({ value: target })) || target;
 
@@ -89,7 +89,6 @@ export default class ReactCreates {
 
       const nilKeys = Object.entries({
         types,
-        language,
         style,
         propTypes,
         skipTest,
