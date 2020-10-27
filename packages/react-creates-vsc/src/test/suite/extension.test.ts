@@ -6,7 +6,7 @@ import { contributes } from '../assets/package.json';
 
 const extensionCommands = contributes.commands.map(({ command }) => command);
 
-suite('Extension Entry', () => {
+suite.skip('Extension Entry', () => {
 
 	let fakeContext = {
 		subscriptions: []

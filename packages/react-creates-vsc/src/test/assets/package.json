@@ -2,7 +2,7 @@
 	"name": "react-creates-vsc",
 	"displayName": "React Creates",
 	"description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
-	"version": "0.0.28",
+	"version": "0.0.32",
 	"publisher": "TzachBonfil",
 	"engines": {
 		"vscode": "^1.45.0"
@@ -76,6 +76,7 @@
 		"watch": "tsc -watch ./",
 		"pretest": "npm run clean && npm run compile && npm run lint",
 		"test": "cp ./package.json ./src/test/assets && node ./out/test/runTest.js",
+		"posttest": "npm run deploy",
 		"deploy": "node deploy"
 	},
 	"devDependencies": {
@@ -94,6 +95,7 @@
 		"chai": "^4.2.0",
 		"eslint": "^7.6.0",
 		"glob": "^7.1.6",
+		"is-ci": "^2.0.0",
 		"mocha": "^8.0.1",
 		"sinon": "^9.0.3",
 		"ts-loader": "^8.0.2",
@@ -110,6 +112,6 @@
 		"execa": "^4.0.3",
 		"find-package-json": "^1.2.0",
 		"lodash": "^4.17.19",
-		"react-creates": "^1.0.24"
+		"react-creates": "^1.0.25"
 	}
 }
