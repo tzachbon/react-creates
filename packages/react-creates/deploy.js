@@ -84,4 +84,46 @@
 
 // program.parse(process.argv);
 
-console.log('Try to deploy package')
+const isCI = require('is-ci');
+const fs = require('fs/promises');
+const path = require('path');
+const axios = require('axios').default
+
+const packAgeJsonPath = path.join(__dirname, 'package.json');
+
+
+const fetchVersion = async () => {
+  const {
+    data: { version: latestVersion },
+  } = await axios('http://registry.npmjs.com/react-creates/latest');
+
+  return latestVersion.trim()
+}
+
+const getPackageJson = async () => {
+  const packageJsonString = await fs.readFile(packAgeJsonPath, 'utf8');
+  const packageJson = JSON.parse(packageJsonString);
+
+  return packageJson;
+}
+
+(async () => {
+
+  if (isCI) {
+
+    const version = await fetchVersion();
+
+    const [major, minor, patch] = version.split('.').map(Number);
+
+    let packageJson = await getPackageJson();
+
+    packageJson.version = `${major}.${minor}.${patch + 1}`
+
+    await fs.writeFile(packAgeJsonPath, JSON.stringify(packageJson, null, 2));
+  } else {
+    console.log('Can not deploy when not in CI');
+  }
+
+  packageJson = await getPackageJson();
+  console.log('Current version: ' + packageJson.version);
+})()
