@@ -8,6 +8,7 @@
     "bootstrap": "lerna bootstrap",
     "postinstall": "npm run bootstrap",
     "test": "lerna run test --stream",
+    "posttest": "npm run deploy",
     "deploy": "lerna run deploy --stream"
   },
   "devDependencies": {
