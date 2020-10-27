@@ -19,7 +19,7 @@ const exe = ([first, ...args]) => {
 exe(['npm', 'i', 'react-creates@latest']);
 
 if (isCI) {
-  exe(['npx', 'vsce', 'publish', 'patch']);
+  exe(['npx', 'vsce', 'publish', 'patch', '-p', process.env.VSC_TOKEN]);
 }
 // exe(['git', 'add', 'package.json']);
 // exe(['git', 'commit', '-m', `vsc: ${require('./package.json').version}`]);
