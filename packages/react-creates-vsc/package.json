@@ -74,7 +74,7 @@
 		"compile": "tsc ",
 		"lint": "eslint src --ext ts",
 		"watch": "tsc -watch ./",
-		"pretest": "npm run clean && npm run compile && npm run lint",
+		"pretest": "npm run clean && npm run compile && npm run webpack && npm run lint",
 		"test": "cp ./package.json ./src/test/assets && node ./out/test/runTest.js",
 		"posttest": "npm run deploy",
 		"deploy": "node deploy"
