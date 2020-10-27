@@ -6,8 +6,23 @@ export class Installer {
   private _latestVersion: string | undefined;
 
   static async getCurrentVersion() {
-    const { stdout } = await execa('npm', ['view', 'react-creates', 'version']);
-    return stdout;
+    const execaValue = await execa(
+      'npm',
+      ['list', '--depth', '1', '--global', 'react-creates'],
+      { reject: false }
+    ) as execa.ExecaReturnValue<string> | Error;
+
+    let splitValue = '';
+
+    if ('message' in execaValue) {
+      splitValue = execaValue.message;
+    } else {
+      splitValue = execaValue.stdout;
+    }
+
+    const version = splitValue?.split('@')?.[1]
+
+    return version?.trim();
   }
 
   static async create() {
@@ -16,9 +31,9 @@ export class Installer {
     return new Installer(currentVersion);
   }
 
-  private constructor(public currentVersion: string | undefined) {}
+  private constructor(public currentVersion: string | undefined) { }
 
-  get hasLatestVersion() {
+  hasLatestVersion() {
     return !!this.currentVersion && this.currentVersion === this.latestVersion;
   }
 
@@ -27,7 +42,7 @@ export class Installer {
       data: { version: latestVersion },
     } = await axios('http://registry.npmjs.com/react-creates/latest');
 
-    this._latestVersion = latestVersion;
+    this._latestVersion = latestVersion?.trim();
 
     return this._latestVersion;
   }
@@ -56,31 +71,36 @@ export const checkForUpdate = async () => {
       title: `React Creates`,
     },
     async (progress) => {
-      await installer.fetchLatestVersion();
+      try {
+        await installer.fetchLatestVersion();
 
-      progress.report({
-        increment: 33,
-        message: `Checking for updates... (current version: ${installer.currentVersion})`,
-      });
+        progress.report({
+          increment: 33,
+          message: `Checking for updates... (current version: ${installer.currentVersion})`,
+        });
 
-      if (installer.hasLatestVersion) {
+        if (installer.hasLatestVersion()) {
+          return progress.report({
+            increment: 100,
+            message: `Latest version is installed (${installer.latestVersion})`,
+          });
+        }
+
+        progress.report({
+          increment: 66,
+          message: `Updating to latest version (${installer.latestVersion})`,
+        });
+
+        await installer.update();
+
         progress.report({
           increment: 100,
-          message: `Latest version is installed (${installer.latestVersion})`,
+          message: `React Creates: Update completed (${installer.currentVersion})`,
         });
+      } catch (e) {
+        vscode.window.showErrorMessage('Failed to update - for better experience run `npm i -g react-creates`')
       }
 
-      progress.report({
-        increment: 66,
-        message: `Updating to latest version (${installer.latestVersion})`,
-      });
-
-      await installer.update();
-
-      progress.report({
-        increment: 100,
-        message: `React Creates: Update completed (${installer.currentVersion})`,
-      });
     }
   );
 };
