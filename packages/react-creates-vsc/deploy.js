@@ -1,4 +1,5 @@
 const execa = require('execa');
+const isCI = require('is-ci')
 
 const exe = ([first, ...args]) => {
   const { stdout, stderr } = execa.sync(first, [...args]);
@@ -16,6 +17,9 @@ const exe = ([first, ...args]) => {
 };
 
 exe(['npm', 'i', 'react-creates@latest']);
-exe(['npx', 'vsce', 'publish', 'patch']);
-exe(['git', 'add', 'package.json']);
-exe(['git', 'commit', '-m', `vsc: ${require('./package.json').version}`]);
+
+if (isCI) {
+  exe(['npx', 'vsce', 'publish', 'patch']);
+}
+// exe(['git', 'add', 'package.json']);
+// exe(['git', 'commit', '-m', `vsc: ${require('./package.json').version}`]);
