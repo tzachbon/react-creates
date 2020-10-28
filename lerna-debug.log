@@ -1,0 +1,249 @@
+0 silly argv {
+0 silly argv   _: [ 'bootstrap' ],
+0 silly argv   hoist: true,
+0 silly argv   lernaVersion: '3.22.1',
+0 silly argv   '$0': '/usr/local/bin/lerna'
+0 silly argv }
+1 notice cli v3.22.1
+2 verbose rootPath /Users/tzachb/Desktop/Tzach/react-creates
+3 verbose hoist using globs ["**"]
+4 silly npmConfig {
+4 silly npmConfig   registry: undefined,
+4 silly npmConfig   npmClient: 'npm',
+4 silly npmConfig   npmClientArgs: [],
+4 silly npmConfig   mutex: undefined
+4 silly npmConfig }
+5 info Bootstrapping 2 packages
+6 verbose lifecycle preinstall
+7 silly lifecycle No script for "preinstall" in "react-creates-vsc", continuing
+8 silly lifecycle No script for "preinstall" in "react-creates", continuing
+9 warn EHOIST_ROOT_VERSION The repository root depends on @types/jest@^26.0.7, which differs from the more common @types/jest@26.0.0.
+10 warn EHOIST_PKG_VERSION "react-creates" package depends on @types/jest@26.0.0, which differs from the hoisted @types/jest@^26.0.7.
+11 warn EHOIST_ROOT_VERSION The repository root depends on @types/node@^14.0.26, which differs from the more common @types/node@14.0.13.
+12 warn EHOIST_PKG_VERSION "react-creates-vsc" package depends on @types/node@^14.0.27, which differs from the hoisted @types/node@^14.0.26.
+13 warn EHOIST_PKG_VERSION "react-creates" package depends on @types/node@14.0.13, which differs from the hoisted @types/node@^14.0.26.
+14 warn EHOIST_ROOT_VERSION The repository root depends on ts-jest@^26.1.3, which differs from the more common ts-jest@^26.1.2.
+15 warn EHOIST_PKG_VERSION "react-creates" package depends on ts-jest@^26.1.2, which differs from the hoisted ts-jest@^26.1.3.
+16 warn EHOIST_ROOT_VERSION The repository root depends on typescript@^4.0.2, which differs from the more common typescript@^3.9.6.
+17 warn EHOIST_PKG_VERSION "react-creates" package depends on typescript@^3.9.6, which differs from the hoisted typescript@^4.0.2.
+18 warn EHOIST_PKG_VERSION "react-creates-vsc" package depends on @types/lodash@^4.14.159, which differs from the hoisted @types/lodash@^4.14.157.
+19 warn EHOIST_PKG_VERSION "react-creates-vsc" package depends on axios@^0.20.0, which differs from the hoisted axios@^0.21.0.
+20 silly hasDependencyInstalled react-creates @types/execa
+21 silly hasDependencyInstalled react-creates @types/jest
+22 silly hasDependencyInstalled react-creates @types/node
+23 silly hasDependencyInstalled react-creates @types/react
+24 silly hasDependencyInstalled react-creates @types/react-dom
+25 silly hasDependencyInstalled react-creates execa
+26 silly hasDependencyInstalled react-creates jest
+27 silly hasDependencyInstalled react-creates lerna
+28 silly hasDependencyInstalled react-creates ts-jest
+29 silly hasDependencyInstalled react-creates typescript
+30 silly hasDependencyInstalled react-creates @types/chai
+31 silly hasDependencyInstalled react-creates @types/find-package-json
+32 silly hasDependencyInstalled react-creates @types/glob
+33 silly hasDependencyInstalled react-creates @types/lodash
+34 silly hasDependencyInstalled react-creates @types/mocha
+35 silly hasDependencyInstalled react-creates @types/promise-timeout
+36 silly hasDependencyInstalled react-creates @types/sinon
+37 silly hasDependencyInstalled react-creates @types/vscode
+38 silly hasDependencyInstalled react-creates @typescript-eslint/eslint-plugin
+39 silly hasDependencyInstalled react-creates @typescript-eslint/parser
+40 silly hasDependencyInstalled react-creates chai
+41 silly hasDependencyInstalled react-creates eslint
+42 silly hasDependencyInstalled react-creates glob
+43 silly hasDependencyInstalled react-creates is-ci
+44 silly hasDependencyInstalled react-creates mocha
+45 silly hasDependencyInstalled react-creates sinon
+46 silly hasDependencyInstalled react-creates ts-loader
+47 silly hasDependencyInstalled react-creates ts-mocha
+48 silly hasDependencyInstalled react-creates utility-types
+49 silly hasDependencyInstalled react-creates vscode-test
+50 silly hasDependencyInstalled react-creates webpack
+51 silly hasDependencyInstalled react-creates webpack-cli
+52 silly hasDependencyInstalled react-creates axios
+53 silly hasDependencyInstalled react-creates configstore
+54 silly hasDependencyInstalled react-creates find-package-json
+55 silly hasDependencyInstalled react-creates lodash
+56 silly hasDependencyInstalled react-creates react-creates
+57 silly hasDependencyInstalled react-creates @types/axios
+58 silly hasDependencyInstalled react-creates @types/chalk
+59 silly hasDependencyInstalled react-creates @types/chance
+60 silly hasDependencyInstalled react-creates @types/commander
+61 silly hasDependencyInstalled react-creates @types/configstore
+62 silly hasDependencyInstalled react-creates @types/inquirer
+63 silly hasDependencyInstalled react-creates @types/listr
+64 silly hasDependencyInstalled react-creates @types/mock-fs
+65 silly hasDependencyInstalled react-creates @types/mustache
+66 silly hasDependencyInstalled react-creates @types/ncp
+67 silly hasDependencyInstalled react-creates @types/tempy
+68 silly hasDependencyInstalled react-creates @types/update-notifier
+69 silly hasDependencyInstalled react-creates auto-changelog
+70 silly hasDependencyInstalled react-creates chance
+71 silly hasDependencyInstalled react-creates create-react-app
+72 silly hasDependencyInstalled react-creates mock-fs
+73 silly hasDependencyInstalled react-creates tempy
+74 silly hasDependencyInstalled react-creates chalk
+75 silly hasDependencyInstalled react-creates commander
+76 silly hasDependencyInstalled react-creates inquirer
+77 silly hasDependencyInstalled react-creates listr
+78 silly hasDependencyInstalled react-creates mustache
+79 silly hasDependencyInstalled react-creates ncp
+80 silly hasDependencyInstalled react-creates update-notifier
+81 silly hasDependencyInstalled react-creates @types/jest
+82 silly hasDependencyInstalled react-creates-vsc @types/node
+83 silly hasDependencyInstalled react-creates @types/node
+84 silly hasDependencyInstalled react-creates ts-jest
+85 silly hasDependencyInstalled react-creates typescript
+86 silly hasDependencyInstalled react-creates-vsc @types/lodash
+87 silly hasDependencyInstalled react-creates-vsc axios
+88 silly root dependencies {}
+89 silly leaf dependencies {}
+90 info Installing external dependencies
+91 verbose actions 2 actions, concurrency 16
+92 info hoist Installing hoisted dependencies into root
+93 silly npmInstallDependencies react-creates [
+93 silly npmInstallDependencies   '@types/execa@^2.0.0',
+93 silly npmInstallDependencies   '@types/jest@^26.0.7',
+93 silly npmInstallDependencies   '@types/node@^14.0.26',
+93 silly npmInstallDependencies   '@types/react@^16.9.43',
+93 silly npmInstallDependencies   '@types/react-dom@^16.9.8',
+93 silly npmInstallDependencies   'execa@^4.0.3',
+93 silly npmInstallDependencies   'jest@^26.1.0',
+93 silly npmInstallDependencies   'lerna@^3.22.1',
+93 silly npmInstallDependencies   'ts-jest@^26.1.3',
+93 silly npmInstallDependencies   'typescript@^4.0.2',
+93 silly npmInstallDependencies   '@types/chai@^4.2.12',
+93 silly npmInstallDependencies   '@types/find-package-json@^1.1.1',
+93 silly npmInstallDependencies   '@types/glob@^7.1.3',
+93 silly npmInstallDependencies   '@types/lodash@^4.14.157',
+93 silly npmInstallDependencies   '@types/mocha@^8.0.0',
+93 silly npmInstallDependencies   '@types/promise-timeout@^1.3.0',
+93 silly npmInstallDependencies   '@types/sinon@^9.0.4',
+93 silly npmInstallDependencies   '@types/vscode@^1.45.0',
+93 silly npmInstallDependencies   '@typescript-eslint/eslint-plugin@^3.8.0',
+93 silly npmInstallDependencies   '@typescript-eslint/parser@^3.8.0',
+93 silly npmInstallDependencies   'chai@^4.2.0',
+93 silly npmInstallDependencies   'eslint@^7.6.0',
+93 silly npmInstallDependencies   'glob@^7.1.6',
+93 silly npmInstallDependencies   'is-ci@^2.0.0',
+93 silly npmInstallDependencies   'mocha@^8.0.1',
+93 silly npmInstallDependencies   'sinon@^9.0.3',
+93 silly npmInstallDependencies   'ts-loader@^8.0.2',
+93 silly npmInstallDependencies   'ts-mocha@^7.0.0',
+93 silly npmInstallDependencies   'utility-types@^3.10.0',
+93 silly npmInstallDependencies   'vscode-test@^1.4.0',
+93 silly npmInstallDependencies   'webpack@^4.44.1',
+93 silly npmInstallDependencies   'webpack-cli@^3.3.12',
+93 silly npmInstallDependencies   'axios@^0.21.0',
+93 silly npmInstallDependencies   'configstore@^5.0.1',
+93 silly npmInstallDependencies   'find-package-json@^1.2.0',
+93 silly npmInstallDependencies   'lodash@^4.17.19',
+93 silly npmInstallDependencies   'react-creates@^1.0.25',
+93 silly npmInstallDependencies   '@types/axios@^0.14.0',
+93 silly npmInstallDependencies   '@types/chalk@^2.2.0',
+93 silly npmInstallDependencies   '@types/chance@^1.1.0',
+93 silly npmInstallDependencies   '@types/commander@^2.12.2',
+93 silly npmInstallDependencies   '@types/configstore@^4.0.0',
+93 silly npmInstallDependencies   '@types/inquirer@^6.5.0',
+93 silly npmInstallDependencies   '@types/listr@^0.14.2',
+93 silly npmInstallDependencies   '@types/mock-fs@^4.10.0',
+93 silly npmInstallDependencies   '@types/mustache@^4.0.1',
+93 silly npmInstallDependencies   '@types/ncp@^2.0.4',
+93 silly npmInstallDependencies   '@types/tempy@^0.3.0',
+93 silly npmInstallDependencies   '@types/update-notifier@^4.1.1',
+93 silly npmInstallDependencies   'auto-changelog@^2.2.0',
+93 silly npmInstallDependencies   'chance@^1.1.6',
+93 silly npmInstallDependencies   'create-react-app@^3.4.1',
+93 silly npmInstallDependencies   'mock-fs@^4.12.0',
+93 silly npmInstallDependencies   'tempy@^0.5.0',
+93 silly npmInstallDependencies   'chalk@^4.1.0',
+93 silly npmInstallDependencies   'commander@^5.1.0',
+93 silly npmInstallDependencies   'inquirer@^7.3.2',
+93 silly npmInstallDependencies   'listr@^0.14.3',
+93 silly npmInstallDependencies   'mustache@^4.0.1',
+93 silly npmInstallDependencies   'ncp@^2.0.0',
+93 silly npmInstallDependencies   'update-notifier@^4.1.1'
+93 silly npmInstallDependencies ]
+94 silly npmInstallDependencies backup /Users/tzachb/Desktop/Tzach/react-creates/package.json
+95 info hoist Pruning hoisted dependencies
+96 silly prune [
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@types/execa',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/execa',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/execa',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/jest',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/typescript',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@types/chai',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@types/find-package-json',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/@types/find-package-json',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@types/glob',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/@types/lodash',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@types/mocha',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@types/promise-timeout',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@types/sinon',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@types/vscode',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@typescript-eslint/eslint-plugin',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@typescript-eslint/parser',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/chai',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/eslint',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/glob',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/is-ci',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/is-ci',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/mocha',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/sinon',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/ts-loader',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/ts-mocha',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/utility-types',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/utility-types',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/vscode-test',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/webpack',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/webpack-cli',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/axios',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/configstore',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/configstore',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/find-package-json',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/find-package-json',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/lodash',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/lodash',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/react-creates',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/@types/axios',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/@types/chalk',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/@types/chance',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/@types/commander',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/@types/configstore',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/@types/inquirer',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/@types/listr',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/@types/mock-fs',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/@types/mustache',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/@types/ncp',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/@types/tempy',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/@types/update-notifier',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/auto-changelog',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/chance',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/create-react-app',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/mock-fs',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/tempy',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/chalk',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/commander',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/inquirer',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/listr',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/mustache',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/ncp',
+96 silly prune   '/Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/update-notifier'
+96 silly prune ]
+97 silly rimrafDir /Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@types/execa
+98 silly rimrafDir /Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/execa
+99 silly rimrafDir /Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/execa
+100 silly rimrafDir /Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/jest
+101 silly rimrafDir /Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/typescript
+102 silly rimrafDir /Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@types/chai
+103 silly rimrafDir /Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@types/find-package-json
+104 silly rimrafDir /Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/@types/find-package-json
+105 silly rimrafDir /Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@types/glob
+106 silly rimrafDir /Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates/node_modules/@types/lodash
+107 silly rimrafDir /Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@types/mocha
+108 silly rimrafDir /Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@types/promise-timeout
+109 silly rimrafDir /Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@types/sinon
+110 silly rimrafDir /Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@types/vscode
+111 silly rimrafDir /Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@typescript-eslint/eslint-plugin
+112 silly rimrafDir /Users/tzachb/Desktop/Tzach/react-creates/packages/react-creates-vsc/node_modules/@typescript-eslint/parser
+113 error
