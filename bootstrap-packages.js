@@ -16,6 +16,5 @@ const isCi = require('is-ci');
     }
   } else {
     console.log('### This script works only in CI');
-    
   }
 })()
