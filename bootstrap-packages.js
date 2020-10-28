@@ -10,7 +10,7 @@ const isCi = require('is-ci');
     const packagesPathes = packagesNames.map(name => path.join(packageBasePath, name));
 
     for (const packagePath of packagesPathes) {
-      execa('lerna', ['bootstrap', '--hoist'], { cwd: packagePath })
+      execa('npm', ['ci'], { cwd: packagePath })
         .stdout
         .pipe(process.stdout)
     }
