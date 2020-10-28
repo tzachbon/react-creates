@@ -1,6 +1,7 @@
 {
   "packages": [
-    "packages/*"
+    "packages/react-creates",
+    "packages/react-creates-vsc"
   ],
   "version": "1.0.0",
   "useWorkspaces": true,
