@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "useWorkspaces": true,
   "scripts": {
-    "bootstrap": "lerna bootstrap --hoist",
+    "bootstrap": "lerna bootstrap",
     "postinstall": "npm run bootstrap",
     "test": "lerna run test --stream",
     "posttest": "npm run deploy",
