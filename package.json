@@ -7,8 +7,8 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "bootstrap-packages": "node bootstrap-packages",
-    "postci": "npm run bootstrap-packages",
     "postinstall": "npm run bootstrap && npm run bootstrap-packages",
+    "pretest": "npm run bootstrap-packages",
     "test": "lerna run test --stream",
     "posttest": "npm run deploy",
     "deploy": "lerna run deploy --stream"
