@@ -47,7 +47,6 @@ const getPackageJson = async () => {
 
     await fs.writeFile(packAgeJsonPath, JSON.stringify(packageJson, null, 2));
 
-    exe(['npm', 'i', 'react-creates@latest']);
     exe(['npx', 'vsce', 'publish', 'patch', '-p', process.env.VSC_TOKEN]);
   } else {
     console.log('Can not deploy when not in CI');
