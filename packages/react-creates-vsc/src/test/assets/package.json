@@ -2,7 +2,7 @@
 	"name": "react-creates-vsc",
 	"displayName": "React Creates",
 	"description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
-	"version": "0.0.32",
+	"version": "0.0.1",
 	"publisher": "TzachBonfil",
 	"engines": {
 		"vscode": "^1.45.0"
@@ -70,11 +70,11 @@
 		"vscode:prepublish": "webpack --mode production",
 		"webpack": "webpack --mode development",
 		"webpack-dev": "webpack --mode development --watch",
-		"clean": "rm -rf out",
-		"compile": "tsc ",
+		"start": "npm run webpack-dev",
+		"build": "webpack --mode production",
+		"clean": "rm -rf out && rm -rf dist",
 		"lint": "eslint src --ext ts",
-		"watch": "tsc -watch ./",
-		"pretest": "npm run clean && npm run compile && npm run lint",
+		"pretest": "npm run clean && tsc && npm run build && npm run lint",
 		"test": "cp ./package.json ./src/test/assets && node ./out/test/runTest.js",
 		"posttest": "npm run deploy",
 		"deploy": "node deploy"
