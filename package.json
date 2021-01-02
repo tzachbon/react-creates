@@ -3,6 +3,7 @@
     "packages/react-creates",
     "packages/react-creates-vsc"
   ],
+  "name": "react-creates",
   "version": "1.0.0",
   "useWorkspaces": true,
   "scripts": {
