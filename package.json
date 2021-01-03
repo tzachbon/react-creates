@@ -9,7 +9,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "bootstrap-packages": "node bootstrap-packages",
-    "postinstall": "npm run bootstrap && npm run bootstrap-packages",
+    "postinstall": "npm run bootstrap-packages",
     "pretest": "npm run bootstrap-packages",
     "test": "lerna run test",
     "posttest": "npm run deploy",

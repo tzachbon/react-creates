@@ -15,6 +15,8 @@ const isCi = require('is-ci');
         .pipe(process.stdout)
     }
   } else {
-    console.log('### This script works only in CI');
+    execa('npm', 'run bootstrap'.split(' '))
+      .stdout
+      .pipe(process.stdout);
   }
 })()

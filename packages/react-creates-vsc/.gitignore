@@ -2,3 +2,4 @@ out
 .vscode-test
 *.vsix
 dist
+src/test/assets/package.json
