@@ -74,8 +74,9 @@
 		"build": "webpack --mode production",
 		"clean": "rm -rf out && rm -rf dist",
 		"lint": "eslint src --ext ts",
-		"pretest": "npm run clean && tsc && npm run build && npm run lint",
-		"test": "cp ./package.json ./src/test/assets && node ./out/test/runTest.js",
+		"pretest": "npm run clean && npm run copy-package-json && tsc && npm run build && npm run lint",
+		"copy-package-json": "cp ./package.json ./src/test/assets",
+		"test": "node ./out/test/runTest.js",
 		"posttest": "npm run deploy",
 		"deploy": "node deploy"
 	},
