@@ -109,7 +109,7 @@
 		"webpack-cli": "^3.3.12"
 	},
 	"dependencies": {
-		"axios": "^0.20.0",
+		"axios": "^0.21.1",
 		"configstore": "^5.0.1",
 		"execa": "^4.0.3",
 		"find-package-json": "^1.2.0",
