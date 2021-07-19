@@ -1,0 +1,11 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./packages/react-creates"
+    },
+    {
+      "path": "./packages/react-creates-vsc"
+    }
+  ]
+}

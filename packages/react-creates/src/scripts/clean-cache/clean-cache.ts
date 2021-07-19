@@ -9,7 +9,7 @@ export const cleanCache = () =>
     .description('Clean cache file')
     .option('-d --directory <target>', 'Component directory', process.cwd())
     .action(async (_) => {
-      let { directory: target } = _.opts();
+      const { directory: target } = _.opts();
 
       try {
         const config = await getConfig({ target, skipCache: true });

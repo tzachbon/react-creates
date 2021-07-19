@@ -25,9 +25,9 @@ export const replaceVariables = async (dir: string, vars: Variables) => {
     path = await renameFileName(path, vars);
 
     if (await isDir(file)) {
-      replaceVariables(path, vars);
+      await replaceVariables(path, vars);
     } else {
-      replaceFileContent(path, vars);
+      await replaceFileContent(path, vars);
     }
   }
 };

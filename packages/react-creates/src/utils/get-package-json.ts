@@ -1,5 +1,5 @@
 import find from 'find-package-json';
 
-export default async function getPackageJson({ cwd = process.cwd() } = {}) {
-  return find(cwd).next().value;
+export default function getPackageJson({ cwd = process.cwd() } = {}) {
+  return Promise.resolve(find(cwd).next().value);
 }

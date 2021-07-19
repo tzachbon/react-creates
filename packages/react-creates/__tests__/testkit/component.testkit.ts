@@ -26,7 +26,7 @@ export class Component {
     this.target = options.target;
   }
 
-  static getValueFromOutput(output: string, start: string, end: string = '\n') {
+  static getValueFromOutput(output: string, start: string, end = '\n') {
     return output.split(start)[1].split(end)[0].trim();
   }
 

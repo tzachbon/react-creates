@@ -1,0 +1,4 @@
+dist
+*.st.css
+/tsconfig.base.json
+*.md

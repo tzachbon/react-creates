@@ -1,0 +1,8 @@
+node_modules
+cjs
+esm
+umd
+dist
+fixtures
+packages/react-creates/templates
+packages/react-creates/__tests__/mocks

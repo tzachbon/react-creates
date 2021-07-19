@@ -84,39 +84,35 @@ export const createComponentRaw = async (
     }
   }
 
-  if (Boolean(klass)) {
+  if (klass) {
     type = Types.CLASS;
   }
 
-  if (Boolean(func)) {
+  if (func) {
     type = Types.FUNCTION;
   }
 
-  try {
-    logHeader(name);
+  logHeader(name);
 
-    target = await parseTarget({ name, target });
+  target = await parseTarget({ name, target });
 
-    await checkForMainDependencies({ target });
+  await checkForMainDependencies({ target });
 
-    const options: CreateComponentOptions = {
-      name,
-      target,
-      type: await parseTypes({ type, config, ignoreCache }),
-      language: await parseLanguage({ language, target, config, ignoreCache }),
-      style: await parseStyle({ style, config, ignoreCache }),
-      propTypes: await parsePropTypes({ propTypes, target, config, ignoreCache }),
-      skipTest: await parseSkipTest({ skipTest, config, ignoreCache }),
-    };
+  const options: CreateComponentOptions = {
+    name,
+    target,
+    type: await parseTypes({ type, config, ignoreCache }),
+    language: await parseLanguage({ language, target, config, ignoreCache }),
+    style: await parseStyle({ style, config, ignoreCache }),
+    propTypes: await parsePropTypes({ propTypes, target, config, ignoreCache }),
+    skipTest: parseSkipTest({ skipTest, config, ignoreCache }),
+  };
 
-    optionsLogger(options);
+  optionsLogger(options);
 
-    if (dryRun) {
-      return;
-    }
-
-    await runCreateComponent(options);
-  } catch (e) {
-    throw e;
+  if (dryRun) {
+    return;
   }
+
+  await runCreateComponent(options);
 };

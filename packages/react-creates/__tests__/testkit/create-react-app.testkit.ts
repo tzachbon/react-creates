@@ -60,20 +60,20 @@ export class TempProject {
     Project created here: ${chalk.bold(this.target)}
     `);
 
-    const projectLanguage = Boolean(typescript) ? Language.TYPESCRIPT : Language.JAVASCRIPT;
+    const projectLanguage = typescript ? Language.TYPESCRIPT : Language.JAVASCRIPT;
 
     const mockPath = join(__dirname, '..', 'mocks', 'create-react-app', projectLanguage);
 
     await copy(mockPath, this.target);
 
-    await this.updatePackageJsonName(this.target);
+    this.updatePackageJsonName(this.target);
 
     if (this.options.install) {
       await execa('npm', ['i'], { cwd: this.target });
     }
   }
 
-  private async updatePackageJsonName(target: string) {
+  private updatePackageJsonName(target: string) {
     const packageJsonPath = join(target, 'package.json');
 
     const packageJsonRaw = fs.readFileSync(packageJsonPath, 'utf8');
