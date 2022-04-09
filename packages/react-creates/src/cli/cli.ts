@@ -1,11 +1,14 @@
 import { program } from 'commander';
-import { createComponentCommand } from './create-component-command';
+import { clearCacheCommand } from './commands/clear-cache';
+import { createComponentCommand } from './commands/create-component';
 
 async function run() {
   await program
     .version('1.0.0')
+    .usage('<command> [options]')
     .allowUnknownOption(false)
     .addCommand(createComponentCommand())
+    .addCommand(clearCacheCommand())
     .parseAsync(process.argv);
 }
 

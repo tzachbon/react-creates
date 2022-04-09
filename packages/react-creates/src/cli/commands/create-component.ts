@@ -1,7 +1,8 @@
 import { nodeFs } from '@file-services/node';
 import { program } from 'commander';
-import { createComponent, ComponentOption } from '../create-component';
+import { createComponent, ComponentOption } from '../../create-component';
 import prompts from 'prompts';
+import { FileSystemCache } from '../file-system-cache';
 
 const propertiesOptions = {
   language: ['typescript', 'javascript'],
@@ -10,8 +11,8 @@ const propertiesOptions = {
 };
 
 export function createComponentCommand() {
+  let optionsCache: FileSystemCache | undefined;
   return program
-    .usage('<command> [options]')
     .command('component <name>')
     .description('Creates react component')
     .option('-l --language <scripting>', 'Scripting language to use')
@@ -21,6 +22,7 @@ export function createComponentCommand() {
     .option('--skipTest|--skip-test', 'Will not create test file')
     .option('-s --style <styling>', 'Selected the style')
     .option('-y --yes', 'Selects the default values')
+    .option('--fresh', 'Will not use cache')
     .action((name, options) =>
       createComponent(
         { name, ...options },
@@ -29,6 +31,14 @@ export function createComponentCommand() {
           async resolveProperty(key) {
             if (options.yes) {
               return;
+            }
+
+            if (!optionsCache) {
+              optionsCache = FileSystemCache.create({ fileSystem: nodeFs, rootDir: options.directory });
+            }
+
+            if (!options.fresh && optionsCache.get(key)) {
+              return optionsCache.get<ComponentOption[typeof key]>(key);
             }
 
             if (!(key === 'style' || key === 'language' || key === 'type')) {
@@ -43,7 +53,13 @@ export function createComponentCommand() {
               choices: values.map((value) => ({ title: value, value })),
             });
 
-            return response[key] as unknown as ComponentOption[typeof key];
+            const value = response[key] as unknown as ComponentOption[typeof key];
+
+            if (!options.fresh) {
+              optionsCache.set(key, value);
+            }
+
+            return value;
           },
         }
       )
