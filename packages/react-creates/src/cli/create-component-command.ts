@@ -20,25 +20,30 @@ export function createComponentCommand() {
     .option('-pt --prop-types', 'Should add Prop-types if inside javascript project')
     .option('--skipTest|--skip-test', 'Will not create test file')
     .option('-s --style <styling>', 'Selected the style')
+    .option('-y --yes', 'Selects the default values')
     .action((name, options) =>
       createComponent(
         { name, ...options },
         {
           fileSystem: nodeFs,
           async resolveProperty(key) {
-            if (key === 'style' || key === 'language' || key === 'type') {
-              const values = [...propertiesOptions[key as keyof typeof propertiesOptions]];
-              const response = await prompts({
-                type: 'select',
-                name: key,
-                message: `Select component ${key}:`,
-                choices: values.map((value) => ({ title: value, value })),
-              });
-
-              return response[key] as unknown as ComponentOption[typeof key];
-            } else {
+            if (options.yes) {
               return;
             }
+
+            if (!(key === 'style' || key === 'language' || key === 'type')) {
+              return;
+            }
+
+            const values = [...propertiesOptions[key as keyof typeof propertiesOptions]];
+            const response = await prompts({
+              type: 'select',
+              name: key,
+              message: `Select component ${key}:`,
+              choices: values.map((value) => ({ title: value, value })),
+            });
+
+            return response[key] as unknown as ComponentOption[typeof key];
           },
         }
       )
