@@ -58,10 +58,10 @@ export async function createComponent(
 
   if (!options.style) {
     options.style = (await resolveProperty?.('style')) || 'none';
+  }
 
-    if (options.style === 'none') {
-      options.style = undefined;
-    }
+  if (options.style === 'none') {
+    options.style = undefined;
   }
 
   const { language, type, name, directory: target } = options;

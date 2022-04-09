@@ -31,11 +31,11 @@ export class CliDriver {
   }
 
   public beforeAndAfter() {
-    before(async () => {
+    beforeEach(async () => {
       this.tempDirectory = await createTempDirectory();
     });
 
-    after(async () => {
+    afterEach(async () => {
       await this.tempDirectory!.remove();
     });
 
