@@ -7,9 +7,7 @@ describe('general', () => {
   const cli = new CliDriver().beforeAndAfter();
 
   it('skip-test', async () => {
-    const files = cli
-      .runSync(['component', componentName, '--type', 'function', '--language', 'typescript', '--skip-test'])
-      .loadDirectorySync(componentName);
+    const files = cli.runSync(['component', componentName, '--skip-test', '--yes']).loadDirectorySync(componentName);
 
     const fixture = CliDriver.loadFixtureSync('skip-test');
 

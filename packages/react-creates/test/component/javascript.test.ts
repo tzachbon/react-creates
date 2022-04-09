@@ -8,7 +8,7 @@ describe('Javascript component', () => {
 
   it('function', async () => {
     const files = cli
-      .runSync(['component', componentName, '--type', 'function', '--language', 'javascript'])
+      .runSync(['component', componentName, '--language', 'javascript', '--yes'])
       .loadDirectorySync(componentName);
 
     const fixture = CliDriver.loadFixtureSync('javascript-function');
@@ -18,7 +18,7 @@ describe('Javascript component', () => {
 
   it('function (prop-type)', async () => {
     const files = cli
-      .runSync(['component', componentName, '--type', 'function', '--language', 'javascript', '--prop-types'])
+      .runSync(['component', componentName, '--language', 'javascript', '--prop-types', '--yes'])
       .loadDirectorySync(componentName);
 
     const fixture = CliDriver.loadFixtureSync('javascript-function-prop-types');
@@ -28,7 +28,7 @@ describe('Javascript component', () => {
 
   it('class', async () => {
     const files = cli
-      .runSync(['component', componentName, '--type', 'class', '--language', 'javascript'])
+      .runSync(['component', componentName, '--type', 'class', '--language', 'javascript', '--yes'])
       .loadDirectorySync(componentName);
 
     const fixture = CliDriver.loadFixtureSync('javascript-class');
@@ -38,7 +38,7 @@ describe('Javascript component', () => {
 
   it('class (prop-types)', async () => {
     const files = cli
-      .runSync(['component', componentName, '--type', 'class', '--language', 'javascript', '--prop-types'])
+      .runSync(['component', componentName, '--type', 'class', '--language', 'javascript', '--prop-types', '--yes'])
       .loadDirectorySync(componentName);
 
     const fixture = CliDriver.loadFixtureSync('javascript-class-prop-types');
