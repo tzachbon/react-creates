@@ -9,6 +9,7 @@
     "build": "tsc --build",
     "clean": "rimraf ./packages/*/dist",
     "lint": "eslint .",
+    "pretest": "npm run build",
     "test": "mocha \"packages/**/dist/test/**/*.test.js\" --parallel"
   },
   "author": {
