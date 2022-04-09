@@ -24,7 +24,9 @@ export interface CreateComponentOption extends ComponentOption {
 }
 
 export interface CreateComponentMeta {
-  resolveProperty?<P extends keyof ComponentOption>(key: P): Required<ComponentOption[P]>;
+  resolveProperty?<P extends keyof ComponentOption>(
+    key: P
+  ): Promise<ComponentOption[P] | undefined> | ComponentOption[P] | undefined;
   fileSystem?: IFileSystem;
   templateDirectory?: string;
   logger?: {
@@ -43,19 +45,19 @@ export async function createComponent(
   }: CreateComponentMeta = {}
 ) {
   if (!options.language) {
-    options.language = resolveProperty?.('language') || 'typescript';
+    options.language = (await resolveProperty?.('language')) || 'typescript';
   }
 
   if (!options.propTypes) {
-    options.propTypes = resolveProperty?.('propTypes') ?? false;
+    options.propTypes = (await resolveProperty?.('propTypes')) ?? false;
   }
 
   if (!options.skipTest) {
-    options.skipTest = resolveProperty?.('skipTest') ?? false;
+    options.skipTest = (await resolveProperty?.('skipTest')) ?? false;
   }
 
   if (!options.style) {
-    options.style = resolveProperty?.('style') || 'none';
+    options.style = (await resolveProperty?.('style')) || 'none';
 
     if (options.style === 'none') {
       options.style = undefined;
