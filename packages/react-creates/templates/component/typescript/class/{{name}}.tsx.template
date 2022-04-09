@@ -1,17 +1,12 @@
-import type React from 'react';
+import React from 'react';
 {{#style}}
 import './style.{{style}}';
 {{/style}}
 
-interface Props {}
+interface {{name}}Props {}
 
-export class {{name}} extends React.Component<Props> {
-
+export class {{name}} extends React.Component<{{name}}Props> {
   render() {
-    return (
-      <div className="{{name}}">
-        {{name}} works!
-      </div>
-    )
+    return <div className="{{name}}">{{name}} works!</div>;
   }
 }

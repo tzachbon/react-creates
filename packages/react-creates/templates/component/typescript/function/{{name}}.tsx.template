@@ -3,12 +3,8 @@ import type React from 'react';
 import './style.{{style}}';
 {{/style}}
 
-interface Props {}
+interface {{name}}Props {}
 
-export const {{name}}: React.FC<Props> = () => {
-  return (
-    <div className="{{name}}">
-      {{name}} works!
-    </div>
-  );
+export const {{name}}: React.FC<{{name}}Props> = () => {
+  return <div className="{{name}}">{{name}} works!</div>;
 };

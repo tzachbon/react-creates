@@ -7,19 +7,13 @@ import './style.{{style}}';
 {{/style}}
 
 export class {{name}} extends React.Component {
-
   render() {
-    return (
-      <div className="{{name}}">
-        {{name}} works!
-      </div>
-    )
+    return <div className="{{name}}">{{name}} works!</div>;
   }
 }
-
-
 {{#propTypes}}
-{{name}}.propTypes = {
 
-}
+{{name}}.propTypes = {
+  className: PropTypes.string,
+};
 {{/propTypes}}

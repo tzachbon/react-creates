@@ -2,7 +2,7 @@ import { nodeFs } from '@file-services/node';
 import type { IFileSystem } from '@file-services/types';
 import { render } from 'mustache';
 
-const testFileRegex = /^(.*?)\.test\.(tsx|js)\.template$/;
+const testFileRegex = /^(.*?)\.test\.(.*?)$/;
 const styleFileRegex = /^style\.\{\{style\}\}\.template$/;
 const defaultTemplateDirectory = nodeFs.join(
   nodeFs.dirname(require.resolve('react-creates/package.json')),
@@ -78,7 +78,7 @@ export async function createComponent(
         /**
          * Delete test file
          */
-        await fileSystem.promises.rm(fileSystem.join(resolvedTarget, oldFileName), { force: true });
+        await fileSystem.promises.rm(fileSystem.join(resolvedTarget, oldFileName));
         continue;
       }
 
@@ -86,7 +86,7 @@ export async function createComponent(
         /**
          * Delete style file
          */
-        await fileSystem.promises.rm(fileSystem.join(resolvedTarget, oldFileName), { force: true });
+        await fileSystem.promises.rm(fileSystem.join(resolvedTarget, oldFileName));
         continue;
       }
 

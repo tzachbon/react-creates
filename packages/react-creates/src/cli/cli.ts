@@ -3,9 +3,8 @@ import { createComponentCommand } from './create-component-command';
 
 async function run() {
   await program
-    .version('0.0.1')
-    .usage('<command> [options]')
-    .addHelpCommand()
+    .version('1.0.0')
+    .allowUnknownOption(false)
     .addCommand(createComponentCommand())
     .parseAsync(process.argv);
 }
