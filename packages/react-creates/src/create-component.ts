@@ -2,6 +2,8 @@ import { nodeFs } from '@file-services/node';
 import type { IFileSystem } from '@file-services/types';
 import { render } from 'mustache';
 
+const testFileRegex = /^(.*?)\.test\.(tsx|js)\.template$/;
+const styleFileRegex = /^style\.\{\{style\}\}\.template$/;
 const defaultTemplateDirectory = nodeFs.join(
   nodeFs.dirname(require.resolve('react-creates/package.json')),
   'templates',
@@ -25,11 +27,20 @@ export interface CreateComponentMeta {
   resolveProperty?<P extends keyof ComponentOption>(key: P): Required<ComponentOption[P]>;
   fileSystem?: IFileSystem;
   templateDirectory?: string;
+  logger?: {
+    log: (...messages: any[]) => void;
+    error: (...messages: any[]) => void;
+  };
 }
 
 export async function createComponent(
   options: CreateComponentOption,
-  { resolveProperty, fileSystem = nodeFs, templateDirectory = defaultTemplateDirectory }: CreateComponentMeta = {}
+  {
+    resolveProperty,
+    fileSystem = nodeFs,
+    templateDirectory = defaultTemplateDirectory,
+    logger = console,
+  }: CreateComponentMeta = {}
 ) {
   if (!options.language) {
     options.language = resolveProperty?.('language') || 'typescript';
@@ -45,6 +56,10 @@ export async function createComponent(
 
   if (!options.style) {
     options.style = resolveProperty?.('style') || 'none';
+
+    if (options.style === 'none') {
+      options.style = undefined;
+    }
   }
 
   const { language, type, name, directory: target } = options;
@@ -55,19 +70,45 @@ export async function createComponent(
   await fileSystem.promises.ensureDirectory(resolvedTarget);
   await fileSystem.promises.copyDirectory(resolvedSource, resolvedTarget);
 
-  for (const oldFileName of await fileSystem.promises.readdir(resolvedTarget)) {
-    /**
-     * Resolve file name
-     */
-    const fileName = render(oldFileName, options).replace(/.template$/, '');
-    const filePath = fileSystem.join(resolvedTarget, fileName);
-    fileSystem.promises.rename(fileSystem.join(resolvedTarget, oldFileName), filePath);
+  const files = await fileSystem.promises.readdir(resolvedTarget);
 
-    /**
-     * Resolve File Content
-     */
-    const content = await fileSystem.promises.readFile(filePath, 'utf8');
-    const resolvedContent = render(content, options);
-    await fileSystem.promises.writeFile(filePath, resolvedContent, 'utf8');
+  try {
+    for (const oldFileName of files) {
+      if (options.skipTest && testFileRegex.test(oldFileName)) {
+        /**
+         * Delete test file
+         */
+        await fileSystem.promises.rm(fileSystem.join(resolvedTarget, oldFileName), { force: true });
+        continue;
+      }
+
+      if (!options.style && styleFileRegex.test(oldFileName)) {
+        /**
+         * Delete style file
+         */
+        await fileSystem.promises.rm(fileSystem.join(resolvedTarget, oldFileName), { force: true });
+        continue;
+      }
+
+      /**
+       * Resolve file name
+       */
+      const fileName = render(oldFileName, options).replace(/.template$/, '');
+      const filePath = fileSystem.join(resolvedTarget, fileName);
+      await fileSystem.promises.rename(fileSystem.join(resolvedTarget, oldFileName), filePath);
+
+      /**
+       * Resolve File Content
+       */
+      const content = await fileSystem.promises.readFile(filePath, 'utf8');
+      const resolvedContent = render(content, options);
+      await fileSystem.promises.writeFile(filePath, resolvedContent, 'utf8');
+    }
+    logger.log(`Component "${name}" created.\n\n${resolvedTarget}\n`);
+  } catch (error) {
+    logger.error(`Failed to create "${name}" component.\n\n${resolvedTarget}\n${error}`);
+    logger.log(`Cleaning up...`);
+
+    await fileSystem.promises.rm(resolvedTarget, { recursive: true, force: true });
   }
 }

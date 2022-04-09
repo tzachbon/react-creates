@@ -1,12 +1,34 @@
 import { spawnSync } from 'child_process';
-import { createTempDirectory, ITempDirectory } from 'create-temp-directory';
 import { nodeFs } from '@file-services/node';
+import rimrafCb from 'rimraf';
+import { promisify } from 'util';
 
-const { join, symlinkSync, mkdirSync, writeFileSync, readdirSync, statSync, relative, readFileSync } = nodeFs;
+const {
+  join,
+  dirname,
+  symlinkSync,
+  mkdirSync,
+  writeFileSync,
+  readdirSync,
+  statSync,
+  relative,
+  readFileSync,
+  promises,
+} = nodeFs;
+const { mkdir } = promises;
+
+const rimraf = promisify(rimrafCb);
+
+const packageRootDir = dirname(require.resolve('react-creates/package.json'));
+const rootTempDir = join(packageRootDir, '..', '..', '.temp');
 
 export class CliDriver {
   tempDirectory: ITempDirectory | undefined;
   constructor() {}
+
+  static loadFixtureSync(name: string) {
+    return loadDirSync(join(packageRootDir, 'fixtures', name));
+  }
 
   public beforeAndAfter() {
     before(async () => {
@@ -20,7 +42,7 @@ export class CliDriver {
     return this;
   }
 
-  populateDirectorySync(files: FilesStructure) {
+  populateDirectorySync = (files: FilesStructure) => {
     if (!this.tempDirectory) {
       throw new Error('tempDirectory is not defined, did you run "beforeAndAfter"?');
     }
@@ -28,9 +50,9 @@ export class CliDriver {
     populateDirectorySync(this.tempDirectory.path, files);
 
     return this;
-  }
+  };
 
-  runSync(args: string[] = []) {
+  runSync = (args: string[] = []) => {
     if (!this.tempDirectory) {
       throw new Error('tempDirectory is not defined, did you run "beforeAndAfter"?');
     }
@@ -40,8 +62,19 @@ export class CliDriver {
     return {
       output: childProcess.stdout,
       error: childProcess.stderr,
+      ...this,
     };
-  }
+  };
+
+  loadDirectorySync = (dirName = '.') => {
+    if (!this.tempDirectory) {
+      throw new Error('tempDirectory is not defined, did you run "beforeAndAfter"?');
+    }
+
+    const directory = join(this.tempDirectory.path, dirName);
+
+    return loadDirSync(directory);
+  };
 }
 
 export const symlinkSymbol = Symbol('symlink');
@@ -131,4 +164,26 @@ export function loadDirSync(rootPath: string, dirPath: string = rootPath): Files
     }
     return acc;
   }, {});
+}
+
+export interface ITempDirectory {
+  /**
+   * Absolute path to created directory.
+   */
+  path: string;
+
+  /**
+   * Remove the directory and all its contents.
+   */
+  remove(): Promise<void>;
+}
+
+export async function createTempDirectory(prefix = 'temp-'): Promise<ITempDirectory> {
+  const path = join(rootTempDir, prefix + Math.random().toString(36).substring(2));
+  await mkdir(path, { recursive: true });
+
+  return {
+    path,
+    remove: () => rimraf(path),
+  };
 }

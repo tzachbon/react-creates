@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
   "files": [
-    "dist",
+    "dist/src",
     "src",
     "templates"
   ],
@@ -38,9 +38,7 @@
     "@types/chalk": "^2.2.0",
     "@types/commander": "^2.12.2",
     "@types/mustache": "^4.1.2",
-    "chalk": "^5.0.1",
     "commander": "^9.1.0",
-    "inquirer": "^8.2.2",
     "mustache": "^4.2.0"
   }
 }
