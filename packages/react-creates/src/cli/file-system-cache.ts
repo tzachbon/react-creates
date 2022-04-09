@@ -38,6 +38,16 @@ export class FileSystemCache {
 
   private constructor(private fileSystem: IFileSystem, private cachePath: string) {}
 
+  has(key: string): boolean {
+    const cacheContent = this.getCacheContent();
+
+    if (!cacheContent) {
+      return false;
+    }
+
+    return key in cacheContent;
+  }
+
   get<T = any>(key: string) {
     const cacheContent = this.getCacheContent();
 

@@ -37,7 +37,7 @@ export function createComponentCommand() {
               optionsCache = FileSystemCache.create({ fileSystem: nodeFs, rootDir: options.directory });
             }
 
-            if (!options.fresh && optionsCache.get(key)) {
+            if (!options.fresh && optionsCache.has(key)) {
               return optionsCache.get<ComponentOption[typeof key]>(key);
             }
 
