@@ -1,1 +1,1 @@
-export { default } from "./{{name}}";
+export { {{name}} } from './{{name}}';

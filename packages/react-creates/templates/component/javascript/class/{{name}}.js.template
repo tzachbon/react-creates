@@ -1,14 +1,16 @@
-import React from 'react'
+import React from 'react';
 {{#propTypes}}
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 {{/propTypes}}
-import './style.{{style}}'
+{{#style}}
+import './style.{{style}}';
+{{/style}}
 
-export default class {{name}} extends React.Component {
+export class {{name}} extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="{{name}}">
         {{name}} works!
       </div>
     )
@@ -21,4 +23,3 @@ export default class {{name}} extends React.Component {
 
 }
 {{/propTypes}}
-

@@ -1,16 +1,18 @@
-import React from 'react'
+import React from 'react';
 {{#propTypes}}
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 {{/propTypes}}
-import './style.{{style}}'
+{{#style}}
+import './style.{{style}}';
+{{/style}}
 
-const {{name}} = props => {
+export const {{name}} = props => {
   return (
-    <div>
+    <div className="{{name}}">
       {{name}} works!
     </div>
-  )
-}
+  );
+};
 
 
 {{#propTypes}}
@@ -18,5 +20,3 @@ const {{name}} = props => {
 
 }
 {{/propTypes}}
-
-export default {{name}}
