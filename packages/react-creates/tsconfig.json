@@ -1,16 +1,6 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "esModuleInterop": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "noImplicitAny": false,
-    "outDir": "dist",
-    "rootDir": "src",
-    "sourceMap": true,
-    "target": "es2019",
-    "declaration": true,
-    "resolveJsonModule": true
-  },
-  "include": ["src/**/*.*"],
-  "exclude": ["packages/react-creates/__tests__/**/*.*"]
+    "outDir": "./dist"
+  }
 }
