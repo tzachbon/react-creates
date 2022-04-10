@@ -8,9 +8,9 @@ const vsce = require.resolve('vsce/vsce');
 
 const extensionData = JSON.parse(spawnSync(vsce, ['show', extensionId, '--json']).stdout.toString());
 const latestVersion = extensionData.versions[0] as { version: string; flags: number; lastUpdated: string };
-const extensionCurrentVersion = require(extensionPackageJsonPath).version;
+const extensionCurrentVersion = require(extensionPackageJsonPath).version as string;
 
-if (latestVersion !== extensionCurrentVersion) {
+if (latestVersion.version !== extensionCurrentVersion) {
   console.log(`Updating extension from ${latestVersion.version} to ${extensionCurrentVersion}`);
 
   const child = fork(vsce, ['publish', '--yarn'], {
