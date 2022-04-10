@@ -14,7 +14,7 @@
     "pretest": "npm run build",
     "test:packages": "mocha \"packages/**/dist/test/**/*.test.js\" --parallel",
     "test:vscode": "npm run test -w react-creates-vscode",
-    "test": "run-p test:*"
+    "test": "npm-run-all test:*"
   },
   "author": {
     "email": "tzachbonfil@gmail.com",
