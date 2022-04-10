@@ -77,7 +77,6 @@
   },
   "scripts": {
     "clean": "run-p clean:*",
-    "clean:user-data": "rimraf .vscode-test/user-data",
     "clean:fixtures": "rimraf dist/fixtures",
     "build:fixtures": "cp -R ./fixtures ./dist/fixtures",
     "prebuild": "npm-run-all clean",
