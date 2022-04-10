@@ -76,6 +76,30 @@
           "group": "reactcreates@1"
         }
       ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "React Creates",
+      "properties": {
+        "react-creates.auto-global-update-runner": {
+          "type": "string",
+          "enum": [
+            "npm",
+            "yarn"
+          ],
+          "default": "npm",
+          "description": "The runner to use for auto-updating the extension.\nFor example, if you are using yarn to install dependencies, you can set this to `yarn`.",
+          "enumDescriptions": [
+            "Use npm to update the extension.",
+            "Use yarn to update the extension."
+          ]
+        },
+        "react-creates.auto-global-update": {
+          "type": "boolean",
+          "default": true,
+          "description": "Autmoatically update the global \"react-creates\" package when a new version is available"
+        }
+      }
     }
   },
   "scripts": {

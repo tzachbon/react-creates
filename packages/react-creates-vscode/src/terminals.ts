@@ -11,14 +11,16 @@ export class Terminals {
     return vscode.workspace.getWorkspaceFolder(uri);
   }
 
-  static send(workspaceFolder: vscode.WorkspaceFolder | vscode.Uri, command: string): vscode.Terminal {
+  static send(workspaceFolder: vscode.WorkspaceFolder | vscode.Uri, command: string, show = true): vscode.Terminal {
     if (workspaceFolder instanceof vscode.Uri) {
       workspaceFolder = this.getWorkspaceFolderFromUri(workspaceFolder)!;
     }
 
     const terminal = this.getTerminal(workspaceFolder);
 
-    terminal.show();
+    if (show) {
+      terminal.show();
+    }
 
     terminal.sendText(command);
 
