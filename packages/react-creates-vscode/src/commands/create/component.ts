@@ -1,8 +1,17 @@
 import * as vscode from 'vscode';
 import { getPathUri } from '../../utils/get-path-uri';
 import { tryRun } from '../../utils/try-run';
-import { ComponentOption, createComponent, propertiesOptions } from 'react-creates';
+import { ComponentOption, createComponentProperties, buildCreateComponentCommand } from 'react-creates';
 import type { CommandWithContext } from '../../main';
+import { Terminals } from '../../terminals';
+
+const propertyDescriptions = {
+  style: 'The style language to use for the component.',
+  type: 'The type of component to create.',
+  language: 'The language to use for the component.',
+  propTypes: 'Whether to include propTypes.',
+  skipTest: 'Whether to skip the test file.',
+};
 
 export const component: CommandWithContext = ({ fileSystem }) => ({
   name: 'react-creates-vscode.component',
@@ -18,18 +27,58 @@ export const component: CommandWithContext = ({ fileSystem }) => ({
         throw new Error('Hey, component must have a name');
       }
 
-      const componentType = (await vscode.window.showQuickPick(Object.values(propertiesOptions.type), {
-        placeHolder: propertiesOptions.type[0],
-      })) as ComponentOption['type'];
+      const probablyDirectory = fileSystem.statSync(contextUri.fsPath).isDirectory()
+        ? contextUri.fsPath
+        : fileSystem.dirname(contextUri.fsPath);
 
-      await createComponent(
+      const directory =
+        (await vscode.window.showInputBox({ prompt: 'Directory of the component', value: probablyDirectory })) ??
+        probablyDirectory;
+
+      return vscode.window.withProgress(
         {
-          name,
-          directory: contextUri.fsPath,
-          type: componentType,
+          title: `React Creates component command for "${name}"`,
+          location: vscode.ProgressLocation.Notification,
+          cancellable: true,
         },
-        {
-          fileSystem,
+        async (progress) => {
+          progress.report({ message: 'Creating component...', increment: 0 });
+
+          const terminalCommand = await buildCreateComponentCommand(
+            {
+              name,
+              directory,
+            },
+            async (key) => {
+              if (key === 'style' || key === 'language' || key === 'type') {
+                type Keys = keyof Pick<typeof createComponentProperties, 'style' | 'language' | 'type'>;
+
+                const values = [...createComponentProperties[key as Keys]];
+                const response = await vscode.window.showQuickPick(values, {
+                  matchOnDescription: true,
+                  placeHolder: propertyDescriptions[key as Keys],
+                });
+
+                return response as ComponentOption[typeof key] | undefined;
+              } else if (key === 'skipTest' || key === 'propTypes') {
+                const values = ['true', 'false'];
+                const response = await vscode.window.showQuickPick(values, {
+                  matchOnDescription: true,
+                  placeHolder: propertyDescriptions[key as 'skipTest' | 'propTypes'],
+                });
+
+                return (response === 'true') as ComponentOption[typeof key];
+              } else {
+                return;
+              }
+            }
+          );
+
+          progress.report({ message: 'Running command...', increment: 0.5 });
+
+          Terminals.send(vscode.Uri.parse(directory), ['npx', 'react-creates', ...terminalCommand].join(' '));
+
+          progress.report({ message: 'Done!', increment: 1 });
         }
       );
     }),

@@ -14,7 +14,10 @@
     "lint": "eslint .",
     "pretest": "npm run build",
     "test:packages": "mocha \"packages/**/dist/test/**/*.test.js\" --parallel",
-    "test": "npm-run-all test:*"
+    "test": "npm-run-all test:*",
+    "watch:packages": "npm run build:packages -- -w --preserveWatchOutput",
+    "watch:vscode": "npm run watch -w react-creates-vsc",
+    "watch": "run-p watch:*"
   },
   "author": {
     "email": "tzachbonfil@gmail.com",

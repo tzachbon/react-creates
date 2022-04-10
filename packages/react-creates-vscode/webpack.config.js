@@ -6,8 +6,8 @@ const path = require('path');
 
 /**@type {import('webpack').Configuration}*/
 module.exports = {
-  mode: 'production',
-  target: 'webworker', // vscode extensions run in webworker context for VS Code web 📖 -> https://webpack.js.org/configuration/target/#target
+  mode: 'development',
+  target: 'node', // vscode extensions run in webworker context for VS Code web 📖 -> https://webpack.js.org/configuration/target/#target
   entry: './dist/src/main.js', // the entry point of this extension, 📖 -> https://webpack.js.org/configuration/entry-context/
   output: {
     // the bundle is stored in the 'dist' folder (check package.json), 📖 -> https://webpack.js.org/configuration/output/
@@ -26,12 +26,6 @@ module.exports = {
     extensions: ['.js'],
     alias: {
       // provides alternate implementation for node module and source files
-    },
-    fallback: {
-      util: require.resolve('util/'),
-      path: require.resolve('path-browserify'),
-      process: false,
-      fs: false,
     },
   },
 };

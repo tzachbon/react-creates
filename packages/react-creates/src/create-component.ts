@@ -10,7 +10,7 @@ const defaultTemplateDirectory = nodeFs.join(
   'component'
 );
 
-export const propertiesOptions = {
+export const createComponentProperties = {
   language: ['typescript', 'javascript'],
   type: ['function', 'class'],
   style: ['css', 'scss', 'none'],
@@ -50,31 +50,7 @@ export async function createComponent(
     logger = console,
   }: CreateComponentMeta = {}
 ) {
-  if (!options.type) {
-    options.type = (await resolveProperty?.('type')) || 'function';
-  }
-
-  if (!options.language) {
-    options.language = (await resolveProperty?.('language')) || 'typescript';
-  }
-
-  if (!options.propTypes) {
-    options.propTypes = (await resolveProperty?.('propTypes')) ?? false;
-  }
-
-  if (!options.skipTest) {
-    options.skipTest = (await resolveProperty?.('skipTest')) ?? false;
-  }
-
-  if (!options.style) {
-    options.style = (await resolveProperty?.('style')) || 'none';
-  }
-
-  if (options.style === 'none') {
-    options.style = undefined;
-  }
-
-  const { language, type, name, directory: target } = options;
+  const { language, type, name, directory: target } = await resolveCreateComponentOptions(options, resolveProperty);
 
   const resolvedSource = fileSystem.join(templateDirectory, language, type);
   const resolvedTarget = fileSystem.join(target, name);
@@ -123,4 +99,19 @@ export async function createComponent(
 
     await fileSystem.promises.rm(resolvedTarget, { recursive: true, force: true });
   }
+}
+
+export async function resolveCreateComponentOptions(
+  options: CreateComponentOption,
+  resolveProperty: CreateComponentMeta['resolveProperty'] = () => void 0
+): Promise<Required<CreateComponentOption>> {
+  return {
+    name: options.name,
+    directory: options.directory,
+    type: options.type ?? ((await resolveProperty?.('type')) || 'function'),
+    language: options.language ?? ((await resolveProperty?.('language')) || 'typescript'),
+    propTypes: options.propTypes ?? (await resolveProperty?.('propTypes')) ?? false,
+    skipTest: options.skipTest ?? (await resolveProperty?.('skipTest')) ?? false,
+    style: options.style ?? (await resolveProperty?.('style')) ?? 'none',
+  };
 }

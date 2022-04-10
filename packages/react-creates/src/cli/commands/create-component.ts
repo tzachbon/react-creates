@@ -1,6 +1,13 @@
 import { nodeFs } from '@file-services/node';
 import { program } from 'commander';
-import { createComponent, ComponentOption, propertiesOptions } from '../../create-component';
+import {
+  createComponent,
+  ComponentOption,
+  createComponentProperties,
+  CreateComponentOption,
+  resolveCreateComponentOptions,
+  CreateComponentMeta,
+} from '../../create-component';
 import prompts from 'prompts';
 import { FileSystemCache } from '../file-system-cache';
 
@@ -39,12 +46,12 @@ export function createComponentCommand() {
               return;
             }
 
-            const values = [...propertiesOptions[key as keyof typeof propertiesOptions]];
+            const values = [...createComponentProperties[key as keyof typeof createComponentProperties]];
             const response = await prompts({
               type: 'select',
               name: key,
               message: `Select component ${key}:`,
-              choices: values.map((value) => ({ title: value, value })),
+              choices: values.map((value) => ({ title: value.toString(), value })),
             });
 
             const value = response[key] as unknown as ComponentOption[typeof key];
@@ -58,4 +65,29 @@ export function createComponentCommand() {
         }
       )
     );
+}
+
+export async function buildCreateComponentCommand(
+  options: CreateComponentOption,
+  resolveProperty?: CreateComponentMeta['resolveProperty']
+): Promise<string[]> {
+  const { name, directory, language, propTypes, skipTest, style, type } = await resolveCreateComponentOptions(
+    options,
+    resolveProperty
+  );
+
+  return [
+    'component',
+    name,
+    '-d',
+    directory,
+    '-l',
+    language,
+    '-t',
+    type,
+    propTypes ? '-pt' : '',
+    skipTest ? '--skipTest' : '',
+    '-s',
+    style,
+  ].filter(Boolean);
 }

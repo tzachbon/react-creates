@@ -14,6 +14,7 @@
     "url": "https://github.com/tzachbon"
   },
   "files": [
+    "dist/src",
     "dist/extension.js",
     "dist/extension.js.map",
     "src"
@@ -45,7 +46,7 @@
     "onCommand:react-creates-vscode.component",
     "onCommand:react-creates-vscode.create"
   ],
-  "main": "dist/extension.js",
+  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
@@ -84,12 +85,14 @@
     "build:fixtures": "cp -R ./fixtures ./dist/fixtures",
     "prebuild": "npm-run-all clean",
     "build": "npm-run-all build:*",
-    "test": "node dist/vscode-test/test-starter.js"
+    "test": "node dist/vscode-test/test-starter.js",
+    "watch": "npm run build:bundle -- --watch"
   },
   "dependencies": {
     "@file-services/node": "^6.0.0",
     "@file-services/types": "^6.0.0",
-    "@types/vscode": "^1.66.0"
+    "@types/vscode": "^1.66.0",
+    "react-creates": "^2.0.0"
   },
   "devDependencies": {
     "vscode": "^1.1.37"

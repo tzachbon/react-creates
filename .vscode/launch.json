@@ -40,6 +40,20 @@
         "${workspaceFolder}/packages/react-creates-vscode/dist/fixtures"
       ],
       "outFiles": ["${workspaceFolder}/packages/react-creates-vscode/dist/vscode-test/**/*.js"]
+    },
+    {
+      "name": "Extension Dev",
+      "type": "extensionHost",
+      "request": "launch",
+      "runtimeExecutable": "${execPath}",
+      "internalConsoleOptions": "openOnSessionStart",
+      "preLaunchTask": "npm: build",
+      "args": [
+        "--disable-extensions",
+        "--extensionDevelopmentPath=${workspaceFolder}/packages/react-creates-vscode",
+        "${workspaceFolder}/packages/react-creates-vscode/dist/fixtures"
+      ],
+      "outFiles": ["${workspaceFolder}/packages/react-creates-vscode/dist/vscode-test/**/*.js"]
     }
   ]
 }
