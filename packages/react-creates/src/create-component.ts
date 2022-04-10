@@ -10,9 +10,15 @@ const defaultTemplateDirectory = nodeFs.join(
   'component'
 );
 
+export const propertiesOptions = {
+  language: ['typescript', 'javascript'],
+  type: ['function', 'class'],
+  style: ['css', 'scss', 'none'],
+};
+
 export interface ComponentOption {
   name: string;
-  type: 'function' | 'class';
+  type?: 'function' | 'class';
   language?: 'typescript' | 'javascript';
   propTypes?: boolean;
   skipTest?: boolean;
@@ -44,6 +50,10 @@ export async function createComponent(
     logger = console,
   }: CreateComponentMeta = {}
 ) {
+  if (!options.type) {
+    options.type = (await resolveProperty?.('type')) || 'function';
+  }
+
   if (!options.language) {
     options.language = (await resolveProperty?.('language')) || 'typescript';
   }

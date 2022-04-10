@@ -1,14 +1,8 @@
 import { nodeFs } from '@file-services/node';
 import { program } from 'commander';
-import { createComponent, ComponentOption } from '../../create-component';
+import { createComponent, ComponentOption, propertiesOptions } from '../../create-component';
 import prompts from 'prompts';
 import { FileSystemCache } from '../file-system-cache';
-
-const propertiesOptions = {
-  language: ['typescript', 'javascript'],
-  type: ['function', 'class'],
-  style: ['css', 'scss', 'none'],
-};
 
 export function createComponentCommand() {
   let optionsCache: FileSystemCache | undefined;
