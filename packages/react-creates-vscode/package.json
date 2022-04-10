@@ -4,6 +4,7 @@
   "description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
   "version": "2.0.0",
   "publisher": "TzachBonfil",
+  "private": true,
   "engines": {
     "vscode": "^1.45.0"
   },
@@ -13,7 +14,8 @@
     "url": "https://github.com/tzachbon"
   },
   "files": [
-    "dist/src",
+    "dist/extension.js",
+    "dist/extension.js.map",
     "src"
   ],
   "keywords": [
@@ -39,11 +41,11 @@
     "type": "github"
   },
   "activationEvents": [
-    "*",
+    "onStartupFinished",
     "onCommand:react-creates-vscode.component",
     "onCommand:react-creates-vscode.create"
   ],
-  "main": "./dist/src/extension.js",
+  "main": "dist/extension.js",
   "contributes": {
     "commands": [
       {
@@ -78,15 +80,18 @@
   "scripts": {
     "clean": "run-p clean:*",
     "clean:fixtures": "rimraf dist/fixtures",
+    "build:bundle": "webpack --config ./webpack.config.js",
     "build:fixtures": "cp -R ./fixtures ./dist/fixtures",
     "prebuild": "npm-run-all clean",
     "build": "npm-run-all build:*",
     "test": "node dist/vscode-test/test-starter.js"
   },
   "dependencies": {
-    "@types/vscode": "^1.66.0",
     "@file-services/node": "^6.0.0",
     "@file-services/types": "^6.0.0",
+    "@types/vscode": "^1.66.0"
+  },
+  "devDependencies": {
     "vscode": "^1.1.37"
   }
 }

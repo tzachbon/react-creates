@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { getPathUri } from '../../utils/get-path-uri';
 import { tryRun } from '../../utils/try-run';
 import { ComponentOption, createComponent, propertiesOptions } from 'react-creates';
-import type { CommandWithContext } from '../../extension';
+import type { CommandWithContext } from '../../main';
 
 export const component: CommandWithContext = ({ fileSystem }) => ({
   name: 'react-creates-vscode.component',

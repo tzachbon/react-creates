@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { tryRun } from '../../utils/try-run';
-import type { CommandWithContext } from '../../extension';
+import type { CommandWithContext } from '../../main';
 import { component } from './component';
 
 const CREATE_OPTIONS = {
