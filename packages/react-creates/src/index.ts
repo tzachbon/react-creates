@@ -1,3 +1,8 @@
-export * from './utils/config';
-export * from './scripts/component/parsers';
-export * from './scripts/component';
+export {
+  ComponentOption,
+  CreateComponentMeta,
+  CreateComponentOption,
+  createComponent,
+  propertiesOptions,
+} from './create-component';
+export { FileSystemCache } from './cli/file-system-cache';

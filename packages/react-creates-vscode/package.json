@@ -1,0 +1,92 @@
+{
+  "name": "react-creates-vscode",
+  "displayName": "React Creates",
+  "description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
+  "version": "2.0.0",
+  "publisher": "TzachBonfil",
+  "engines": {
+    "vscode": "^1.45.0"
+  },
+  "author": {
+    "name": "Tzach Bonfil",
+    "email": "tzachbonfil@gmail.com",
+    "url": "https://github.com/tzachbon"
+  },
+  "files": [
+    "dist/src",
+    "src"
+  ],
+  "keywords": [
+    "react",
+    "component",
+    "cli",
+    "generator",
+    "tool",
+    "react-native",
+    "react native",
+    "native",
+    "ng add",
+    "javascript",
+    "typescript"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "icon": "assets/logo.png",
+  "homepage": "https://github.com/tzachbon/react-creates/tree/master/packages/react-creates-vscode/README.md",
+  "repository": {
+    "url": "https://github.com/tzachbon/react-creates/tree/master/packages/react-creates-vscode.git",
+    "type": "github"
+  },
+  "activationEvents": [
+    "*",
+    "onCommand:react-creates-vscode.component",
+    "onCommand:react-creates-vscode.create"
+  ],
+  "main": "./dist/src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "react-creates-vscode.component",
+        "title": "React Creates: Component",
+        "icon": {
+          "dark": "assets/add_icon_light.svg",
+          "light": "assets/add_icon_dark.svg"
+        }
+      },
+      {
+        "command": "react-creates-vscode.create",
+        "title": "React Creates: Create"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "when": "explorerResourceIsFolder",
+          "command": "react-creates-vscode.component"
+        }
+      ],
+      "explorer/context": [
+        {
+          "when": "explorerResourceIsFolder",
+          "command": "react-creates-vscode.component",
+          "group": "reactcreates@1"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "clean": "run-p clean:*",
+    "clean:fixtures": "rimraf dist/fixtures",
+    "build:fixtures": "cp -R ./fixtures ./dist/fixtures",
+    "prebuild": "npm-run-all clean",
+    "build": "npm-run-all build:*",
+    "test": "node dist/vscode-test/test-starter.js"
+  },
+  "dependencies": {
+    "@types/vscode": "^1.66.0",
+    "@file-services/node": "^6.0.0",
+    "@file-services/types": "^6.0.0",
+    "vscode": "^1.1.37"
+  }
+}

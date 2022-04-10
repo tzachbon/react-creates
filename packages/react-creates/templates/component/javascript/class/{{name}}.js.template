@@ -1,0 +1,19 @@
+import React from 'react';
+{{#propTypes}}
+import PropTypes from 'prop-types';
+{{/propTypes}}
+{{#style}}
+import './style.{{style}}';
+{{/style}}
+
+export class {{name}} extends React.Component {
+  render() {
+    return <div className="{{name}}">{{name}} works!</div>;
+  }
+}
+{{#propTypes}}
+
+{{name}}.propTypes = {
+  className: PropTypes.string,
+};
+{{/propTypes}}

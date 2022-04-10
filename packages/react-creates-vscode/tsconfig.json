@@ -4,5 +4,6 @@
     "outDir": "./dist"
   },
   "exclude": ["fixtures/**/*", "dist/**/*"],
-  "include": ["**/*"]
+  "include": ["**/*"],
+  "references": [{ "path": "../react-creates" }]
 }
