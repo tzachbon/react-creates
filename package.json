@@ -8,7 +8,7 @@
   "scripts": {
     "build:packages": "tsc --build",
     "build:vscode": "npm run build -w react-creates-vscode",
-    "build": "run-p build:*",
+    "build": "npm-run-all build:*",
     "clean": "rimraf ./packages/*/dist",
     "lint": "eslint .",
     "pretest": "npm run build",
