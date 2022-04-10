@@ -5,7 +5,7 @@ async function main() {
   try {
     // The folder containing the Extension Manifest package.json
     // Passed to `--extensionDevelopmentPath`
-    const extensionDevelopmentPath = dirname(require.resolve('react-creates-vscode/package.json'));
+    const extensionDevelopmentPath = dirname(require.resolve('react-creates-vsc/package.json'));
 
     // The path to test runner
     // Passed to --extensionTestsPath
