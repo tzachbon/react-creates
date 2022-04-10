@@ -29,6 +29,13 @@ export function createComponentCommand() {
         { name, ...options },
         {
           fileSystem: nodeFs,
+          onFinished({ name: _name, directory: _directory, ...resolvedOptions }) {
+            if (optionsCache && !options.fresh && !options.yes) {
+              for (const [key, value] of Object.entries(resolvedOptions)) {
+                optionsCache.set(key, value);
+              }
+            }
+          },
           async resolveProperty(key) {
             if (options.yes) {
               return;

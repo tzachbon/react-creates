@@ -51,7 +51,7 @@
     "commands": [
       {
         "command": "react-creates-vscode.component",
-        "title": "React Creates: Component",
+        "title": "React Creates: Create component",
         "icon": {
           "dark": "assets/add_icon_light.svg",
           "light": "assets/add_icon_dark.svg"
@@ -60,6 +60,10 @@
       {
         "command": "react-creates-vscode.create",
         "title": "React Creates: Create"
+      },
+      {
+        "command": "react-creates-vscode.clear-cache",
+        "title": "React Creates: Clear cache"
       }
     ],
     "menus": {
@@ -74,6 +78,11 @@
           "when": "explorerResourceIsFolder",
           "command": "react-creates-vscode.component",
           "group": "reactcreates@1"
+        },
+        {
+          "when": "explorerResourceIsFolder",
+          "command": "react-creates-vscode.clear-cache",
+          "group": "reactcreates@1"
         }
       ]
     },
@@ -81,14 +90,14 @@
       "type": "object",
       "title": "React Creates",
       "properties": {
-        "react-creates.auto-global-update-runner": {
+        "react-creates.package-manager-runner": {
           "type": "string",
           "enum": [
             "npm",
             "yarn"
           ],
           "default": "npm",
-          "description": "The runner to use for auto-updating the extension.\nFor example, if you are using yarn to install dependencies, you can set this to `yarn`.",
+          "description": "The package manager runner to use for auto-updating the extension.\nFor example, if you are using yarn to install dependencies, you can set this to `yarn`.",
           "enumDescriptions": [
             "Use npm to update the extension.",
             "Use yarn to update the extension."
@@ -96,7 +105,7 @@
         },
         "react-creates.auto-global-update": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Autmoatically update the global \"react-creates\" package when a new version is available"
         }
       }

@@ -1,7 +1,12 @@
 import * as vscode from 'vscode';
 import { getPathUri } from '../../utils/get-path-uri';
 import { tryRun } from '../../utils/try-run';
-import { ComponentOption, createComponentProperties, buildCreateComponentCommand } from 'react-creates';
+import {
+  ComponentOption,
+  createComponentProperties,
+  buildCreateComponentCommand,
+  FileSystemCache,
+} from 'react-creates';
 import type { CommandWithContext } from '../../main';
 import { Terminals } from '../../terminals';
 
@@ -13,7 +18,7 @@ const propertyDescriptions = {
   skipTest: 'Whether to skip the test file.',
 };
 
-export const component: CommandWithContext = ({ fileSystem }) => ({
+export const component: CommandWithContext = ({ fileSystem, config }) => ({
   name: 'react-creates-vscode.component',
   command: (contextUri) =>
     tryRun(async () => {
@@ -21,6 +26,7 @@ export const component: CommandWithContext = ({ fileSystem }) => ({
         contextUri = getPathUri();
       }
 
+      const cache = FileSystemCache.create({ fileSystem, rootDir: contextUri.fsPath });
       const name = await vscode.window.showInputBox({ prompt: 'Name of the component' });
 
       if (!name) {
@@ -50,6 +56,12 @@ export const component: CommandWithContext = ({ fileSystem }) => ({
               directory,
             },
             async (key) => {
+              if (cache.has(key)) {
+                return cache.get(key);
+              }
+
+              let value;
+
               if (key === 'style' || key === 'language' || key === 'type') {
                 type Keys = keyof Pick<typeof createComponentProperties, 'style' | 'language' | 'type'>;
 
@@ -59,7 +71,7 @@ export const component: CommandWithContext = ({ fileSystem }) => ({
                   placeHolder: propertyDescriptions[key as Keys],
                 });
 
-                return response as ComponentOption[typeof key] | undefined;
+                value = response as ComponentOption[typeof key] | undefined;
               } else if (key === 'skipTest' || key === 'propTypes') {
                 const values = ['true', 'false'];
                 const response = await vscode.window.showQuickPick(values, {
@@ -67,16 +79,27 @@ export const component: CommandWithContext = ({ fileSystem }) => ({
                   placeHolder: propertyDescriptions[key as 'skipTest' | 'propTypes'],
                 });
 
-                return (response === 'true') as ComponentOption[typeof key];
-              } else {
-                return;
+                value = (response === 'true') as ComponentOption[typeof key];
               }
+
+              if (value) {
+                cache.set(key, value);
+              }
+
+              return value;
             }
           );
 
           progress.report({ message: 'Running command...', increment: 0.5 });
 
-          Terminals.send(vscode.Uri.parse(directory), ['npx', 'react-creates', ...terminalCommand].join(' '));
+          Terminals.send(
+            vscode.Uri.parse(directory),
+            [
+              config.get('package-manager-runner') === 'npm' ? 'npm_config_yes=true npx' : 'yarn',
+              'react-creates',
+              ...terminalCommand,
+            ].join(' ')
+          );
 
           progress.report({ message: 'Done!', increment: 1 });
         }

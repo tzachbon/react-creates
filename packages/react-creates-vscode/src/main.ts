@@ -8,6 +8,7 @@ import { component } from './commands/create/component';
 import { create } from './commands/create';
 import { Terminals } from './terminals';
 import { runAutoGlobalUpdate } from './auto-global-update';
+import { clearCache } from './commands/clear-cache';
 
 export type CommandWithContext = RegisterCommand<Context>;
 export type Context = { rootDir: string; fileSystem: IFileSystem; config: vscode.WorkspaceConfiguration };
@@ -16,6 +17,8 @@ export type Context = { rootDir: string; fileSystem: IFileSystem; config: vscode
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
   const rootDir = getRootDir();
+
+  console.log(`React Creates activated - "${context.extensionPath}" `);
 
   if (!rootDir) {
     vscode.window.showErrorMessage('No workspace folder found.');
@@ -37,7 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     runAutoGlobalUpdate({
       rootDir,
-      runner: commandContext.config.get<string>('auto-global-update-runner'),
+      runner: commandContext.config.get<string>('package-manager-runner'),
     });
 
     setTimeout(() => {
@@ -45,10 +48,9 @@ export function activate(context: vscode.ExtensionContext) {
     }, 5000);
   }
 
-  const createCommand = registerCommand(create(commandContext));
-  const componentCommand = registerCommand(component(commandContext));
-
-  [createCommand, componentCommand].forEach((command) => context.subscriptions.push(command));
+  [create, component, clearCache].forEach((command) =>
+    context.subscriptions.push(registerCommand(command(commandContext)))
+  );
 }
 
 // this method is called when your extension is deactivated

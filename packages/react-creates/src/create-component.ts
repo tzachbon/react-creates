@@ -35,6 +35,7 @@ export interface CreateComponentMeta {
   ): Promise<ComponentOption[P] | undefined> | ComponentOption[P] | undefined;
   fileSystem?: IFileSystem;
   templateDirectory?: string;
+  onFinished?: (options: Required<CreateComponentOption>) => Promise<void> | void;
   logger?: {
     log: (...messages: any[]) => void;
     error: (...messages: any[]) => void;
@@ -48,9 +49,11 @@ export async function createComponent(
     fileSystem = nodeFs,
     templateDirectory = defaultTemplateDirectory,
     logger = console,
+    onFinished,
   }: CreateComponentMeta = {}
 ) {
-  const { language, type, name, directory: target } = await resolveCreateComponentOptions(options, resolveProperty);
+  const resolvedOptions = await resolveCreateComponentOptions(options, resolveProperty);
+  const { language, type, name, directory: target } = resolvedOptions;
 
   const resolvedSource = fileSystem.join(templateDirectory, language, type);
   const resolvedTarget = fileSystem.join(target, name);
@@ -60,9 +63,14 @@ export async function createComponent(
 
   const files = await fileSystem.promises.readdir(resolvedTarget);
 
+  const modifiedOptions = {
+    ...resolvedOptions,
+    style: resolvedOptions.style === 'none' ? undefined : resolvedOptions.style,
+  };
+
   try {
     for (const oldFileName of files) {
-      if (options.skipTest && testFileRegex.test(oldFileName)) {
+      if (modifiedOptions.skipTest && testFileRegex.test(oldFileName)) {
         /**
          * Delete test file
          */
@@ -70,7 +78,7 @@ export async function createComponent(
         continue;
       }
 
-      if (!options.style && styleFileRegex.test(oldFileName)) {
+      if (!modifiedOptions.style && styleFileRegex.test(oldFileName)) {
         /**
          * Delete style file
          */
@@ -81,7 +89,7 @@ export async function createComponent(
       /**
        * Resolve file name
        */
-      const fileName = render(oldFileName, options).replace(/.template$/, '');
+      const fileName = render(oldFileName, modifiedOptions).replace(/.template$/, '');
       const filePath = fileSystem.join(resolvedTarget, fileName);
       await fileSystem.promises.rename(fileSystem.join(resolvedTarget, oldFileName), filePath);
 
@@ -89,10 +97,12 @@ export async function createComponent(
        * Resolve File Content
        */
       const content = await fileSystem.promises.readFile(filePath, 'utf8');
-      const resolvedContent = render(content, options);
+      const resolvedContent = render(content, modifiedOptions);
       await fileSystem.promises.writeFile(filePath, resolvedContent, 'utf8');
     }
     logger.log(`Component "${name}" created.\n\n${resolvedTarget}\n`);
+
+    onFinished?.(resolvedOptions);
   } catch (error) {
     logger.error(`Failed to create "${name}" component.\n\n${resolvedTarget}\n${error}`);
     logger.log(`Cleaning up...`);

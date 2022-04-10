@@ -20,7 +20,11 @@ export class FileSystemCache {
       throw new Error('Could not find package.json');
     }
 
-    const cachePathDir = findCacheDir({ name: fileSystem.join('react-creates', packageJsonPath), create: true })!;
+    const cachePathDir = findCacheDir({
+      name: fileSystem.join('react-creates', packageJsonPath),
+      create: true,
+      cwd: rootDir,
+    })!;
 
     return fileSystem.join(cachePathDir, 'cache.json');
   }
@@ -65,11 +69,12 @@ export class FileSystemCache {
   }
 
   private getCacheContent() {
-    if (!this.currentContent) {
-      if (!this.fileSystem.existsSync(this.cachePath)) {
-        this.fileSystem.writeFileSync(this.cachePath, '{}');
-      }
+    if (!this.fileSystem.existsSync(this.cachePath)) {
+      this.fileSystem.writeFileSync(this.cachePath, '{}');
+      this.currentContent = {};
+    }
 
+    if (!this.currentContent) {
       this.currentContent = (this.fileSystem.readJsonFileSync(this.cachePath) as Record<string, any>) ?? {};
     }
 
