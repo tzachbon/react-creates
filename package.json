@@ -7,7 +7,7 @@
   ],
   "scripts": {
     "build:packages": "tsc --build",
-    "build:vscode": "npm run build -w react-creates-vscode",
+    "build:vscode": "npm run build -w react-creates-vsc",
     "build": "npm-run-all build:*",
     "publish:vscode": "node -r @ts-tools/node/r scripts/publish-vscode.ts",
     "clean": "rimraf ./packages/*/dist",
