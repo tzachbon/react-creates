@@ -128,6 +128,6 @@
     "react-creates": "^2.0.2"
   },
   "devDependencies": {
-    "vscode": "^1.1.37"
+    "vscode": "^0.9.9"
   }
 }
