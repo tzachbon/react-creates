@@ -2,7 +2,7 @@
  <h1 align="center">
  React Creates (VSCode) ⚛️
  </h1>
-<img src="https://github.com/tzachbon/react-creates/blob/master/packages/react-creates-vsc/screencast.gif?raw=true">
+<img src="https://github.com/tzachbon/react-creates/blob/master/packages/react-creates-vscode/screencast.gif?raw=true">
 </p>
 
 # Table of content

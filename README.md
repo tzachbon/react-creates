@@ -38,7 +38,7 @@ Examples:
 > VSCode
 
 <p align="center">
-  <img src="packages/react-creates-vsc/screencast.gif">
+  <img src="packages/react-creates-vscode/screencast.gif">
 </p>
 
 ## Contribute
