@@ -41,68 +41,53 @@ export const component: CommandWithContext = ({ fileSystem, config }) => ({
         (await vscode.window.showInputBox({ prompt: 'Directory of the component', value: probablyDirectory })) ??
         probablyDirectory;
 
-      return vscode.window.withProgress(
+      const terminalCommand = await buildCreateComponentCommand(
         {
-          title: `React Creates component command for "${name}"`,
-          location: vscode.ProgressLocation.Notification,
-          cancellable: true,
+          name,
+          directory,
         },
-        async (progress) => {
-          progress.report({ message: 'Creating component...', increment: 0 });
+        async (key) => {
+          if (cache.has(key)) {
+            return cache.get(key);
+          }
 
-          const terminalCommand = await buildCreateComponentCommand(
-            {
-              name,
-              directory,
-            },
-            async (key) => {
-              if (cache.has(key)) {
-                return cache.get(key);
-              }
+          let value;
 
-              let value;
+          if (key === 'style' || key === 'language' || key === 'type') {
+            type Keys = keyof Pick<typeof createComponentProperties, 'style' | 'language' | 'type'>;
 
-              if (key === 'style' || key === 'language' || key === 'type') {
-                type Keys = keyof Pick<typeof createComponentProperties, 'style' | 'language' | 'type'>;
+            const values = [...createComponentProperties[key as Keys]];
+            const response = await vscode.window.showQuickPick(values, {
+              matchOnDescription: true,
+              placeHolder: propertyDescriptions[key as Keys],
+            });
 
-                const values = [...createComponentProperties[key as Keys]];
-                const response = await vscode.window.showQuickPick(values, {
-                  matchOnDescription: true,
-                  placeHolder: propertyDescriptions[key as Keys],
-                });
+            value = response as ComponentOption[typeof key] | undefined;
+          } else if (key === 'skipTest' || key === 'propTypes') {
+            const values = ['true', 'false'];
+            const response = await vscode.window.showQuickPick(values, {
+              matchOnDescription: true,
+              placeHolder: propertyDescriptions[key as 'skipTest' | 'propTypes'],
+            });
 
-                value = response as ComponentOption[typeof key] | undefined;
-              } else if (key === 'skipTest' || key === 'propTypes') {
-                const values = ['true', 'false'];
-                const response = await vscode.window.showQuickPick(values, {
-                  matchOnDescription: true,
-                  placeHolder: propertyDescriptions[key as 'skipTest' | 'propTypes'],
-                });
+            value = (response === 'true') as ComponentOption[typeof key];
+          }
 
-                value = (response === 'true') as ComponentOption[typeof key];
-              }
+          if (value) {
+            cache.set(key, value);
+          }
 
-              if (value) {
-                cache.set(key, value);
-              }
-
-              return value;
-            }
-          );
-
-          progress.report({ message: 'Running command...', increment: 0.5 });
-
-          Terminals.send(
-            vscode.Uri.parse(directory),
-            [
-              config.get('package-manager-runner') === 'npm' ? 'npm_config_yes=true npx' : 'yarn',
-              'react-creates',
-              ...terminalCommand,
-            ].join(' ')
-          );
-
-          progress.report({ message: 'Done!', increment: 1 });
+          return value;
         }
+      );
+
+      Terminals.send(
+        vscode.Uri.parse(directory),
+        [
+          config.get('package-manager-runner') === 'npm' ? 'npm_config_yes=true npx' : 'yarn',
+          'react-creates',
+          ...terminalCommand,
+        ].join(' ')
       );
     }),
 });
