@@ -25,7 +25,7 @@ React creates for you useful and common tools that adapt themselves to your proj
 You can use:
 
 - [Super simple CLI](packages/react-creates/README.md)
-- [Visual Studio Code Extension (VSCode)](packages/react-creates-vsc/README.md)
+- [Visual Studio Code Extension (VSCode)](packages/react-creates-vscode/README.md)
 
 Examples:
 
