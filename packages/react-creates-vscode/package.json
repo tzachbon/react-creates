@@ -126,8 +126,5 @@
     "@file-services/types": "^6.0.0",
     "@types/vscode": "^1.66.0",
     "react-creates": "^2.0.4"
-  },
-  "devDependencies": {
-    "vscode": "^1.1.37"
   }
 }
