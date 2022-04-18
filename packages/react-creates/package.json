@@ -1,6 +1,6 @@
 {
   "name": "react-creates",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
   "files": [
     "dist/src",
