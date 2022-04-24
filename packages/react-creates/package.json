@@ -38,7 +38,7 @@
     "@types/find-cache-dir": "^3.2.1",
     "@types/mustache": "^4.1.2",
     "@types/prompts": "^2.0.14",
-    "commander": "^9.1.0",
+    "commander": "^9.2.0",
     "find-cache-dir": "^3.3.2",
     "mustache": "^4.2.0",
     "prompts": "^2.4.2"
