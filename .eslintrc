@@ -7,7 +7,7 @@
   },
   "extends": ["eslint:recommended", "prettier"],
   "plugins": ["react-hooks", "no-only-tests"],
-  "ignorePatterns": ["node_modules/", "packages/**/dist", "packages/**/test", "packages/**/template"],
+  "ignorePatterns": ["node_modules/", "packages/**/dist"],
   "parserOptions": {
     "sourceType": "module",
     "ecmaFeatures": {

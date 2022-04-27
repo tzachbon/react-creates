@@ -24,7 +24,6 @@ const rootTempDir = join(packageRootDir, '..', '..', '.temp');
 
 export class CliDriver {
   tempDirectory: ITempDirectory | undefined;
-  constructor() {}
 
   static loadFixtureSync(name: string) {
     return loadDirSync(join(packageRootDir, 'fixtures', name));

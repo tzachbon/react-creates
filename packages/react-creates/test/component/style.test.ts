@@ -6,7 +6,7 @@ const componentName = 'Component';
 describe('Style', () => {
   const cli = new CliDriver().beforeAndAfter();
 
-  it('no style specified', async () => {
+  it('no style specified', () => {
     const files = cli.runSync(['component', componentName, '--yes']).loadDirectorySync(componentName);
 
     const fixture = CliDriver.loadFixtureSync('no-style-specified');
@@ -14,7 +14,7 @@ describe('Style', () => {
     expect(files).toEqual(fixture);
   });
 
-  it('none', async () => {
+  it('none', () => {
     const files = cli
       .runSync(['component', componentName, '--style', 'none', '--yes'])
       .loadDirectorySync(componentName);
@@ -24,7 +24,7 @@ describe('Style', () => {
     expect(files).toEqual(fixture);
   });
 
-  it('css', async () => {
+  it('css', () => {
     const files = cli.runSync(['component', componentName, '--style', 'css', '--yes']).loadDirectorySync(componentName);
 
     const fixture = CliDriver.loadFixtureSync('style-css');
@@ -32,7 +32,7 @@ describe('Style', () => {
     expect(files).toEqual(fixture);
   });
 
-  it('scss', async () => {
+  it('scss', () => {
     const files = cli
       .runSync(['component', componentName, '--style', 'scss', '--yes'])
       .loadDirectorySync(componentName);
