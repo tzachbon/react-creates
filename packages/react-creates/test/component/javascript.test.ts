@@ -6,7 +6,7 @@ const componentName = 'Component';
 describe('Javascript component', () => {
   const cli = new CliDriver().beforeAndAfter();
 
-  it('function', async () => {
+  it('function', () => {
     const files = cli
       .runSync(['component', componentName, '--language', 'javascript', '--yes'])
       .loadDirectorySync(componentName);
@@ -16,7 +16,7 @@ describe('Javascript component', () => {
     expect(files).toEqual(fixture);
   });
 
-  it('function (prop-type)', async () => {
+  it('function (prop-type)', () => {
     const files = cli
       .runSync(['component', componentName, '--language', 'javascript', '--prop-types', '--yes'])
       .loadDirectorySync(componentName);
@@ -26,7 +26,7 @@ describe('Javascript component', () => {
     expect(files).toEqual(fixture);
   });
 
-  it('class', async () => {
+  it('class', () => {
     const files = cli
       .runSync(['component', componentName, '--type', 'class', '--language', 'javascript', '--yes'])
       .loadDirectorySync(componentName);
@@ -36,7 +36,7 @@ describe('Javascript component', () => {
     expect(files).toEqual(fixture);
   });
 
-  it('class (prop-types)', async () => {
+  it('class (prop-types)', () => {
     const files = cli
       .runSync(['component', componentName, '--type', 'class', '--language', 'javascript', '--prop-types', '--yes'])
       .loadDirectorySync(componentName);

@@ -6,7 +6,7 @@ const componentName = 'Component';
 describe('Typescript component', () => {
   const cli = new CliDriver().beforeAndAfter();
 
-  it('function (default)', async () => {
+  it('function (default)', () => {
     const files = cli.runSync(['component', componentName, '--yes']).loadDirectorySync(componentName);
 
     const fixture = CliDriver.loadFixtureSync('typescript-function');
@@ -14,7 +14,7 @@ describe('Typescript component', () => {
     expect(files).toEqual(fixture);
   });
 
-  it('class', async () => {
+  it('class', () => {
     const files = cli
       .runSync(['component', componentName, '--type', 'class', '--yes'])
       .loadDirectorySync(componentName);
