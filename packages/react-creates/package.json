@@ -3,12 +3,13 @@
   "version": "2.0.6",
   "description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
   "files": [
-    "dist/src",
+    "dist",
+    "!dist/test",
     "src",
     "templates"
   ],
-  "types": "dist/src/index.d.ts",
-  "main": "dist/src/index.js",
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
   "bin": {
     "react-creates": "bin/react-creates.js"
   },

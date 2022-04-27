@@ -1,9 +1,0 @@
-{
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "./dist"
-  },
-  "exclude": ["fixtures/**/*", "dist/**/*"],
-  "include": ["**/*"],
-  "references": [{ "path": "../react-creates" }]
-}
