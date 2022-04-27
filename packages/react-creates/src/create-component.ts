@@ -105,12 +105,12 @@ export async function createComponent(
        * Resolve File Content
        */
       const content = await fileSystem.promises.readFile(filePath, 'utf8');
-      const resolvedContent = render(content, modifiedOptions);
+      const resolvedContent = render(content, modifiedOptions).trimStart();
       await fileSystem.promises.writeFile(filePath, resolvedContent, 'utf8');
     }
     logger.log(`Component "${name}" created.\n\n${resolvedTarget}\n`);
 
-    onFinished?.(resolvedOptions);
+    void onFinished?.(resolvedOptions);
   } catch (error) {
     logger.error(`Failed to create "${name}" component.\n\n${resolvedTarget}\n${error}`);
     logger.log(`Cleaning up...`);
