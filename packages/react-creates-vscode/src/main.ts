@@ -15,13 +15,13 @@ export type Context = { rootDir: string; fileSystem: IFileSystem; config: vscode
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
   const rootDir = getRootDir();
 
   console.log(`React Creates activated - "${context.extensionPath}" `);
 
   if (!rootDir) {
-    vscode.window.showErrorMessage('No workspace folder found.');
+    await vscode.window.showErrorMessage('No workspace folder found.');
     return;
   }
 

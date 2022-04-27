@@ -53,7 +53,7 @@ export function createComponentCommand() {
               return;
             }
 
-            const values = [...createComponentProperties[key as keyof typeof createComponentProperties]];
+            const values = [...createComponentProperties[key as unknown as keyof typeof createComponentProperties]];
             const response = await prompts({
               type: 'select',
               name: key,

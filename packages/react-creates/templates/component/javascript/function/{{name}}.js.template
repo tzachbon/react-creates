@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import './style.{{style}}';
 {{/style}}
 
-export const {{name}} = (props) => {
+export const {{name}} = () => {
   return <div className="{{name}}">{{name}} works!</div>;
 };
 {{#propTypes}}

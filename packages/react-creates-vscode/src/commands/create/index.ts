@@ -20,7 +20,7 @@ export const create: CommandWithContext = (context) => ({
           break;
 
         default:
-          vscode.window.showErrorMessage(
+          await vscode.window.showErrorMessage(
             'Please select one of those options: ' + Object.values(CREATE_OPTIONS).join(', ')
           );
           break;
