@@ -14,8 +14,9 @@ const propertyDescriptions = {
   style: 'The style language to use for the component.',
   type: 'The type of component to create.',
   language: 'The language to use for the component.',
-  propTypes: 'Whether to include propTypes.',
+  propTypes: 'Whether to include prop-types.',
   skipTest: 'Whether to skip the test file.',
+  cssModules: 'Whether to use CSS Modules.',
 };
 
 export const component: CommandWithContext = ({ fileSystem, config }) => ({
@@ -63,7 +64,7 @@ export const component: CommandWithContext = ({ fileSystem, config }) => ({
             });
 
             value = response as ComponentOption[typeof key] | undefined;
-          } else if (key === 'skipTest' || key === 'propTypes') {
+          } else if (key === 'skipTest' || key === 'propTypes' || key === 'cssModules') {
             const values = ['false', 'true'];
             const response = await vscode.window.showQuickPick(values, {
               matchOnDescription: true,
