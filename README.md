@@ -12,7 +12,10 @@ React creates for you useful and common tools that adapt themselves to your proj
     <img src="https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg">
   </a>
   <a href="https://marketplace.visualstudio.com/items?itemName=TzachBonfil.react-creates-vsc">
-    <img src="https://vsmarketplacebadge.apphb.com/version/TzachBonfil.react-creates-vsc.svg">
+    <img src="https://vsmarketplacebadge.apphb.com/downloads-short/TzachBonfil.react-creates-vsc.svg">
+  </a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=TzachBonfil.react-creates-vsc">
+    <img src="https://vsmarketplacebadge.apphb.com/rating-star/TzachBonfil.react-creates-vsc.svg">
   </a>
   <a href="https://github.com/tzachbon/react-creates/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/tzachbon/react-creates.svg">
