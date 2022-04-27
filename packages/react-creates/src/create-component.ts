@@ -22,6 +22,7 @@ export interface ComponentOption {
   language?: 'typescript' | 'javascript';
   propTypes?: boolean;
   skipTest?: boolean;
+  cssModules?: boolean;
   style?: 'css' | 'scss' | 'none';
 }
 
@@ -53,7 +54,9 @@ export async function createComponent(
   }: CreateComponentMeta = {}
 ) {
   const resolvedOptions = await resolveCreateComponentOptions(options, resolveProperty);
-  const { language, type, name, directory: target } = resolvedOptions;
+  const { language, type, name, directory: target, cssModules } = resolvedOptions;
+
+  validateOptions(resolvedOptions);
 
   const resolvedSource = fileSystem.join(templateDirectory, language, type);
   const resolvedTarget = fileSystem.join(target, name);
@@ -65,7 +68,12 @@ export async function createComponent(
 
   const modifiedOptions = {
     ...resolvedOptions,
-    style: resolvedOptions.style === 'none' ? undefined : resolvedOptions.style,
+    style:
+      resolvedOptions.style === 'none'
+        ? undefined
+        : cssModules
+        ? `module.${resolvedOptions.style}`
+        : resolvedOptions.style,
   };
 
   try {
@@ -123,5 +131,15 @@ export async function resolveCreateComponentOptions(
     propTypes: options.propTypes ?? (await resolveProperty?.('propTypes')) ?? false,
     skipTest: options.skipTest ?? (await resolveProperty?.('skipTest')) ?? false,
     style: options.style ?? (await resolveProperty?.('style')) ?? 'none',
+    cssModules: options.cssModules ?? (await resolveProperty?.('cssModules')) ?? false,
   };
+}
+
+function validateOptions(options: Required<CreateComponentOption>): void {
+  /**
+   * Validate CSS Modules
+   */
+  if (options.cssModules && ['css', 'scss'].includes(options.style) === false) {
+    throw new Error(`Cannot use CSS Modules with style "${options.style}", only "css" and "scss" are supported.`);
+  }
 }
