@@ -47,19 +47,19 @@ export const component: CommandWithContext = ({ fileSystem, config }) => ({
           directory,
         },
         async (key) => {
+          type Keys = keyof Pick<typeof createComponentProperties, 'style' | 'language' | 'type'>;
+
           if (cache.has(key)) {
             return cache.get(key);
           }
 
-          let value;
+          let value: ComponentOption[typeof key] | undefined;
 
           if (key === 'style' || key === 'language' || key === 'type') {
-            type Keys = keyof Pick<typeof createComponentProperties, 'style' | 'language' | 'type'>;
-
-            const values = [...createComponentProperties[key as Keys]];
+            const values = [...createComponentProperties[key as unknown as Keys]];
             const response = await vscode.window.showQuickPick(values, {
               matchOnDescription: true,
-              placeHolder: propertyDescriptions[key as Keys],
+              placeHolder: propertyDescriptions[key as unknown as Keys],
             });
 
             value = response as ComponentOption[typeof key] | undefined;
@@ -67,7 +67,7 @@ export const component: CommandWithContext = ({ fileSystem, config }) => ({
             const values = ['false', 'true'];
             const response = await vscode.window.showQuickPick(values, {
               matchOnDescription: true,
-              placeHolder: propertyDescriptions[key as 'skipTest' | 'propTypes'],
+              placeHolder: propertyDescriptions[key as unknown as 'skipTest' | 'propTypes'],
             });
 
             value = (response === 'true') as ComponentOption[typeof key];
