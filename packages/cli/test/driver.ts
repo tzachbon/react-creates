@@ -90,6 +90,7 @@ export function runCliSync(cliArgs: string[] = [], cwd: string) {
   return spawnSync('node', [require.resolve('react-creates/bin/react-creates.js'), ...cliArgs], {
     encoding: 'utf8',
     cwd,
+    stdio: 'inherit',
   });
 }
 
