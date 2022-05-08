@@ -1,6 +1,6 @@
 {
   "name": "@react-creates/core",
-  "version": "2.0.6",
+  "version": "2.1.0",
   "description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
   "files": [
     "dist",
