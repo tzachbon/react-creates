@@ -1,4 +1,9 @@
 {
   "files": [],
-  "references": [{ "path": "./packages/react-creates" }, { "path": "./packages/react-creates-vscode" }]
+  "references": [
+    { "path": "./packages/react-creates/src" },
+    { "path": "./packages/react-creates/test" },
+    { "path": "./packages/react-creates-vscode/src" },
+    { "path": "./packages/react-creates-vscode/vscode-test" }
+  ]
 }

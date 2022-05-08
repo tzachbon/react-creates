@@ -14,9 +14,8 @@
     "url": "https://github.com/tzachbon"
   },
   "files": [
-    "dist/src",
-    "dist/extension.js",
-    "dist/extension.js.map",
+    "dist",
+    "!dist/vscode-test",
     "src"
   ],
   "keywords": [

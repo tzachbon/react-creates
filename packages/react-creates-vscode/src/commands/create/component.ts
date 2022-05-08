@@ -63,7 +63,7 @@ export const component: CommandWithContext = ({ fileSystem, config }) => ({
               placeHolder: propertyDescriptions[key as unknown as Keys],
             });
 
-            value = response as ComponentOption[typeof key] | undefined;
+            value = response as unknown as ComponentOption[typeof key] | undefined;
           } else if (key === 'skipTest' || key === 'propTypes' || key === 'cssModules') {
             const values = ['false', 'true'];
             const response = await vscode.window.showQuickPick(values, {
