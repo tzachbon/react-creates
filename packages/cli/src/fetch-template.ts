@@ -7,6 +7,7 @@ export async function fetchTemplate(path: string[]) {
   const emitter = degit(`${REPO_URL}/${['templates', ...path].join('/')}`, {
     cache: true,
     force: true,
+    mode: 'git',
   });
 
   const templatesDirectory = nodeFs.join(nodeFs.dirname(require.resolve('react-creates/package.json')), 'templates');
