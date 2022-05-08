@@ -64,7 +64,7 @@ export class CliDriver {
 
     const childProcess = runCliSync(args, this.tempDirectory.path);
 
-    if (childProcess.error) {
+    if (childProcess.status === 0) {
       if (shouldThrow) {
         throw childProcess.error;
       } else {
