@@ -29,7 +29,7 @@ export interface CreateComponentMeta {
     key: P
   ): Promise<ComponentOption[P] | undefined> | ComponentOption[P] | undefined;
   fileSystem: IFileSystem;
-  templateDirectory: string;
+  getTemplateDirectory: (options: Required<ComponentOption>) => string | Promise<string>;
   onFinished?: (options: Required<CreateComponentOption>) => Promise<void> | void;
   logger: {
     log: (...messages: any[]) => void;
@@ -39,14 +39,14 @@ export interface CreateComponentMeta {
 
 export async function createComponent(
   options: CreateComponentOption,
-  { resolveProperty, fileSystem, templateDirectory, logger, onFinished }: CreateComponentMeta
+  { resolveProperty, fileSystem, getTemplateDirectory, logger, onFinished }: CreateComponentMeta
 ) {
   const resolvedOptions = await resolveCreateComponentOptions(options, resolveProperty);
-  const { language, type, name, directory: target, cssModules } = resolvedOptions;
+  const { name, directory: target, cssModules } = resolvedOptions;
 
   validateOptions(resolvedOptions);
 
-  const resolvedSource = fileSystem.join(templateDirectory, language, type);
+  const resolvedSource = await getTemplateDirectory(resolvedOptions);
   const resolvedTarget = fileSystem.join(target, name);
 
   await fileSystem.promises.ensureDirectory(resolvedTarget);
