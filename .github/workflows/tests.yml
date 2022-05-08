@@ -17,5 +17,5 @@ jobs:
           cache: npm
       - run: npm i -g npm@8.3
       - run: npm ci
-      - run: npm run lint
       - run: npm test
+      - run: npm run lint
