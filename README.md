@@ -35,13 +35,13 @@ Examples:
 > CLI
 
 <p align="center">
-  <img src="packages/react-creates/screencast.gif">
+  <img src="packages/cli/screencast.gif">
 </p>
 
 > VSCode
 
 <p align="center">
-  <img src="packages/react-creates-vscode/screencast.gif">
+  <img src="packages/vscode/screencast.gif">
 </p>
 
 ## Contribute
