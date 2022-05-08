@@ -27,7 +27,7 @@ export function createComponentCommand() {
     .option('-y --yes', 'Selects the default values')
     .option('--fresh', 'Will not use cache')
     .option('--templatesDirectory <string>', 'Target root directory for templates to be stored locally')
-    .action(async (name, options) => {
+    .action((name, options) => {
       const { templatesDirectory } = options;
       return createComponent(
         { name, ...options },
