@@ -125,7 +125,3 @@ dist
 
 # testing temp directory
 .temp
-
-# temp-templates
-
-packages/*/templates

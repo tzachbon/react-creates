@@ -8,9 +8,8 @@ describe('CSS Modules', () => {
 
   describe('style', () => {
     it('should throw when style is not css or scss', () => {
-      const { output, error } = cli.runSync(['component', componentName, '--css-modules', '--yes']);
+      const { error } = cli.runSync(['component', componentName, '--css-modules', '--yes'], { shouldThrow: false });
 
-      expect(output).toEqual('');
       expect(error).toContain('Error: Cannot use CSS Modules with style "none", only "css" and "scss" are supported');
     });
 

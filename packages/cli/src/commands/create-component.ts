@@ -26,14 +26,16 @@ export function createComponentCommand() {
     .option('-s --style <styling>', 'Selected the style')
     .option('-y --yes', 'Selects the default values')
     .option('--fresh', 'Will not use cache')
+    .option('--templatesDirectory <string>', 'Target root directory for templates to be stored locally')
     .action(async (name, options) => {
+      const { templatesDirectory } = options;
       return createComponent(
         { name, ...options },
         {
           fileSystem: nodeFs,
           logger: console,
           async getTemplateDirectory({ language, type }) {
-            const { targetTemplateDirectory } = await fetchTemplate(['component', language, type]);
+            const { targetTemplateDirectory } = await fetchTemplate(['component', language, type], templatesDirectory);
 
             return targetTemplateDirectory;
           },
