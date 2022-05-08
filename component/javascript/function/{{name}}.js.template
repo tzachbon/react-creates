@@ -1,0 +1,16 @@
+{{#propTypes}}
+import PropTypes from 'prop-types';
+{{/propTypes}}
+{{#style}}
+import {{#cssModules}}classes from {{/cssModules}}'./style.{{style}}';
+{{/style}}
+
+export const {{name}} = () => {
+  return <div className={{#cssModules}}{classes.{{name}}}{{/cssModules}}{{^cssModules}}"{{name}}"{{/cssModules}}>{{name}} works!</div>;
+};
+{{#propTypes}}
+
+{{name}}.propTypes = {
+  className: PropTypes.string,
+};
+{{/propTypes}}
