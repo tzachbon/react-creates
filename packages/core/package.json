@@ -1,0 +1,38 @@
+{
+  "name": "@react-creates/core",
+  "version": "2.0.6",
+  "description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
+  "files": [
+    "dist",
+    "!dist/test",
+    "!dist/tsconfig.tsbuildinfo",
+    "src"
+  ],
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "homepage": "https://github.com/tzachbon/react-creates/tree/master/packages/core",
+  "readme": "https://github.com/tzachbon/react-creates/tree/master/packages/core/README.md",
+  "scripts": {},
+  "keywords": [
+    "react",
+    "component",
+    "cli",
+    "generator",
+    "tool",
+    "react-native",
+    "react native",
+    "native",
+    "ng add"
+  ],
+  "author": {
+    "name": "Tzach Bonfil",
+    "email": "tzachbonfil@gmail.com",
+    "url": "https://github.com/tzachbon"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@file-services/types": "^6.0.0",
+    "@types/mustache": "^4.1.2",
+    "mustache": "^4.2.0"
+  }
+}
