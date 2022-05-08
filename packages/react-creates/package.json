@@ -5,6 +5,7 @@
   "files": [
     "dist",
     "!dist/test",
+    "!dist/tsconfig.tsbuildinfo",
     "src",
     "templates"
   ],
