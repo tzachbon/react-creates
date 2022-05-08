@@ -1,0 +1,129 @@
+{
+  "name": "react-creates-vsc",
+  "displayName": "React Creates",
+  "description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
+  "version": "2.0.6",
+  "publisher": "TzachBonfil",
+  "private": true,
+  "engines": {
+    "vscode": "^1.45.0"
+  },
+  "author": {
+    "name": "Tzach Bonfil",
+    "email": "tzachbonfil@gmail.com",
+    "url": "https://github.com/tzachbon"
+  },
+  "files": [
+    "dist",
+    "!dist/vscode-test",
+    "src"
+  ],
+  "keywords": [
+    "react",
+    "component",
+    "cli",
+    "generator",
+    "tool",
+    "react-native",
+    "react native",
+    "native",
+    "ng add",
+    "javascript",
+    "typescript"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "icon": "assets/logo.png",
+  "homepage": "https://github.com/tzachbon/react-creates/tree/master/packages/vscode/README.md",
+  "repository": {
+    "url": "https://github.com/tzachbon/react-creates/tree/master/packages/vscode.git",
+    "type": "github"
+  },
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:react-creates-vscode.component",
+    "onCommand:react-creates-vscode.create"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "react-creates-vscode.component",
+        "title": "React Creates: Create component",
+        "icon": {
+          "dark": "assets/add_icon_light.svg",
+          "light": "assets/add_icon_dark.svg"
+        }
+      },
+      {
+        "command": "react-creates-vscode.create",
+        "title": "React Creates: Create"
+      },
+      {
+        "command": "react-creates-vscode.clear-cache",
+        "title": "React Creates: Clear cache"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "when": "explorerResourceIsFolder",
+          "command": "react-creates-vscode.component"
+        }
+      ],
+      "explorer/context": [
+        {
+          "when": "explorerResourceIsFolder",
+          "command": "react-creates-vscode.component",
+          "group": "reactcreates@1"
+        },
+        {
+          "when": "explorerResourceIsFolder",
+          "command": "react-creates-vscode.clear-cache",
+          "group": "reactcreates@1"
+        }
+      ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "React Creates",
+      "properties": {
+        "react-creates.package-manager-runner": {
+          "type": "string",
+          "enum": [
+            "npm",
+            "yarn"
+          ],
+          "default": "npm",
+          "description": "The package manager runner to use for auto-updating the extension.\nFor example, if you are using yarn to install dependencies, you can set this to `yarn`.",
+          "enumDescriptions": [
+            "Use npm to update the extension.",
+            "Use yarn to update the extension."
+          ]
+        },
+        "react-creates.auto-global-update": {
+          "type": "boolean",
+          "default": false,
+          "description": "Autmoatically update the global \"react-creates\" package when a new version is available"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "clean": "run-p clean:*",
+    "clean:fixtures": "rimraf dist/fixtures",
+    "build:bundle": "webpack --config ./webpack.config.js",
+    "build:fixtures": "cp -R ./fixtures ./dist/fixtures",
+    "prebuild": "npm-run-all clean",
+    "build": "npm-run-all build:*",
+    "test": "node dist/vscode-test/test-starter.js",
+    "watch": "npm run build:bundle -- --watch"
+  },
+  "dependencies": {
+    "@file-services/node": "^6.0.0",
+    "@file-services/types": "^6.0.0",
+    "@types/vscode": "^1.66.0",
+    "react-creates": "^2.0.6"
+  }
+}
