@@ -58,8 +58,8 @@ export class CliDriver {
       throw new Error('tempDirectory is not defined, did you run "beforeAndAfter"?');
     }
 
-    if (!args.includes('--templatesDirectory')) {
-      args.push('--templatesDirectory', this.tempTemplateDir!.path);
+    if (!args.includes('--templatesDirectory') && this.tempTemplateDir) {
+      args.push('--templatesDirectory', this.tempTemplateDir.path);
     }
 
     const childProcess = runCliSync(args, this.tempDirectory.path);
