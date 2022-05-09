@@ -29,7 +29,7 @@
     "npm": ">=8"
   },
   "devDependencies": {
-    "@ts-tools/node": "^3.0.1",
+    "@ts-tools/node": "^4.0.0",
     "@types/mocha": "^9.1.1",
     "@types/node": "^17.0.31",
     "@types/react": "^18.0.8",
