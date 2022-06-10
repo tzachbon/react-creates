@@ -7,7 +7,7 @@ describe('CSS Modules', () => {
   const cli = new CliDriver().beforeAndAfter();
 
   describe('style', () => {
-    it('should throw when style is not css or scss', () => {
+    it.skip('should throw when style is not css or scss', () => {
       const { error } = cli.runSync(['component', componentName, '--css-modules', '--yes'], { shouldThrow: false });
 
       expect(error).toContain('Error: Cannot use CSS Modules with style "none", only "css" and "scss" are supported');
