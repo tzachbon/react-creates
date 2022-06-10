@@ -2,7 +2,7 @@
   "name": "react-creates-vsc",
   "displayName": "React Creates",
   "description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
-  "version": "2.1.0",
+  "version": "2.1.2",
   "publisher": "TzachBonfil",
   "private": true,
   "engines": {
@@ -123,8 +123,8 @@
   "dependencies": {
     "@file-services/node": "^6.0.0",
     "@file-services/types": "^6.0.0",
-    "@types/vscode": "^1.66.0",
-    "@react-creates/core": "^2.1.0",
-    "react-creates": "^2.1.0"
+    "@types/vscode": "^1.67.0",
+    "@react-creates/core": "^2.1.1",
+    "react-creates": "^2.1.1"
   }
 }
