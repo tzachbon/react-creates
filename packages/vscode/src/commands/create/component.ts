@@ -81,7 +81,7 @@ export const component: CommandWithContext = ({ fileSystem, config }) => ({
       Terminals.send(
         vscode.Uri.parse(directory),
         [
-          config.get('package-manager-runner') === 'npm' ? 'npm_config_yes=true npx' : 'yarn',
+          config.get('package-manager-runner') === 'npm' ? 'npx --yes' : 'yarn',
           'react-creates',
           ...terminalCommand,
         ].join(' ')
