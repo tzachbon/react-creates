@@ -2,7 +2,7 @@
   "name": "react-creates-vsc",
   "displayName": "React Creates",
   "description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "publisher": "TzachBonfil",
   "private": true,
   "engines": {
