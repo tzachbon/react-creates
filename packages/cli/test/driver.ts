@@ -67,7 +67,7 @@ export class CliDriver {
     if (childProcess.status === 0) {
       if (shouldThrow) {
         throw childProcess.error;
-      } else {
+      } else if (childProcess.error) {
         console.error(childProcess.error);
       }
     }
