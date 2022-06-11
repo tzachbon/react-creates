@@ -20,10 +20,7 @@ export async function fetchTemplate(path: string[], templatesDirectory = getTemp
 
 function getTempTemplatesDirectory() {
   const rootDir = nodeFs.dirname(require.resolve('react-creates/package.json'));
-  const cachePath = FileSystemCache.getCachePath({
-    fileSystem: nodeFs,
-    rootDir,
-  });
+  const cachePath = FileSystemCache.getCacheRootPath({ rootDir });
 
   return nodeFs.resolve(cachePath, 'templates');
 }
