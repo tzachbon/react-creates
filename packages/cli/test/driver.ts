@@ -12,6 +12,7 @@ const {
   statSync,
   relative,
   readFileSync,
+  ensureDirectorySync,
   promises,
 } = nodeFs;
 const { mkdir } = promises;
@@ -85,6 +86,7 @@ export class CliDriver {
     }
 
     const directory = join(this.tempDirectory.path, dirName);
+    ensureDirectorySync(directory);
 
     return loadDirSync(directory);
   };
