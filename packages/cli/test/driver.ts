@@ -26,7 +26,12 @@ export class CliDriver {
   tempTemplateDir: ITempDirectory | undefined;
 
   static loadFixtureSync(name: string) {
-    return loadDirSync(join(packageRootDir, 'fixtures', name));
+    return Object.fromEntries(
+      Object.entries(loadDirSync(join(packageRootDir, 'fixtures', name))).map(([key, value]) => [
+        key,
+        value.toString().trim(),
+      ])
+    );
   }
 
   public beforeAndAfter() {
@@ -170,7 +175,7 @@ export function loadDirSync(rootPath: string, dirPath: string = rootPath): Files
     const key = relative(rootPath, fullPath).replace(/\\/g, '/');
     const stat = statSync(fullPath);
     if (stat.isFile()) {
-      acc[key] = readFileSync(fullPath, 'utf8');
+      acc[key] = readFileSync(fullPath, 'utf8').trim();
     } else if (stat.isDirectory()) {
       return {
         ...acc,
