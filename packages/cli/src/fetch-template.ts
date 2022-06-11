@@ -1,19 +1,14 @@
 import nodeFs from '@file-services/node';
+import { fork } from 'child_process';
+import { once } from 'events';
 import { FileSystemCache } from './file-system-cache';
 
 export async function fetchTemplate(path: string[], templatesDirectory = getTempTemplatesDirectory()) {
-  const repo = 'tzachbon/react-creates';
-  const directory = ['templates', ...path].join('/');
+  const request = `tzachbon/react-creates/${['templates', ...path].join('/')}`;
 
   const targetTemplateDirectory = nodeFs.resolve(templatesDirectory, ...path);
 
-  if (!(await nodeFs.promises.exists(targetTemplateDirectory))) {
-    await nodeFs.promises.mkdir(targetTemplateDirectory, { recursive: true });
-
-    const { default: degit } = await import('degit');
-
-    await degit(`${repo}/${directory}`, { cache: true, force: true }).clone(targetTemplateDirectory);
-  }
+  await once(fork(require.resolve('degit/degit'), [request, targetTemplateDirectory]), 'exit');
 
   return { templatesDirectory, targetTemplateDirectory };
 }
