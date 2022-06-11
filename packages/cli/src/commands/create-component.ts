@@ -10,6 +10,7 @@ import {
 } from '@react-creates/core';
 import prompts from 'prompts';
 import { FileSystemCache } from '../file-system-cache';
+import { fetchTemplate } from '../fetch-template';
 
 export function createComponentCommand() {
   let optionsCache: FileSystemCache | undefined;
@@ -25,17 +26,19 @@ export function createComponentCommand() {
     .option('-s --style <styling>', 'Selected the style')
     .option('-y --yes', 'Selects the default values')
     .option('--fresh', 'Will not use cache')
-    .action((name, options) =>
-      createComponent(
+    .option('--templatesDirectory <string>', 'Target root directory for templates to be stored locally')
+    .action((name, options) => {
+      const { templatesDirectory } = options;
+      return createComponent(
         { name, ...options },
         {
           fileSystem: nodeFs,
           logger: console,
-          templateDirectory: nodeFs.join(
-            nodeFs.dirname(require.resolve('react-creates/package.json')),
-            'templates',
-            'component'
-          ),
+          async getTemplateDirectory({ language, type }) {
+            const { targetTemplateDirectory } = await fetchTemplate(['component', language, type], templatesDirectory);
+
+            return targetTemplateDirectory;
+          },
           onFinished({ name: _name, directory: _directory, ...resolvedOptions }) {
             if (optionsCache && !options.fresh && !options.yes) {
               for (const [key, value] of Object.entries(resolvedOptions)) {
@@ -77,8 +80,8 @@ export function createComponentCommand() {
             return value;
           },
         }
-      )
-    );
+      );
+    });
 }
 
 export async function buildCreateComponentCommand(

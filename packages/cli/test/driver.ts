@@ -2,7 +2,6 @@ import { spawnSync } from 'child_process';
 import { nodeFs } from '@file-services/node';
 import rimrafCb from 'rimraf';
 import { promisify } from 'util';
-
 const {
   join,
   dirname,
@@ -24,6 +23,7 @@ const rootTempDir = join(packageRootDir, '..', '..', '.temp');
 
 export class CliDriver {
   tempDirectory: ITempDirectory | undefined;
+  tempTemplateDir: ITempDirectory | undefined;
 
   static loadFixtureSync(name: string) {
     return loadDirSync(join(packageRootDir, 'fixtures', name));
@@ -32,10 +32,12 @@ export class CliDriver {
   public beforeAndAfter() {
     beforeEach(async () => {
       this.tempDirectory = await createTempDirectory();
+      this.tempTemplateDir = await createTempDirectory('temp-template-');
     });
 
     afterEach(async () => {
       await this.tempDirectory!.remove();
+      await this.tempTemplateDir!.remove();
     });
 
     return this;
@@ -51,12 +53,24 @@ export class CliDriver {
     return this;
   };
 
-  runSync = (args: string[] = []) => {
+  runSync = (args: string[] = [], { shouldThrow = false }: { shouldThrow?: boolean } = {}) => {
     if (!this.tempDirectory) {
       throw new Error('tempDirectory is not defined, did you run "beforeAndAfter"?');
     }
 
+    if (!args.includes('--templatesDirectory') && this.tempTemplateDir) {
+      args.push('--templatesDirectory', this.tempTemplateDir.path);
+    }
+
     const childProcess = runCliSync(args, this.tempDirectory.path);
+
+    if (childProcess.status === 0) {
+      if (shouldThrow) {
+        throw childProcess.error;
+      } else if (childProcess.error) {
+        console.error(childProcess.error);
+      }
+    }
 
     return {
       output: childProcess.stdout,
@@ -87,10 +101,14 @@ export interface FilesStructure {
 }
 
 export function runCliSync(cliArgs: string[] = [], cwd: string) {
-  return spawnSync('node', [require.resolve('react-creates/bin/react-creates.js'), ...cliArgs], {
-    encoding: 'utf8',
-    cwd,
-  });
+  return spawnSync(
+    'node',
+    ['--enable-source-maps', require.resolve('react-creates/bin/react-creates.js'), ...cliArgs],
+    {
+      encoding: 'utf8',
+      cwd,
+    }
+  );
 }
 
 export function populateDirectorySync(
