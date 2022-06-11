@@ -10,21 +10,27 @@ interface FileSystemCacheOptions {
 export class FileSystemCache {
   private currentContent: Record<string, any> | undefined;
   static create({ fileSystem = nodeFs, rootDir = process.cwd() }: FileSystemCacheOptions = {}) {
-    return new this(fileSystem, fileSystem.join(FileSystemCache.getCacheRootPath({ rootDir }), 'cache.json'));
+    return new this(fileSystem, FileSystemCache.getCachePath({ fileSystem, rootDir }));
   }
 
-  static getCacheRootPath({ rootDir = process.cwd() }: FileSystemCacheOptions = {}) {
+  static getCachePath({ fileSystem = nodeFs, rootDir = process.cwd() }: FileSystemCacheOptions = {}) {
+    const packageJsonPath = fileSystem.findClosestFileSync(rootDir, 'package.json');
+
+    if (!packageJsonPath) {
+      throw new Error('Could not find package.json');
+    }
+
     const cachePathDir = findCacheDir({
-      name: 'react-creates',
+      name: fileSystem.join('react-creates', packageJsonPath),
       create: true,
       cwd: rootDir,
     })!;
 
-    return cachePathDir;
+    return fileSystem.join(cachePathDir, 'cache.json');
   }
 
   static delete({ fileSystem = nodeFs, rootDir = process.cwd() }: FileSystemCacheOptions = {}) {
-    const cachePath = FileSystemCache.getCacheRootPath({ rootDir });
+    const cachePath = FileSystemCache.getCachePath({ fileSystem, rootDir });
 
     if (fileSystem.existsSync(cachePath)) {
       fileSystem.unlinkSync(cachePath);

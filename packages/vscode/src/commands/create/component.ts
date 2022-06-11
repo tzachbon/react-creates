@@ -38,46 +38,44 @@ export const component: CommandWithContext = ({ fileSystem, config }) => ({
         (await vscode.window.showInputBox({ prompt: 'Directory of the component', value: probablyDirectory })) ??
         probablyDirectory;
 
-      const terminalCommand = await tryRun(() =>
-        buildCreateComponentCommand(
-          {
-            name,
-            directory,
-          },
-          async (key) => {
-            type Keys = keyof Pick<typeof createComponentProperties, 'style' | 'language' | 'type'>;
+      const terminalCommand = await buildCreateComponentCommand(
+        {
+          name,
+          directory,
+        },
+        async (key) => {
+          type Keys = keyof Pick<typeof createComponentProperties, 'style' | 'language' | 'type'>;
 
-            if (cache.has(key)) {
-              return cache.get(key);
-            }
-
-            let value: ComponentOption[typeof key] | undefined;
-
-            if (key === 'style' || key === 'language' || key === 'type') {
-              const values = [...createComponentProperties[key as unknown as Keys]];
-              const response = await vscode.window.showQuickPick(values, {
-                matchOnDescription: true,
-                placeHolder: propertyDescriptions[key as unknown as Keys],
-              });
-
-              value = response as unknown as ComponentOption[typeof key] | undefined;
-            } else if (key === 'skipTest' || key === 'propTypes' || key === 'cssModules') {
-              const values = ['false', 'true'];
-              const response = await vscode.window.showQuickPick(values, {
-                matchOnDescription: true,
-                placeHolder: propertyDescriptions[key as unknown as 'skipTest' | 'propTypes'],
-              });
-
-              value = (response === 'true') as ComponentOption[typeof key];
-            }
-
-            if (value) {
-              cache.set(key, value);
-            }
-
-            return value;
+          if (cache.has(key)) {
+            return cache.get(key);
           }
-        )
+
+          let value: ComponentOption[typeof key] | undefined;
+
+          if (key === 'style' || key === 'language' || key === 'type') {
+            const values = [...createComponentProperties[key as unknown as Keys]];
+            const response = await vscode.window.showQuickPick(values, {
+              matchOnDescription: true,
+              placeHolder: propertyDescriptions[key as unknown as Keys],
+            });
+
+            value = response as unknown as ComponentOption[typeof key] | undefined;
+          } else if (key === 'skipTest' || key === 'propTypes' || key === 'cssModules') {
+            const values = ['false', 'true'];
+            const response = await vscode.window.showQuickPick(values, {
+              matchOnDescription: true,
+              placeHolder: propertyDescriptions[key as unknown as 'skipTest' | 'propTypes'],
+            });
+
+            value = (response === 'true') as ComponentOption[typeof key];
+          }
+
+          if (value) {
+            cache.set(key, value);
+          }
+
+          return value;
+        }
       );
 
       Terminals.send(
