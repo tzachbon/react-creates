@@ -1,4 +1,4 @@
-import expect from 'expect';
+import { expect } from 'expect';
 import { CliDriver } from '../driver';
 
 const componentName = 'Component';

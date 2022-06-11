@@ -1,5 +1,5 @@
 import { describe, it } from 'mocha';
-import expect from 'expect';
+import { expect } from 'expect';
 import * as vscode from 'vscode';
 
 describe('Extension', () => {
