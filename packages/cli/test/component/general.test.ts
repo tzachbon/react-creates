@@ -13,4 +13,13 @@ describe('general', () => {
 
     expect(files).toEqual(fixture);
   });
+
+  it('should not re-fetch templates', () => {
+    const files = cli
+      .runSync(['component', componentName, '--yes'])
+      .runSync(['component', `Second${componentName}`, '--yes'])
+      .loadDirectorySync(`Second${componentName}`);
+
+    expect(Object.keys(files).length).toBeGreaterThan(0);
+  });
 });
