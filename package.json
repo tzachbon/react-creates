@@ -42,7 +42,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-no-only-tests": "^2.6.0",
     "eslint-plugin-react": "^7.30.0",
-    "eslint-plugin-react-hooks": "^4.5.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "expect": "^28.1.1",
     "glob": "^8.0.3",
     "jest-util": "^28.1.1",
