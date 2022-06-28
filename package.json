@@ -35,7 +35,7 @@
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
     "@types/rimraf": "^3.0.2",
-    "@types/vscode": "^1.68.0",
+    "@types/vscode": "^1.68.1",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
     "@vscode/test-electron": "^2.1.4",
     "eslint": "^8.18.0",
