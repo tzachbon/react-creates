@@ -38,7 +38,7 @@
     "@types/vscode": "^1.68.0",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
     "@vscode/test-electron": "^2.1.4",
-    "eslint": "^8.18.0",
+    "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-no-only-tests": "^2.6.0",
     "eslint-plugin-react": "^7.30.1",
