@@ -39,7 +39,7 @@
     "@types/find-cache-dir": "^3.2.1",
     "@types/prompts": "^2.0.14",
     "@react-creates/core": "^2.1.2",
-    "commander": "^9.3.0",
+    "commander": "^9.4.0",
     "degit": "^2.8.4",
     "find-cache-dir": "^3.3.2",
     "prompts": "^2.4.2"
