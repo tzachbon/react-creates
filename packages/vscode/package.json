@@ -122,7 +122,7 @@
   },
   "dependencies": {
     "@file-services/node": "^6.0.0",
-    "@file-services/types": "^6.0.0",
+    "@file-services/types": "^7.0.0",
     "@types/vscode": "^1.69.0",
     "@react-creates/core": "^2.1.2",
     "react-creates": "^2.1.2"
