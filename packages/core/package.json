@@ -35,7 +35,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@file-services/types": "^6.0.0",
+    "@file-services/types": "^7.0.0",
     "@types/mustache": "^4.2.1",
     "mustache": "^4.2.0"
   }
