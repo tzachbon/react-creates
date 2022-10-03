@@ -1,6 +1,6 @@
 {
   "name": "@react-creates/core",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
   "publishConfig": {
     "access": "public",

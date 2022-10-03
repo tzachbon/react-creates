@@ -1,6 +1,6 @@
 {
   "name": "react-creates",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "React creates for you useful and common tools that adapt themselves to your project for faster and easier development",
   "files": [
     "dist",
@@ -36,9 +36,9 @@
   "dependencies": {
     "@file-services/node": "^7.0.1",
     "@file-services/types": "^7.0.1",
+    "@react-creates/core": "^2.1.3",
     "@types/find-cache-dir": "^3.2.1",
     "@types/prompts": "^2.0.14",
-    "@react-creates/core": "^2.1.2",
     "commander": "^9.4.1",
     "degit": "^2.8.4",
     "find-cache-dir": "^3.3.2",
